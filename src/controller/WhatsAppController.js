@@ -49,5 +49,9 @@ class WhatsAppController {
     Element.prototype.removeClass = function(name){
         this.classList.remove(name)
     }
+
+    Element.prototype.toggleClass = function(name){
+        this.classList.toggle(name)
+    }
   }
 }
