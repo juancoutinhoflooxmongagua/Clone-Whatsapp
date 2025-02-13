@@ -53,5 +53,9 @@ class WhatsAppController {
     Element.prototype.toggleClass = function(name){
         this.classList.toggle(name)
     }
+
+    Element.prototype.hasClass = function(name) {
+        this.classList.contains(name)
+    }
   }
 }
