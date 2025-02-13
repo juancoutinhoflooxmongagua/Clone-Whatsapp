@@ -28,6 +28,12 @@ class WhatsAppController {
         this.style.display = (this.style.display === 'none') ? 'block' : 'none'
     }
 
-    
+
+    Element.prototype.on = function(events, fn){
+        events.split('').forEach(event => {
+            this.addEventListener(event, fn)
+        })
+    }
+
   }
 }
