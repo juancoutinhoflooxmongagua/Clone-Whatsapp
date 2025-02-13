@@ -1,13 +1,14 @@
-class WhatsAppController{
-    constructor(){
-        console.log('Whatsapp Controller')
-        this.LoadElements()
-    }
+class WhatsAppController {
+  constructor() {
+      console.log('Whatsapp Controller');
+      this.loadElements();
+  }
 
+  loadElements() { 
+      this.el = {};
 
-    LoadElements(){
-        document.querySelectorAll('[id]').forEach(element => {
-            this.el[Format.getCamelCase('id')] = element
-        })
-    }
+      document.querySelectorAll("[id]").forEach((element) => {
+          this.el[Format.getCamelCase(element.id)] = element;
+      });
+  }
 }
