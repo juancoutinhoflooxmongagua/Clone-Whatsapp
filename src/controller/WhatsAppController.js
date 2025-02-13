@@ -72,5 +72,9 @@ class WhatsAppController {
     this.el.btnNewContact.on('click', e =>{
         this.el.panelAddContact.addClass('open')
     })
+
+    this.el.btnClosePanelEditProfile.on('click', e=>{
+        this.el.panelEditProfile.removeClass('open')
+    })
   }
 }
