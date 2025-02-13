@@ -40,5 +40,14 @@ class WhatsAppController {
             this.style[name] = styles[name]
         }
     }
+
+    Element.prototype.addClass = function(name){
+        this.classList.add(name)
+    }
+
+
+    Element.prototype.removeClass = function(name){
+        this.classList.remove(name)
+    }
   }
 }
