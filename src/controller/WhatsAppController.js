@@ -29,7 +29,6 @@ class WhatsAppController {
         return this
     }
 
-    // Corrigir para suportar múltiplos eventos
     Element.prototype.on = function(events, fn){
         events.split(' ').forEach(event => {
             this.addEventListener(event, fn)
@@ -84,12 +83,16 @@ class WhatsAppController {
         });
         
         this.el.btnClosePanelEditProfile.on('click', e=>{
-            this.el.panelEditProfile.removeClass('open');
+            this.el.panelEditProfile.removeClass('open')
         });
    
         this.el.btnClosePanelAddContact.on('click', e=>{
-            this.el.panelAddContact.removeClass('open');
+            this.el.panelAddContact.removeClass('open')
         });
+
+        this.el.photoContainerEditProfile.on('click', e => {
+            this.el.inputProfilePhoto.click()
+        })
     }
     
     closeAllLeftPanel(){
