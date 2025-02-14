@@ -61,6 +61,10 @@ class WhatsAppController {
     Element.prototype.hasClass = function(name) {
         return this.classList.contains(name)
     }
+    
+    HTMLFormElement.prototype.getForm = function(){
+        return new FormData(this)
+    }
   }
 
   initEvents(){
