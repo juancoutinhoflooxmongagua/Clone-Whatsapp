@@ -106,6 +106,12 @@ class WhatsAppController {
         this.el.btnSavePanelEditProfile.on('click', e => {
             console.log(this.el.inputNamePanelEditProfile.innerHTML)
         })
+
+        this.el.formPanelAddContact.on('submit', e=> {
+            e.preventDefault()
+
+            let formData = new FormData(this.el.formPanelAddContact)
+        })
     }
     
     closeAllLeftPanel(){
