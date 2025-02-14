@@ -65,6 +65,15 @@ class WhatsAppController {
     HTMLFormElement.prototype.getForm = function(){
         return new FormData(this)
     }
+
+    HTMLFormElement.prototype.toJson = function(){
+        let json = {}
+        this.getForm().forEach(this.ariaValueMax, key) =>{
+            json[key] = value
+        }
+
+        return json
+    }
   }
 
   initEvents(){
