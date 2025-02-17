@@ -168,23 +168,39 @@ class WhatsAppController {
             });
         });
         
-        this.el.btnClosePanelCamera.on('click', e => { // Corrigido: vírgula e sintaxe
-            this.el.panelCamera.removeClass('open');
+        this.el.btnClosePanelCamera.on('click', e => { 
+            this.CloseAllMainPanel()
             this.el.panelMessagesContainer.show();
         });
         
-        this.el.btnTakePicture.on('click', e => { // Corrigido: vírgula entre 'click' e a função
+        this.el.btnTakePicture.on('click', e => { 
             console.log('take picture');
         });
         
         
         this.el.btnAttachDocument.on('click', e => {
-            console.log('Document');
+          this.CloseAllMainPanel()
+          this.el.panelDocumentPreview.addClass('open');
+          this.el.panelDocumentPreview.css({
+              'height': 'calc(100% - 120px)' 
+          });
         });
+
+        this.el.btnClosePanelDocumentPreview.on('click', e => {
+            this.CloseAllMainPanel()
+            this.el.panelMessagesContainer.show()
+        });
+        
         
         this.el.btnAttachContact.on('click', e => {
             console.log('contact');
         });
+    }
+
+    CloseAllMainPanel(){
+        this.el.panelMessagesContainer.hide()
+        this.el.panelDocumentPreview.removeClass('open')
+        this.el.panelCamera.removeClass('open')
     }
 
     closeMenuAttach(e){
