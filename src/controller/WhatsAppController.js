@@ -173,6 +173,10 @@ class WhatsAppController {
             this.el.panelMessagesContainer.show();
         });
         
+        this.el.btnTakePicture.on('click', e => { // Corrigido: vírgula entre 'click' e a função
+            console.log('take picture');
+        });
+        
         
         this.el.btnAttachDocument.on('click', e => {
             console.log('Document');
