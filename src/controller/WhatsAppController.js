@@ -140,6 +140,10 @@ class WhatsAppController {
                 });
             });
         });
+
+        this.el.btnAttach.on('click', e=>{
+            this.el.menuAttach.addClass('open')
+        })
         
     }
     
