@@ -149,9 +149,12 @@ class WhatsAppController {
             console.log('photo')
         })
         
-        
         this.el.btnAttachCamera.on('click', e=>{
             console.log('camera')
+        })
+
+        this.el.btnAttachDocument.on('click', e=>{
+            console.log('Document')
         })
     }
     
