@@ -156,6 +156,10 @@ class WhatsAppController {
         this.el.btnAttachDocument.on('click', e=>{
             console.log('Document')
         })
+
+        this.el.btnAttachContact.on('click', e=>{
+            console.log('contact')
+        })
     }
     
     closeAllLeftPanel(){
