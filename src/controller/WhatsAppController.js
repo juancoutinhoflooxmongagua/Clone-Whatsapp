@@ -66,15 +66,20 @@ class WhatsAppController {
         return new FormData(this)
     }
 
-    HTMLFormElement.prototype.toJson = function(){
+    HTMLFormElement.prototype.toJson = function() {
         let json = {};
         
-        this.getForm().forEach((value, key) => {  // Correção na função forEach
+        // Usando FormData para obter todos os campos do formulário
+        const formData = new FormData(this);
+    
+        // Iterando sobre os dados do formulário e preenchendo o objeto JSON
+        formData.forEach((value, key) => {
             json[key] = value;
         });
     
         return json;
-    }    
+    };
+    
   }
 
   initEvents(){
@@ -127,17 +132,19 @@ class WhatsAppController {
             let formData = new FormData(this.el.formPanelAddContact)
         })
 
-
-        this.el.contactMessagesList.querySelectorAll('.contact-item').forEach(item => {
-            item.addEventListener('click', e => {  // Corrigido aqui
-                this.el.main.style.display = 'flex';  // Alterado para usar o estilo diretamente
+        this.el.contactsMessagesList.querySelectorAll('.contact-item').forEach(item => {
+            item.addEventListener('click', e => {
+                this.el.home.hide();
+                this.el.main.css({
+                    display: 'flex'
+                });
             });
         });
-
-    }
         
-        closeAllLeftPanel() {
-            this.el.panelAddContact.hide();
-            this.el.panelEditProfile.hide();
-        }
+    }
+    
+    closeAllLeftPanel(){
+        this.el.panelAddContact.hide();
+        this.el.panelEditProfile.hide();
+    }
 }
