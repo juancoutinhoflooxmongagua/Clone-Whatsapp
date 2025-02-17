@@ -150,6 +150,9 @@ class WhatsAppController {
         })
         
         
+        this.el.btnAttachCamera.on('click', e=>{
+            console.log('camera')
+        })
     }
     
     closeAllLeftPanel(){
