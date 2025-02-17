@@ -160,10 +160,19 @@ class WhatsAppController {
             });
         });
         
-        
         this.el.btnAttachCamera.on('click', e => {
-            console.log('camera');
+            this.el.panelMessagesContainer.hide();
+            this.el.panelCamera.addClass('open');
+            this.el.panelCamera.css({
+                'height': 'calc(100% - 120px)' 
+            });
         });
+        
+        this.el.btnClosePanelCamera.on('click', e => { // Corrigido: vírgula e sintaxe
+            this.el.panelCamera.removeClass('open');
+            this.el.panelMessagesContainer.show();
+        });
+        
         
         this.el.btnAttachDocument.on('click', e => {
             console.log('Document');
