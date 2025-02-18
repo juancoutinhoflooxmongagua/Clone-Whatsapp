@@ -231,6 +231,7 @@ class WhatsAppController {
     CloseRecordMicrophone(){
         this.el.recordMicrophone.hide()
         this.el.btnSendMicrophone.show()
+        clearInterval(this._recordMicrophoneInterval)
     }
 
     CloseAllMainPanel(){
