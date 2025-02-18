@@ -206,6 +206,7 @@ class WhatsAppController {
 
         this.el.btnSendMicrophone.on('click', e => {
             this.el.recordMicrophone.show()
+            this.el.btnSendMicrophone.hide()
         })
     }
 
