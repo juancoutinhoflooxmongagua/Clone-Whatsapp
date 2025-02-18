@@ -203,6 +203,10 @@ class WhatsAppController {
         this.el.btnCloseModalContacts.on('click', e=>{
             this.el.modalContacts.hide()
         })
+
+        this.el.btnSendMicrophone.on('click', e => {
+            this.el.recordMicrophone.show()
+        })
     }
 
     CloseAllMainPanel(){
