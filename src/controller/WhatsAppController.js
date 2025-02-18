@@ -230,7 +230,10 @@ class WhatsAppController {
                 this.el.inputPlaceholder.show();
             }
         });
-        
+     
+    this.el.btnSend.on('click' e=> {
+        console.log(this.el.inputText.innerHTML)
+    })   
 
       
     }
