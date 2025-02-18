@@ -186,6 +186,10 @@ class WhatsAppController {
           });
         });
 
+        this.el.btnSendDocument.on('click', e=> {
+            console.log('oi')
+        })
+        
         this.el.btnClosePanelDocumentPreview.on('click', e => {
             this.CloseAllMainPanel()
             this.el.panelMessagesContainer.show()
