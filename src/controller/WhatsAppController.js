@@ -218,6 +218,21 @@ class WhatsAppController {
         this.el.btnFinishMicrophone.on('click', e =>{
             this.CloseRecordMicrophone()
         })
+
+
+        this.el.inputText.on('keyup', e => {
+
+            if (this.el.inputText.innerHTML.length) { 
+                this.el.inputPlaceholder.hide();
+                this.el.btnSendMicrophone.hide()
+                this.el.btnSend.show()
+            } else {
+                this.el.inputPlaceholder.show();
+            }
+        });
+        
+
+      
     }
 
     startRecordMicrophoneTime(){
