@@ -220,6 +220,13 @@ class WhatsAppController {
         })
 
 
+        this.el.inputText.on('keypress', e => {
+            if (e.key === 'Enter' && !e.ctrlKey){
+                e.preventDefault()
+            }
+        })
+
+
         this.el.inputText.on('keyup', e => {
 
             if (this.el.inputText.innerHTML.length) {
