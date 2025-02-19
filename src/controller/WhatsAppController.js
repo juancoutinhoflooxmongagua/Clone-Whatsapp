@@ -1,111 +1,111 @@
 class WhatsAppController {
-  constructor() {
-      console.log('Whatsapp Controller')
-      this.elementsPrototype()
-      this.loadElements()
-      this.initEvents()
-  }
-
-  loadElements() { 
-      this.el = {}
-
-      document.querySelectorAll("[id]").forEach((element) => {
-          this.el[Format.getCamelCase(element.id)] = element
-      })
-  }
-
-  elementsPrototype(){
-    Element.prototype.hide = function(){
-        this.style.display = 'none'
+    constructor() {
+        console.log('Whatsapp Controller')
+        this.elementsPrototype()
+        this.loadElements()
+        this.initEvents()
     }
 
-    Element.prototype.show = function(){
-        this.style.display = 'block'
-        return this
-    }
+    loadElements() {
+        this.el = {}
 
-    Element.prototype.toggle = function(){
-        this.style.display = (this.style.display === 'none') ? 'block' : 'none'
-        return this
-    }
-
-    Element.prototype.on = function(events, fn){
-        events.split(' ').forEach(event => {
-            this.addEventListener(event, fn)
+        document.querySelectorAll("[id]").forEach((element) => {
+            this.el[Format.getCamelCase(element.id)] = element
         })
-        return this
     }
 
-    Element.prototype.css = function(styles){
-        for (let name in styles){
-            this.style[name] = styles[name]
+    elementsPrototype() {
+        Element.prototype.hide = function () {
+            this.style.display = 'none'
         }
-        return this
+
+        Element.prototype.show = function () {
+            this.style.display = 'block'
+            return this
+        }
+
+        Element.prototype.toggle = function () {
+            this.style.display = (this.style.display === 'none') ? 'block' : 'none'
+            return this
+        }
+
+        Element.prototype.on = function (events, fn) {
+            events.split(' ').forEach(event => {
+                this.addEventListener(event, fn)
+            })
+            return this
+        }
+
+        Element.prototype.css = function (styles) {
+            for (let name in styles) {
+                this.style[name] = styles[name]
+            }
+            return this
+        }
+
+        Element.prototype.addClass = function (name) {
+            this.classList.add(name)
+            return this
+        }
+
+        Element.prototype.removeClass = function (name) {
+            this.classList.remove(name)
+            return this
+        }
+
+        Element.prototype.toggleClass = function (name) {
+            this.classList.toggle(name)
+            return this
+        }
+
+        Element.prototype.hasClass = function (name) {
+            return this.classList.contains(name)
+        }
+
+        HTMLFormElement.prototype.getForm = function () {
+            return new FormData(this)
+        }
+
+        HTMLFormElement.prototype.toJson = function () {
+            let json = {};
+
+            // Usando FormData para obter todos os campos do formulário
+            const formData = new FormData(this);
+
+            // Iterando sobre os dados do formulário e preenchendo o objeto JSON
+            formData.forEach((value, key) => {
+                json[key] = value;
+            });
+
+            return json;
+        };
+
     }
 
-    Element.prototype.addClass = function(name){
-        this.classList.add(name)
-        return this
-    }
-
-    Element.prototype.removeClass = function(name){
-        this.classList.remove(name)
-        return this
-    }
-
-    Element.prototype.toggleClass = function(name){
-        this.classList.toggle(name)
-        return this
-    }
-
-    Element.prototype.hasClass = function(name) {
-        return this.classList.contains(name)
-    }
-    
-    HTMLFormElement.prototype.getForm = function(){
-        return new FormData(this)
-    }
-
-    HTMLFormElement.prototype.toJson = function() {
-        let json = {};
-        
-        // Usando FormData para obter todos os campos do formulário
-        const formData = new FormData(this);
-    
-        // Iterando sobre os dados do formulário e preenchendo o objeto JSON
-        formData.forEach((value, key) => {
-            json[key] = value;
-        });
-    
-        return json;
-    };
-    
-  }
-
-  initEvents(){
-        this.el.myPhoto.on('click', e=>{
+    initEvents() {
+        this.el.myPhoto.on('click', e => {
             this.closeAllLeftPanel();
             this.el.panelEditProfile.show();
-            setTimeout(()=>{
+            setTimeout(() => {
                 this.el.panelEditProfile.addClass('open');
             }, 300);
-        
+
         });
-        
-        this.el.btnNewContact.on('click', e=>{
+
+        this.el.btnNewContact.on('click', e => {
             this.closeAllLeftPanel();
             this.el.panelAddContact.show();
-            setTimeout(()=>{
+            setTimeout(() => {
                 this.el.panelAddContact.addClass('open');
             }, 300);
-        
+
         });
-        
-        this.el.btnClosePanelEditProfile.on('click', e=>{
+
+        this.el.btnClosePanelEditProfile.on('click', e => {
             this.el.panelEditProfile.removeClass('open')
         });
-   
-        this.el.btnClosePanelAddContact.on('click', e=>{
+
+        this.el.btnClosePanelAddContact.on('click', e => {
             this.el.panelAddContact.removeClass('open')
         });
 
@@ -113,7 +113,7 @@ class WhatsAppController {
             this.el.inputProfilePhoto.click()
         })
 
-        this.el.inputNamePanelEditProfile.on('keypress', e=> {
+        this.el.inputNamePanelEditProfile.on('keypress', e => {
             if (e.key === 'Enter') {
                 e.preventDefault();
 
@@ -126,7 +126,7 @@ class WhatsAppController {
             console.log(this.el.inputNamePanelEditProfile.innerHTML)
         })
 
-        this.el.formPanelAddContact.on('submit', e=> {
+        this.el.formPanelAddContact.on('submit', e => {
             e.preventDefault()
 
             let formData = new FormData(this.el.formPanelAddContact)
@@ -141,66 +141,66 @@ class WhatsAppController {
             });
         });
 
-    
-        this.el.btnAttach.on('click', e=> {
+
+        this.el.btnAttach.on('click', e => {
             e.stopPropagation()
             this.el.menuAttach.addClass('open')
             document.addEventListener('click', this.closeMenuAttach.bind(this))
         })
-        
+
         this.el.btnAttachPhoto.on('click', e => {
             this.el.inputPhoto.click()
         });
 
         this.el.inputPhoto.on('change', e => {
             console.log(this.el.inputPhoto.files);
-        
+
             [...this.el.inputPhoto.files].forEach(file => {
-                console.log(file); 
+                console.log(file);
             });
         });
-        
+
         this.el.btnAttachCamera.on('click', e => {
             this.el.panelMessagesContainer.hide();
             this.el.panelCamera.addClass('open');
             this.el.panelCamera.css({
-                'height': 'calc(100% - 120px)' 
+                'height': 'calc(100% - 120px)'
             });
         });
-        
-        this.el.btnClosePanelCamera.on('click', e => { 
+
+        this.el.btnClosePanelCamera.on('click', e => {
             this.CloseAllMainPanel()
             this.el.panelMessagesContainer.show();
         });
-        
-        this.el.btnTakePicture.on('click', e => { 
+
+        this.el.btnTakePicture.on('click', e => {
             console.log('take picture');
         });
-        
-        
+
+
         this.el.btnAttachDocument.on('click', e => {
-          this.CloseAllMainPanel()
-          this.el.panelDocumentPreview.addClass('open');
-          this.el.panelDocumentPreview.css({
-              'height': 'calc(100% - 120px)' 
-          });
+            this.CloseAllMainPanel()
+            this.el.panelDocumentPreview.addClass('open');
+            this.el.panelDocumentPreview.css({
+                'height': 'calc(100% - 120px)'
+            });
         });
 
-        this.el.btnSendDocument.on('click', e=> {
+        this.el.btnSendDocument.on('click', e => {
             console.log('oi')
         })
-        
+
         this.el.btnClosePanelDocumentPreview.on('click', e => {
             this.CloseAllMainPanel()
             this.el.panelMessagesContainer.show()
         });
-        
-        
+
+
         this.el.btnAttachContact.on('click', e => {
             this.el.modalContacts.show()
         });
 
-        this.el.btnCloseModalContacts.on('click', e=>{
+        this.el.btnCloseModalContacts.on('click', e => {
             this.el.modalContacts.hide()
         })
 
@@ -215,14 +215,14 @@ class WhatsAppController {
             this.CloseRecordMicrophone()
         })
 
-        this.el.btnFinishMicrophone.on('click', e =>{
+        this.el.btnFinishMicrophone.on('click', e => {
             this.CloseRecordMicrophone()
         })
 
 
         this.el.inputText.on('keyup', e => {
 
-            if (this.el.inputText.innerHTML.length) { 
+            if (this.el.inputText.innerHTML.length) {
                 this.el.inputPlaceholder.hide();
                 this.el.btnSendMicrophone.hide()
                 this.el.btnSend.show()
@@ -230,40 +230,40 @@ class WhatsAppController {
                 this.el.inputPlaceholder.show();
             }
         });
-     
-    this.el.btnSend.on('click', e=> {
-        console.log(this.el.inputText.innerHTML)
-    })   
 
-      
+        this.el.btnSend.on('click', e => {
+            console.log(this.el.inputText.innerHTML)
+        })
+
+
     }
 
-    startRecordMicrophoneTime(){
+    startRecordMicrophoneTime() {
         let start = Date.now()
 
-        this._recordMicrophoneInterval = setInterval(() =>{
+        this._recordMicrophoneInterval = setInterval(() => {
             this.el.recordMicrophoneTimer.innerHTML = Format.toTime(Date.now() - start)
         }, 100)
     }
-    
-    CloseRecordMicrophone(){
+
+    CloseRecordMicrophone() {
         this.el.recordMicrophone.hide()
         this.el.btnSendMicrophone.show()
         clearInterval(this._recordMicrophoneInterval)
     }
 
-    CloseAllMainPanel(){
+    CloseAllMainPanel() {
         this.el.panelMessagesContainer.hide()
         this.el.panelDocumentPreview.removeClass('open')
         this.el.panelCamera.removeClass('open')
     }
 
-    closeMenuAttach(e){
+    closeMenuAttach(e) {
         document.removeEventListener('click', this.closeMenuAttach)
         this.el.menuAttach.removeClass('open')
         console.log('remove menu')
     }
-    closeAllLeftPanel(){
+    closeAllLeftPanel() {
         this.el.panelAddContact.hide();
         this.el.panelEditProfile.hide();
     }
