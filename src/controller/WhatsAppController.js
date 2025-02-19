@@ -245,6 +245,10 @@ class WhatsAppController {
         })
 
 
+        this.el.btnEmojis.on('click', e=> {
+            this.el.panelEmojis.addClass('open')
+        })
+
     }
 
     startRecordMicrophoneTime() {
