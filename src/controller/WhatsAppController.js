@@ -249,6 +249,11 @@ class WhatsAppController {
             this.el.panelEmojis.toggleClass('open')
         })
 
+        this.el.panelEmojis.querySelectorAll('.emojik').forEach(emoji =>{
+            emoji.on('click', e =>{
+                    console.log(emoji.dataset.unicode)
+            })
+        })
     }
 
     startRecordMicrophoneTime() {
