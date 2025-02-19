@@ -221,8 +221,10 @@ class WhatsAppController {
 
 
         this.el.inputText.on('keypress', e => {
-            if (e.key === 'Enter' && !e.ctrlKey){
+            if (e.key === 'Enter' && !e.ctrlKey) {
                 e.preventDefault()
+
+                this.btnSend.click()
             }
         })
 
