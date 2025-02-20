@@ -262,7 +262,15 @@ class WhatsAppController {
                     img.classList.add(name);
                 });
 
-                this.el.inputText.appendChild(img);
+           
+                let cursor = window.getSelection()
+                
+                if (!cursor.focusNode || !cursor.focusNode.id == 'input-text'){
+                    this.el.inputText.focus()
+
+                    cursor = window.getSelection()
+                }
+                
 
                 this.el.inputText.dispatchEvent(new Event('keyup'));
             });
