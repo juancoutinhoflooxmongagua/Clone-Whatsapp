@@ -1,10 +1,10 @@
-const path = require('path'); // Importação necessária
+const path = require('path'); 
 
 module.exports = {
     entry: './src/app.js',
 
-    output: { // Corrigido "outrop" para "output"
+    output: { 
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist') // Remova a barra antes de 'dist'
+        path: path.resolve(__dirname, 'dist')
     }
 };
