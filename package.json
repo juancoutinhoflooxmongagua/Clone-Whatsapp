@@ -1,25 +1,19 @@
 {
-  "name": "zap-clone",
+  "name": "wppclone",
   "version": "1.0.0",
-  "description": "[![Hcode Treinamentos](https://www.hcode.com.br/res/img/hcode-200x100.png)](https://www.hcode.com.br)",
-  "main": "index.js",
+  "main": "webpack.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.config.js",
     "start": "webpack-dev-server"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/juancoutinhoflooxmongagua/Clone-Whatsapp.git"
-  },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/juancoutinhoflooxmongagua/Clone-Whatsapp/issues"
-  },
-  "homepage": "https://github.com/juancoutinhoflooxmongagua/Clone-Whatsapp#readme",
+  "description": "",
   "dependencies": {
+    "pdfjs-dist": "2.0.489",
     "webpack": "^3.1.0",
-    "webpack-dev-server": "^2.5.1"
+    "webpack-dev-server": "^2.5.1",
+    "firebase": "^4.13.1"
   }
 }
