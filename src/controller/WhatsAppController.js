@@ -180,18 +180,24 @@ export class WhatsAppController {
             this._camera.stop(); 
         });
         
-
-        this.el.btnTakePicture.on('click', e => {  
-            let dataUrl = this._camera.TakePicture()
-
-            this.el.pictureCamera.src = dataUrl
-            this.el.pictureCamera.show()
-
-            this.el.videoCamera.hide();
-            this.el.btnReshootPanelCamera.show()
-        });
+        this.el.btnTakePicture.on('click', e => {
+            let dataUrl = this._camera.TakePicture();
         
+            // Verifique se a dataUrl é válida antes de usá-la
+            if (dataUrl) {
+                this.el.pictureCamera.src = dataUrl;
+                this.el.pictureCamera.show();
+                this.el.videoCamera.hide();
+                this.el.btnReshootPanelCamera.show();
+            } else {
+                console.error("Erro ao capturar a imagem");
+            }
+        });
 
+        this.el.btnSendPicture.on('click', e=>{
+            console.log(this.el.pictureCamera.src)
+        })
+        
         this.el.btnReshootPanelCamera.on('click', e => {  // corrigido de 'btnReshootPanelCamera('click', ...)'
             this.el.pictureCamera.hide()
             this.el.videoCamera.show()
