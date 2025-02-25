@@ -181,11 +181,15 @@ export class WhatsAppController {
         });
         
 
-        this.el.btnTakePicture.on('click', e => {
-            console.log('take picture');
+        this.el.btnTakePicture.on('click', e => {  
+            let dataUrl = this._camera.TakePicture()
+
+            this.el.pictureCamera.src = dataUrl
+            this.el.pictureCamera.show()
+
+            this.el.videoCamera.hide()
         });
-
-
+        
         this.el.btnAttachDocument.on('click', e => {
             this.CloseAllMainPanel()
             this.el.panelDocumentPreview.addClass('open');
