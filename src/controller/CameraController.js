@@ -22,4 +22,8 @@ export class CameraController {
             console.error('Nenhum stream de vídeo foi iniciado.');
         }
     }
+
+    takepicture(mimeTYpe = 'image/png'){
+
+    }
 }
