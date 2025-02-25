@@ -187,9 +187,20 @@ export class WhatsAppController {
             this.el.pictureCamera.src = dataUrl
             this.el.pictureCamera.show()
 
-            this.el.videoCamera.hide()
+            this.el.videoCamera.hide();
+            this.el.btnReshootPanelCamera.show()
         });
         
+
+        this.el.btnReshootPanelCamera.on('click', e => {  // corrigido de 'btnReshootPanelCamera('click', ...)'
+            this.el.pictureCamera.hide()
+            this.el.videoCamera.show()
+            this.el.btnReshootPanelCamera.hide()
+            this.el.containerTakePicutre.show()
+            this.el.containerSendPicture.hide()
+        })
+        
+
         this.el.btnAttachDocument.on('click', e => {
             this.CloseAllMainPanel()
             this.el.panelDocumentPreview.addClass('open');
