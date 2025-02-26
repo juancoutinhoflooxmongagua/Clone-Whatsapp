@@ -213,6 +213,8 @@ export class WhatsAppController {
             this.el.panelDocumentPreview.css({
                 'height': 'calc(100% - 120px)'
             });
+
+            this.el.inputDocument.click()
         });
 
         this.el.btnSendDocument.on('click', e => {
