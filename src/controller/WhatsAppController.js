@@ -1,5 +1,6 @@
 import {Format} from '../util/Format'
 import {CameraController} from './CameraController'
+import {DocumentPreviewController} from './DocumentPreviewController.js'
 
 export class WhatsAppController {
     constructor() {
@@ -72,10 +73,8 @@ export class WhatsAppController {
         HTMLFormElement.prototype.toJson = function () {
             let json = {};
 
-            // Usando FormData para obter todos os campos do formulário
             const formData = new FormData(this);
 
-            // Iterando sobre os dados do formulário e preenchendo o objeto JSON
             formData.forEach((value, key) => {
                 json[key] = value;
             });
@@ -183,7 +182,6 @@ export class WhatsAppController {
         this.el.btnTakePicture.on('click', e => {
             let dataUrl = this._camera.TakePicture();
         
-            // Verifique se a dataUrl é válida antes de usá-la
             if (dataUrl) {
                 this.el.pictureCamera.src = dataUrl;
                 this.el.pictureCamera.show();
@@ -198,7 +196,7 @@ export class WhatsAppController {
             console.log(this.el.pictureCamera.src)
         })
         
-        this.el.btnReshootPanelCamera.on('click', e => {  // corrigido de 'btnReshootPanelCamera('click', ...)'
+        this.el.btnReshootPanelCamera.on('click', e => {  
             this.el.pictureCamera.hide()
             this.el.videoCamera.show()
             this.el.btnReshootPanelCamera.hide()
@@ -206,35 +204,109 @@ export class WhatsAppController {
             this.el.containerSendPicture.hide()
         })
         
-
-        this.el.btnAttachDocument.on('click', e => {
-            this.CloseAllMainPanel()
+        this.el.btnAttachDocument.on('click', (e) => {
+            this.closeAllMainPanel();
             this.el.panelDocumentPreview.addClass('open');
             this.el.panelDocumentPreview.css({
-                'height': 'calc(100% - 120px)'
+              height: 'calc(100% - 120px)',
             });
-
-            this.el.inputDocument.click()
-        });
-
-
-        this.el.inputDocument.on('change', e => {
+      
+            this.el.inputDocument.click();
+          });
+      
+          this.el.inputDocument.on('change', (event) => {
             if (this.el.inputDocument.files.length) {
-                let file = this.el.inputDocument.files[0];
-                console.log(file)
+              let file = this.el.inputDocument.files[0];
+      
+              this.closeAllMainPanel();
+              this.el.panelMessagesContainer.hide();
+              this.el.panelDocumentPreview.addClass('open');
+              setTimeout(() => {
+                this.el.panelDocumentPreview.style.height = 'calc(100% - 120px)';
+              }, 500);
+      
+              this._documentPreview = new DocumentPreviewController(file);
+      
+              this._documentPreview
+                .getPriviewData()
+                .then((data) => {
+                  this.el.filePanelDocumentPreview.hide();
+                  this.el.imagePanelDocumentPreview.show();
+                  this.el.imgPanelDocumentPreview.src = data.src;
+                  this.el.imgPanelDocumentPreview.show();
+      
+                  this.el.infoPanelDocumentPreview.innerHTML = data.info;
+      
+                  this.el.panelDocumentPreview.css({
+                    height: 'calc(100% - 120px)',
+                  });
+                })
+                .catch((err) => {
+                  this.el.panelDocumentPreview.css({
+                    height: 'calc(100% - 120px)',
+                  });
+      
+                  switch (file.type) {
+                    case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+                    case 'application/msword':
+                      this.el.iconPanelDocumentPreview.classList.value =
+                        'jcxhw icon-doc-doc';
+                      break;
+      
+                    case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                    case 'application/vnd.ms-excel':
+                      this.el.iconPanelDocumentPreview.classList.value =
+                        'jcxhw icon-doc-xls';
+                      break;
+      
+                    case 'application/vnd.ms-powerpoint':
+                    case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
+                      this.el.iconPanelDocumentPreview.classList.value =
+                        'jcxhw icon-doc-ppt';
+                      break;
+      
+                    default:
+                      this.el.iconPanelDocumentPreview.classList.value =
+                        'jcxhw icon-doc-generic';
+                  }
+      
+                  this.el.filePanelDocumentPreview.show();
+                  this.el.imagePanelDocumentPreview.hide();
+      
+                  this.el.filenamePanelDocumentPreview.innerHTML = file.name;
+                });
             }
-        });
-        
+          });
+      
+          this.el.btnSendDocument.on('click', (e) => {
+           
+              let file = this.el.inputDocument.files[0];
+              let base64 = this.el.imgPanelDocumentPreview.src;
+      
+            if(file.type === 'application/pdf'){
+      
+              Base64.toFile(base64).then(filePreview =>{
+      
+              Message.sendDocument(this._activeContact.chatId, this._user.email, file, base64, this.el.infoPanelDocumentPreview.innerHTML);
+              
+            });
+      
+            }else{
+      
+              Message.send(this._activeContact.chatId, this._user.email, file);
+      
+            }
+      
+            this.el.btnClosePanelDocumentPreview.click();
+      
+      
+          });
 
-        this.el.btnSendDocument.on('click', e => {
-            console.log('oi')
-        })
-
-        this.el.btnClosePanelDocumentPreview.on('click', e => {
-            this.CloseAllMainPanel()
-            this.el.panelMessagesContainer.show()
-        });
-
+  
+          this.el.btnClosePanelDocumentPreview.on('click', (e) => {
+            this.closeAllMainPanel();
+            this.el.panelMessagesContainer.show();
+          });
 
         this.el.btnAttachContact.on('click', e => {
             this.el.modalContacts.show()
@@ -341,11 +413,11 @@ export class WhatsAppController {
         clearInterval(this._recordMicrophoneInterval)
     }
 
-    CloseAllMainPanel() {
-        this.el.panelMessagesContainer.hide()
-        this.el.panelDocumentPreview.removeClass('open')
-        this.el.panelCamera.removeClass('open')
-    }
+    closeAllMainPanel() {
+        this.el.panelMessagesContainer.hide();
+        this.el.panelDocumentPreview.removeClass('open');
+        this.el.panelCamera.removeClass('open');
+      }
 
     closeMenuAttach(e) {
         document.removeEventListener('click', this.closeMenuAttach)
