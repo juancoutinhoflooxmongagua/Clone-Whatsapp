@@ -301,6 +301,14 @@ class WhatsAppController {
             this.el.inputDocument.click()
         });
 
+
+        this.el.inputDocument.on('click', e => {
+            if (this.el.inputDocument.files.length) {
+                let file = this.el.inputDocument[0].files[0];
+            }
+        });
+        
+
         this.el.btnSendDocument.on('click', e => {
             console.log('oi')
         })
