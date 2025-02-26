@@ -225,6 +225,7 @@ export class WhatsAppController {
                 
             }
         })
+        
         this.el.btnSendDocument.on('click', e => {
             console.log('oi')
         })
