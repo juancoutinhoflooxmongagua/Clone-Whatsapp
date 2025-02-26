@@ -218,9 +218,10 @@ export class WhatsAppController {
         });
 
 
-        this.el.inputDocument.on('click', e => {
+        this.el.inputDocument.on('change', e => {
             if (this.el.inputDocument.files.length) {
-                let file = this.el.inputDocument[0].files[0];
+                let file = this.el.inputDocument.files[0];
+                console.log(file)
             }
         });
         
