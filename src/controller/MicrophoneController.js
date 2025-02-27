@@ -3,13 +3,17 @@ class MicrophoneController {
         this._videoEl = videoEl;
 
         navigator.mediaDevices.getUserMedia({
-            video: true
+            audio: true
         }).then(stream => {
-            this._stream = stream; 
-            this._videoEl.srcObject = stream;
-            this._videoEl.play();
+            this._stream = stream;
+            
+            let audio = new Audio()
+
+            audio.src = URL.createObjectURL(stream)
+
+            audio.play()
         }).catch(err => {
-            console.error('Erro ao acessar a câmera: ', err);
+            console.error('Erro ao acessar o audio: ', err);
         });
     }
 }
