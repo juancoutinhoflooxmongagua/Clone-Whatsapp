@@ -6,9 +6,22 @@ import {MicrophoneController} from './MicrophoneController.js'
 export class WhatsAppController {
     constructor() {
         console.log('Whatsapp Controller')
+        this.initAuth()
         this.elementsPrototype()
         this.loadElements()
         this.initEvents()
+
+        this._firebase = new firebase()
+    }
+
+
+    initAuth(){
+        this._firebase.initAuth().
+        then(response => {
+            console.log('response', response)
+        }).catch(err =>{
+            console.error(err);
+        })
     }
 
     loadElements() {
