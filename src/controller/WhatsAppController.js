@@ -327,10 +327,12 @@ export class WhatsAppController {
         })
 
         this.el.btnCancelMicrophone.on('click', e => {
+            this._MicrophoneController.stop()
             this.CloseRecordMicrophone()
         })
 
         this.el.btnFinishMicrophone.on('click', e => {
+            this._MicrophoneController.stop()
             this.CloseRecordMicrophone()
         })
 
