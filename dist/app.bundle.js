@@ -9024,13 +9024,20 @@ class WhatsAppController {
             this.startRecordMicrophoneTime()
 
             this._MicrophoneController = new __WEBPACK_IMPORTED_MODULE_3__MicrophoneController_js__["a" /* MicrophoneController */]()
+            
+
+            this._MicrophoneController.on('play', musica => {
+                console.log('a', musica)
+            })
         })
 
         this.el.btnCancelMicrophone.on('click', e => {
+            this._MicrophoneController.stop()
             this.CloseRecordMicrophone()
         })
 
         this.el.btnFinishMicrophone.on('click', e => {
+            this._MicrophoneController.stop()
             this.CloseRecordMicrophone()
         })
 
@@ -37536,32 +37543,71 @@ var substr = 'ab'.substr(-1) === 'b'
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-class MicrophoneController {
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_ClassEvent__ = __webpack_require__(115);
+
+class MicrophoneController extends __WEBPACK_IMPORTED_MODULE_0__util_ClassEvent__["a" /* ClassEvent */] {
     constructor() {
-        // Try to get access to the microphone
+        super()
+        
         navigator.mediaDevices.getUserMedia({ audio: true })
             .then(stream => {
                 this._stream = stream;
 
-                // Create a new AudioContext to manage the audio stream
                 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-                // Create a MediaStreamAudioSourceNode to use the microphone stream
                 const source = audioContext.createMediaStreamSource(stream);
 
-                // Optionally, connect the source to an audio destination (like speakers)
                 source.connect(audioContext.destination);
 
-                // Now the microphone stream is playing through the speakers
                 console.log('Microphone is active and audio is being played');
             })
             .catch(err => {
                 console.error('Error accessing microphone: ', err);
             });
     }
+
+
+    stop(){
+        this._stream.getTracks().forEach(track =>{
+            track.stop()
+        })
+    }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = MicrophoneController;
 
+
+
+/***/ }),
+/* 115 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class ClassEvent {
+    constructor() {
+      this._events = {};
+    }
+  
+    on(eventName, fn) {
+      if (!this._events[eventName]) this._events[eventName] = new Array();
+  
+      this._events[eventName].push(fn);
+    }
+  
+    trigger() {
+      let args = [...arguments];
+  
+      let eventName = args.shift();
+  
+      args.push(new Event(eventName));
+  
+      if (this._events[eventName] instanceof Array) {
+        this._events[eventName].forEach((fn) => {
+          fn.apply(null, args);
+        });
+      }
+    }
+  }
+/* harmony export (immutable) */ __webpack_exports__["a"] = ClassEvent;
 
 
 /***/ })
