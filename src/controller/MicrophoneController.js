@@ -1,6 +1,8 @@
 import { ClassEvent } from "../util/ClassEvent";
 export class MicrophoneController extends ClassEvent {
     constructor() {
+        super()
+        
         navigator.mediaDevices.getUserMedia({ audio: true })
             .then(stream => {
                 this._stream = stream;
