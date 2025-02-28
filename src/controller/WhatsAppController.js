@@ -1,6 +1,7 @@
 import {Format} from '../util/Format'
 import {CameraController} from './CameraController'
 import {DocumentPreviewController} from './DocumentPreviewController.js'
+import {MicrophoneController} from './MicrophoneController.js'
 
 export class WhatsAppController {
     constructor() {
@@ -322,7 +323,7 @@ export class WhatsAppController {
 
             this.startRecordMicrophoneTime()
 
-            this._microphoneController = new microphoneController()
+            this._MicrophoneController = new MicrophoneController()
         })
 
         this.el.btnCancelMicrophone.on('click', e => {
@@ -332,7 +333,6 @@ export class WhatsAppController {
         this.el.btnFinishMicrophone.on('click', e => {
             this.CloseRecordMicrophone()
         })
-
 
         this.el.inputText.on('keypress', e => {
             if (e.key === 'Enter' && !e.ctrlKey) {

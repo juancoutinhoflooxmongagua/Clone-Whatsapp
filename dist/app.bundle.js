@@ -8697,6 +8697,8 @@ window.app = new __WEBPACK_IMPORTED_MODULE_0__controller_WhatsAppController__["a
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_Format__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CameraController__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__DocumentPreviewController_js__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MicrophoneController_js__ = __webpack_require__(114);
+
 
 
 
@@ -9021,7 +9023,7 @@ class WhatsAppController {
 
             this.startRecordMicrophoneTime()
 
-            this._microphoneController = new microphoneController()
+            this._MicrophoneController = new __WEBPACK_IMPORTED_MODULE_3__MicrophoneController_js__["a" /* MicrophoneController */]()
         })
 
         this.el.btnCancelMicrophone.on('click', e => {
@@ -9031,7 +9033,6 @@ class WhatsAppController {
         this.el.btnFinishMicrophone.on('click', e => {
             this.CloseRecordMicrophone()
         })
-
 
         this.el.inputText.on('keypress', e => {
             if (e.key === 'Enter' && !e.ctrlKey) {
@@ -37529,6 +37530,39 @@ var substr = 'ab'.substr(-1) === 'b'
 ;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 114 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class MicrophoneController {
+    constructor() {
+        // Try to get access to the microphone
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                this._stream = stream;
+
+                // Create a new AudioContext to manage the audio stream
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+                // Create a MediaStreamAudioSourceNode to use the microphone stream
+                const source = audioContext.createMediaStreamSource(stream);
+
+                // Optionally, connect the source to an audio destination (like speakers)
+                source.connect(audioContext.destination);
+
+                // Now the microphone stream is playing through the speakers
+                console.log('Microphone is active and audio is being played');
+            })
+            .catch(err => {
+                console.error('Error accessing microphone: ', err);
+            });
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = MicrophoneController;
+
+
 
 /***/ })
 /******/ ]);
