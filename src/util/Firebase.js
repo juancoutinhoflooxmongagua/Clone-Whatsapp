@@ -12,7 +12,7 @@ class Firebase {
         return firebase.firestore()
     }
 
-    static hd(){
+    static hd(){ 
         return firebase.storage()
     }
 
