@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "dist";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 116);
+/******/ 	return __webpack_require__(__webpack_require__.s = 132);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -284,31 +284,7 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 116:
-/***/ (function(module, exports, __webpack_require__) {
-
-/* Copyright 2016 Mozilla Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-(typeof window !== 'undefined' ? window : {}).pdfjsWorker =
-  __webpack_require__(23);
-
-
-/***/ }),
-
-/***/ 12:
+/***/ 13:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -466,7 +442,31 @@ function fromByteArray (uint8) {
 
 /***/ }),
 
-/***/ 13:
+/***/ 132:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* Copyright 2016 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+(typeof window !== 'undefined' ? window : {}).pdfjsWorker =
+  __webpack_require__(26);
+
+
+/***/ }),
+
+/***/ 14:
 /***/ (function(module, exports) {
 
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
@@ -572,9 +572,9 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 
-var base64 = __webpack_require__(12)
-var ieee754 = __webpack_require__(13)
-var isArray = __webpack_require__(7)
+var base64 = __webpack_require__(13)
+var ieee754 = __webpack_require__(14)
+var isArray = __webpack_require__(8)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -2356,7 +2356,7 @@ function isnan (val) {
 
 /***/ }),
 
-/***/ 23:
+/***/ 26:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, Buffer, global) {/**
@@ -47433,7 +47433,7 @@ exports.PDFImage = PDFImage;
 
 /***/ }),
 
-/***/ 7:
+/***/ 8:
 /***/ (function(module, exports) {
 
 var toString = {}.toString;

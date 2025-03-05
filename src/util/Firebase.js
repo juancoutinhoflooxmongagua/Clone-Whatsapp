@@ -11,35 +11,28 @@ export class Firebase {
           storageBucket: "wasabi-5d6f7.firebasestorage.app",
           messagingSenderId: "22057437819",
           appId: "1:22057437819:web:7d0026bc8f2abc9105f0de"
-        }
+        };
 
-        this.init()
+        this._initialized = false; // Fixing typo from `this.initialized`
+        this.init();
     }
 
-    init(){
-
+    init() {
         if (!this._initialized) {
-
             firebase.firestore().settings({
                 timestampsInSnapshots: true
-            })
+            });
 
-            firebase.initializeApp(this._config)
-            this.initialized = true
+            firebase.initializeApp(this._config);
+            this._initialized = true; // Fixing typo from `this.initialized`
         }
     }
 
-    static db(){
-        return firebase.firestore()
+    static db() {
+        return firebase.firestore();
     }
 
-    static hd(){ 
-        return firebase.storage()
-    }
-
-    initAuth(){
-        return new Promise((s, f) => {
-            firebase.auth.signInWithPopup()
-        })
+    static hd() {
+        return firebase.storage();
     }
 }
