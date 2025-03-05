@@ -11400,14 +11400,13 @@ window.app = new __WEBPACK_IMPORTED_MODULE_0__controller_WhatsAppController__["a
 class WhatsAppController {
     constructor() {
         console.log('Whatsapp Controller')
+        
+        this._Firebase = new __WEBPACK_IMPORTED_MODULE_4__util_Firebase_js__["a" /* Firebase */]()
         this.initAuth()
         this.elementsPrototype()
         this.loadElements()
         this.initEvents()
-
-        this._firebase = new __WEBPACK_IMPORTED_MODULE_4__util_Firebase_js__["firebase"]()
     }
-
 
     initAuth(){
         this._firebase.initAuth().
@@ -40320,41 +40319,65 @@ const firebase = __webpack_require__(121);
 __webpack_require__(133);
 
 class Firebase {
-    
-    constructor(){
-        this._config = {
-          apiKey: "AIzaSyCLODBGpr_LFC-OfLgMwvVulXg-ipnvHO0",
-          authDomain: "wasabi-5d6f7.firebaseapp.com",
-          projectId: "wasabi-5d6f7",
-          storageBucket: "wasabi-5d6f7.firebasestorage.app",
-          messagingSenderId: "22057437819",
-          appId: "1:22057437819:web:7d0026bc8f2abc9105f0de"
-        };
+  constructor() {
+    this._config = {
+ 
+        apiKey: "AIzaSyCLODBGpr_LFC-OfLgMwvVulXg-ipnvHO0",
+        authDomain: "wasabi-5d6f7.firebaseapp.com",
+        projectId: "wasabi-5d6f7",
+        storageBucket: "wasabi-5d6f7.firebasestorage.app",
+        messagingSenderId: "22057437819",
+        appId: "1:22057437819:web:7d0026bc8f2abc9105f0de"
+    };
 
-        this._initialized = false; // Fixing typo from `this.initialized`
-        this.init();
+    this.init();
+  }
+
+  init() {
+    if (!window._initializedFirebase) {
+      firebase.initializeApp(this._config);
+
+      firebase.firestore().settings({
+        timestampsInSnapshots: true,
+      });
+
+      window._initializedFirebase = true;
     }
+  }
 
-    init() {
-        if (!this._initialized) {
-            firebase.firestore().settings({
-                timestampsInSnapshots: true
-            });
+  static db() {
+    return firebase.firestore();
+  }
 
-            firebase.initializeApp(this._config);
-            this._initialized = true; // Fixing typo from `this.initialized`
-        }
-    }
+  static hd() {
+    return firebase.storage();
+  }
 
-    static db() {
-        return firebase.firestore();
-    }
+  initAuth() {
+    return new Promise((s, f) => {
+      let provider = new firebase.auth.GoogleAuthProvider();
 
-    static hd() {
-        return firebase.storage();
-    }
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then((result) => {
+          let token = result.credential.acessToken;
+          let user = result.user;
+
+          s({
+            user,
+            token,
+          });
+        })
+        .catch((err) => {
+          f(err);
+        });
+    });
+  }
 }
-/* unused harmony export Firebase */
+/* harmony export (immutable) */ __webpack_exports__["a"] = Firebase;
+
+
 
 
 

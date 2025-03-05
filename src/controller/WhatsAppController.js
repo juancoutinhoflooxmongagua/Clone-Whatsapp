@@ -2,18 +2,17 @@ import {Format} from '../util/Format'
 import {CameraController} from './CameraController'
 import {DocumentPreviewController} from './DocumentPreviewController.js'
 import {MicrophoneController} from './MicrophoneController.js'
-import {firebase} from '../util/Firebase.js';
+import { Firebase } from '../util/Firebase.js'
 export class WhatsAppController {
     constructor() {
         console.log('Whatsapp Controller')
+        
+        this._firebase = new Firebase()
         this.initAuth()
         this.elementsPrototype()
         this.loadElements()
         this.initEvents()
-
-        this._firebase = new firebase()
     }
-
 
     initAuth(){
         this._firebase.initAuth().
