@@ -2,7 +2,7 @@ import {Format} from '../util/Format'
 import {CameraController} from './CameraController'
 import {DocumentPreviewController} from './DocumentPreviewController.js'
 import {MicrophoneController} from './MicrophoneController.js'
-
+import { Firebase } from '../util/firebase';
 export class WhatsAppController {
     constructor() {
         console.log('Whatsapp Controller')

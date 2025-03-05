@@ -1,7 +1,8 @@
-const firebase = require('Firebase')
-require('firebase/firestore')
-export class Firebase {
+const firebase = require("firebase");
+require("firebase/firestore");
 
+export class Firebase {
+    
     constructor(){
         this._config = {
           apiKey: "AIzaSyCLODBGpr_LFC-OfLgMwvVulXg-ipnvHO0",
@@ -18,6 +19,11 @@ export class Firebase {
     init(){
 
         if (!this._initialized) {
+
+            firebase.firestore().settings({
+                timestampsInSnapshots: true
+            })
+
             firebase.initializeApp(this._config)
             this.initialized = true
         }
