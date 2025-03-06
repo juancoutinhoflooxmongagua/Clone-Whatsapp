@@ -16,8 +16,9 @@ export class WhatsAppController {
 
     initAuth(){
         this._firebase.initAuth().
-        then((response, token) => {
-            console.log('response', response)
+        then(response => {
+            this._user = response.user
+            this._appContent
         }).catch(err =>{
             console.error(err);
         })
