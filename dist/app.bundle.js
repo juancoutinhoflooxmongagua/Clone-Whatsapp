@@ -11401,7 +11401,7 @@ class WhatsAppController {
     constructor() {
         console.log('Whatsapp Controller')
         
-        this._Firebase = new __WEBPACK_IMPORTED_MODULE_4__util_Firebase_js__["a" /* Firebase */]()
+        this._firebase = new __WEBPACK_IMPORTED_MODULE_4__util_Firebase_js__["a" /* Firebase */]()
         this.initAuth()
         this.elementsPrototype()
         this.loadElements()
@@ -11411,7 +11411,8 @@ class WhatsAppController {
     initAuth(){
         this._firebase.initAuth().
         then(response => {
-            console.log('response', response)
+            this._user = response.user
+            this._appContent.show()
         }).catch(err =>{
             console.error(err);
         })
