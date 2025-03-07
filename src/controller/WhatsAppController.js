@@ -3,6 +3,7 @@ import {CameraController} from './CameraController'
 import {DocumentPreviewController} from './DocumentPreviewController.js'
 import {MicrophoneController} from './MicrophoneController.js'
 import { Firebase } from '../util/Firebase.js'
+import { User } from '../model/User.js'
 export class WhatsAppController {
     constructor() {
         console.log('Whatsapp Controller')
