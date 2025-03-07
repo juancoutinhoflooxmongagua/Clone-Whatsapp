@@ -6,7 +6,8 @@ export class User extends ClassEvent {
         return Firebase.db().collection('/users')
     }
 
-    static findByEmail(email){
-        return User.getRef().doc
+    static findByEmail(email) {
+        return User.getRef().doc(email); // Agora passa o e-mail como parâmetro
     }
+    
 }
