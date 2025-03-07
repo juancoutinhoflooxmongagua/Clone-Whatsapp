@@ -11409,12 +11409,16 @@ class WhatsAppController {
     }
 
     initAuth(){
-        this._firebase.initAuth().
-        then(response => {
+        
+    this._firebase.initAuth()
+        .then(response => {
             this._user = response.user
-            this._appContent.show()
-        }).catch(err =>{
-            console.error(err);
+
+            this.el.appContent.css({
+                display: 'flex'
+            })
+        }).catch(err => {
+            console.error(err)
         })
     }
 
