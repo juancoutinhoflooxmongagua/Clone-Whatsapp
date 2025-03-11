@@ -5343,10 +5343,11 @@ var $indexOf = callBindBasic([GetIntrinsic('%String.prototype.indexOf%')]);
 
 /** @type {import('.')} */
 module.exports = function callBoundIntrinsic(name, allowMissing) {
-	// eslint-disable-next-line no-extra-parens
-	var intrinsic = /** @type {Parameters<typeof callBindBasic>[0][0]} */ (GetIntrinsic(name, !!allowMissing));
+	/* eslint no-extra-parens: 0 */
+
+	var intrinsic = /** @type {(this: unknown, ...args: unknown[]) => unknown} */ (GetIntrinsic(name, !!allowMissing));
 	if (typeof intrinsic === 'function' && $indexOf(name, '.prototype.') > -1) {
-		return callBindBasic([intrinsic]);
+		return callBindBasic(/** @type {const} */ ([intrinsic]));
 	}
 	return intrinsic;
 };
@@ -5449,6 +5450,7 @@ var INTRINSICS = {
 	'%Error%': $Error,
 	'%eval%': eval, // eslint-disable-line no-eval
 	'%EvalError%': $EvalError,
+	'%Float16Array%': typeof Float16Array === 'undefined' ? undefined : Float16Array,
 	'%Float32Array%': typeof Float32Array === 'undefined' ? undefined : Float32Array,
 	'%Float64Array%': typeof Float64Array === 'undefined' ? undefined : Float64Array,
 	'%FinalizationRegistry%': typeof FinalizationRegistry === 'undefined' ? undefined : FinalizationRegistry,
@@ -11518,22 +11520,35 @@ class WhatsAppController {
 
     this._firebase.initAuth()
     .then(response => {
-        this._user = new __WEBPACK_IMPORTED_MODULE_5__model_User_js__["a" /* User */]()
 
-        let userRef = __WEBPACK_IMPORTED_MODULE_5__model_User_js__["a" /* User */].findByEmail(response.user.email)
+        this._user = new __WEBPACK_IMPORTED_MODULE_5__model_User_js__["a" /* User */](response.user.email)
 
-        userRef.set({
-            name: response.user.displayName,
-            email: response.user.email,
-            photo: response.user.photoURL
-        }).then(() => {
-            this.el.appContent.css({
-                display: 'flex'
-            })
+        this._user.on('datachange', data => {
+            document.querySelector('title').innerHTML = data.name + ' - Whatsapp Clone';
+
+            if (data.photo) {
+                let photo = this.el.imgPanelEditProfile
+
+                photo.src = data.photo
+
+                photo.show()
+
+                this.el.imgDefaultPanelEditProfile.hide()
+
+                let photo2 = this.el.myPhoto.querySelectorAll('img')
+                photo2.src = data.photo 
+
+                photo2.show()
+            }
+        })
+
+        this.el.appContent.css({
+            display: 'flex'
+        })
+        
         }).catch(err=> {
             console.error(err)
         })
-    })
    }
 
     loadElements() {
@@ -79623,21 +79638,134 @@ T.prototype.getStatus=T.prototype.W;T.prototype.getStatusText=T.prototype.Ha;T.p
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_Firebase__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util_ClassEvent__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Model__ = __webpack_require__(137);
 
 
 
-class User extends __WEBPACK_IMPORTED_MODULE_1__util_ClassEvent__["a" /* ClassEvent */] {
-    static getRef(){
-        return __WEBPACK_IMPORTED_MODULE_0__util_Firebase__["a" /* Firebase */].db().collection('/users')
+class User extends __WEBPACK_IMPORTED_MODULE_1__Model__["a" /* Model */] {
+
+    constructor(id){
+
+        super();
+        if(id) this.getById(id);
+
     }
 
-    static findByEmail(email) {
-        return User.getRef().doc(email); // Agora passa o e-mail como parâmetro
+    get name(){return this._data.name;}
+    set name(value){this._data.name=value;}
+
+    get email(){return this._data.email;}
+    set email(value){this._data.email=value;}
+
+    get photo(){return this._data.photo;}
+    set photo(value){this._data.photo=value;}
+
+    getById(id){
+
+        return new Promise((s, f )=>{
+
+            User.findByEmail(id).onSnapshot(doc =>{
+
+                this.fromJSON(doc.data());
+
+                s(doc);
+
+            });
+
+        });
+
     }
-    
+
+
+    save(){
+
+        return User.findByEmail(this.email).set(this.toJSON()).then();
+
+    }
+
+    static getRef() {
+        
+        return __WEBPACK_IMPORTED_MODULE_0__util_Firebase__["a" /* Firebase */].db().collection('/users');
+
+    }
+
+    static getContactsRef(id){
+
+      return User.getRef()
+      .doc(id)
+      .collection('contacts');
+
+    }
+
+    static findByEmail(email){
+
+        return User.getRef().doc(email);
+
+    }
+
+    addContact(contact) {
+      return User.getContactsRef(this.email)
+      .doc(btoa(contact.email))
+      .set(contact.toJSON());
+    }
+
+    getContacts(filter = ''){
+
+      return new Promise((s, f)=>{
+
+      User.getContactsRef(this.email).where('name', '>=', filter).onSnapshot(docs=>{
+
+        let contacts = [];
+
+        docs.forEach(doc =>{
+
+          let data = doc.data();
+
+          data.id = doc.id;
+
+          contacts.push(data);
+
+        });
+
+        this.trigger('contactschange', docs);
+
+        s(contacts);
+
+      });
+
+    });   
+
+    }
+
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = User;
+
+
+/***/ }),
+/* 137 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_ClassEvent__ = __webpack_require__(47);
+
+
+class Model extends __WEBPACK_IMPORTED_MODULE_0__util_ClassEvent__["a" /* ClassEvent */] {
+  constructor() {
+    super();
+    this._data = {};
+  }
+
+  fromJSON(json) {
+    this._data = Object.assign(this._data, json);
+
+    this.trigger('datachange', this._data);
+  }
+
+  toJSON() {
+    return this._data;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Model;
 
 
 /***/ })
