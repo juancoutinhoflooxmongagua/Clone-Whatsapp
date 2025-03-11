@@ -15,40 +15,48 @@ export class WhatsAppController {
         this.initEvents()
     }
 
-   initAuth(){
-
-    this._firebase.initAuth()
-    .then(response => {
-
-        this._user = new User(response.user.email)
-
-        this._user.on('datachange', data => {
-            document.querySelector('title').innerHTML = data.name + ' - Whatsapp Clone';
-
-            if (data.photo) {
-                let photo = this.el.imgPanelEditProfile
-
-                photo.src = data.photo
-
-                photo.show()
-
-                this.el.imgDefaultPanelEditProfile.hide()
-
-                let photo2 = this.el.myPhoto.querySelectorAll('img')
-                photo2.src = data.photo 
-
-                photo2.show()
-            }
-        })
-
-        this.el.appContent.css({
-            display: 'flex'
-        })
-        
-        }).catch(err=> {
-            console.error(err)
-        })
-   }
+    initAuth() {
+        this._firebase
+          .initAuth()
+          .then((response) => {
+            this._user = new User(response.user.email);
+    
+            this._user.on('datachange', (data) => {
+              document.querySelector('title').innerHTML =
+                data.name + ' - WhatsappClone';
+    
+              this.el.inputNamePanelEditProfile.innerHTML = data.name;
+    
+              if (data.photo) {
+                let photo = this.el.imgPanelEditProfile;
+                photo.src = data.photo;
+                photo.show();
+                this.el.imgDefaultPanelEditProfile.hide();
+    
+                let photo2 = this.el.myPhoto.querySelector('img');
+                photo2.src = data.photo;
+                photo2.show();
+              }
+    
+              this.initContacts();
+    
+            });
+    
+            
+            this._user.name = response.user.displayName;
+            this._user.email = response.user.email;
+            this._user.photo = response.user.photoURL;
+    
+            this._user.save().then(() => {
+              this.el.appContent.css({
+                display: 'flex',
+              });
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
 
     loadElements() {
         this.el = {}
