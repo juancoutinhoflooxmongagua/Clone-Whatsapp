@@ -193,7 +193,12 @@ export class WhatsAppController {
             
             contact.on('datachange', data=>{
                 if (data.name){
-                    this._user.addContact(contact)
+                    this._user.addContact(contact).then(() => {
+                        
+                        this.el.btnClosePanelAddContact.click()
+                        console.info('Contato Adicionado') 
+                        
+                    })
                 } else {
                     console.error('usuário não encontrado')
                 }
