@@ -95,7 +95,7 @@ export class WhatsAppController {
                         <span dir="auto" title="${contact.name}" class="_1wjpf">${contact.name}</span>
                     </div>
                     <div class="_3Bxar">
-                  
+                        <span class="_3T2VG">${Format.fbTimeStampToTime(contact.lastMessageTime)}</span>
                     </div>
                 </div>
                 <div class="_1AwDx">
@@ -147,9 +147,9 @@ export class WhatsAppController {
         this._user.getContacts();
     
       }
-
+    
       setActiveChat(contact){
-
+    
         if(this._activeContact){
           Message.getRef(this._activeContact.chatId).onSnapshot(() =>{
     
@@ -279,6 +279,7 @@ export class WhatsAppController {
          });
     
       }
+    
     
 
       
