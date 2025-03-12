@@ -11596,7 +11596,7 @@ class WhatsAppController {
                         <span dir="auto" title="${contact.name}" class="_1wjpf">${contact.name}</span>
                     </div>
                     <div class="_3Bxar">
-                        <span class="_3T2VG">${__WEBPACK_IMPORTED_MODULE_0__util_Format__["a" /* Format */].fbTimeStampToTime(contact.lastMessageTime)}</span>
+                  
                     </div>
                 </div>
                 <div class="_1AwDx">
@@ -11649,7 +11649,140 @@ class WhatsAppController {
     
       }
 
+      setActiveChat(contact){
 
+        if(this._activeContact){
+          Message.getRef(this._activeContact.chatId).onSnapshot(() =>{
+    
+    
+    
+          });
+        }
+        this._activeContact = contact;
+    
+        this.el.activeName.innerHTML = contact.name;
+        this.el.activeStatus.innerHTML = contact.status;
+    
+        if(contact.photo){
+          let img = this.el.activePhoto;
+          img.src = contact.photo;
+          img.show();
+        }
+    
+        this.el.home.hide();
+        this.el.main.css({
+          display:'flex'
+        });
+    
+        
+        this.el.panelMessagesContainer.innerHTML = '';
+    
+        Message.getRef(this._activeContact.chatId).orderBy("timeStamp").onSnapshot(docs => {
+    
+    
+            let scrollTop = this.el.panelMessagesContainer.scrollTop;
+            let scrollTopMax = (this.el.panelMessagesContainer.scrollHeight -
+            this.el.panelMessagesContainer.offsetHeight);
+            let autoScroll = (scrollTop >= scrollTopMax);
+    
+            docs.forEach(doc =>{
+              let data = doc.data();
+              data.id = doc.id;
+              
+              let message = new Message();
+              
+              message.fromJSON(data);
+    
+              let me = (data.from === this._user.email);
+              let view = message.getViewElement(me);
+    
+              if (!this.el.panelMessagesContainer.querySelector('#_'+ data.id)) {
+    
+                if (!me){
+    
+                  doc.ref.set({status:true
+    
+                  }, {
+                    merge:true
+                  }); 
+    
+                }
+    
+               
+    
+              this.el.panelMessagesContainer.appendChild(view);
+              
+            }else {
+    
+             
+    
+              let parent = this.el.panelMessagesContainer.querySelector('#_'+ data.id).parentNode;
+    
+              parent.replaceChild(view, this.el.panelMessagesContainer.querySelector('#_'+ data.id));
+    
+              this.el.panelMessagesContainer.querySelector('#_'+ data.id).innerHTML = view.innerHTML;
+    
+            }
+            
+            
+            
+            if (this.el.panelMessagesContainer.querySelector('#_'+ data.id) && me){
+    
+             let msgEl = this.el.panelMessagesContainer.querySelector('#_'+ data.id)
+    
+              msgEl.querySelector('.message-status').innerHTML = message.getStatusViewElement().outerHTML;
+    
+            }
+    
+            if(message.type === 'contact'){
+    
+              view.querySelector('.btn-message-send').on('click', e =>{
+    
+                Chat.createIfNotExists(this._user.email, message.content.email).then(chat => {
+    
+                  let contact = new __WEBPACK_IMPORTED_MODULE_5__model_User__["a" /* User */](message.content.email);
+                  contact.on('datachange', data =>{
+    
+                    contact.chatId = chat.id;
+      
+                    this._user.addContact(contact);
+    
+                  this._user.chatId = chat.id;
+      
+                  contact.addContact(this._user);
+      
+                  this.setActiveChat(contact);
+    
+                  });
+    
+    
+                  
+      
+                });
+    
+              });
+    
+            }
+          }); 
+              
+          if (autoScroll) {
+    
+            this.el.panelMessagesContainer.scrollTop = 
+            (this.el.panelMessagesContainer.scrollHeight - 
+            this.el.panelMessagesContainer.offsetHeight);
+    
+          } else {
+    
+            this.el.panelMessagesContainer.scrollTop = scrollTop;
+    
+          }
+    
+         });
+    
+      }
+    
+
+      
     loadElements() {
         this.el = {}
 
