@@ -2,7 +2,7 @@ import { Format } from '../util/Format';
 import { CameraController } from './CameraController';
 import { MicrophoneController } from './MicrophoneController';
 import { DocumentPreviewController } from './DocumentPreviewController';
-import { Firebase } from '../util/Firebase';
+import { Firebase } from '../util/firebase';
 import { User } from '../model/User';
 
 export class WhatsAppController {
@@ -148,7 +148,140 @@ export class WhatsAppController {
     
       }
 
+      setActiveChat(contact){
 
+        if(this._activeContact){
+          Message.getRef(this._activeContact.chatId).onSnapshot(() =>{
+    
+    
+    
+          });
+        }
+        this._activeContact = contact;
+    
+        this.el.activeName.innerHTML = contact.name;
+        this.el.activeStatus.innerHTML = contact.status;
+    
+        if(contact.photo){
+          let img = this.el.activePhoto;
+          img.src = contact.photo;
+          img.show();
+        }
+    
+        this.el.home.hide();
+        this.el.main.css({
+          display:'flex'
+        });
+    
+        
+        this.el.panelMessagesContainer.innerHTML = '';
+    
+        Message.getRef(this._activeContact.chatId).orderBy("timeStamp").onSnapshot(docs => {
+    
+    
+            let scrollTop = this.el.panelMessagesContainer.scrollTop;
+            let scrollTopMax = (this.el.panelMessagesContainer.scrollHeight -
+            this.el.panelMessagesContainer.offsetHeight);
+            let autoScroll = (scrollTop >= scrollTopMax);
+    
+            docs.forEach(doc =>{
+              let data = doc.data();
+              data.id = doc.id;
+              
+              let message = new Message();
+              
+              message.fromJSON(data);
+    
+              let me = (data.from === this._user.email);
+              let view = message.getViewElement(me);
+    
+              if (!this.el.panelMessagesContainer.querySelector('#_'+ data.id)) {
+    
+                if (!me){
+    
+                  doc.ref.set({status:true
+    
+                  }, {
+                    merge:true
+                  }); 
+    
+                }
+    
+               
+    
+              this.el.panelMessagesContainer.appendChild(view);
+              
+            }else {
+    
+             
+    
+              let parent = this.el.panelMessagesContainer.querySelector('#_'+ data.id).parentNode;
+    
+              parent.replaceChild(view, this.el.panelMessagesContainer.querySelector('#_'+ data.id));
+    
+              this.el.panelMessagesContainer.querySelector('#_'+ data.id).innerHTML = view.innerHTML;
+    
+            }
+            
+            
+            
+            if (this.el.panelMessagesContainer.querySelector('#_'+ data.id) && me){
+    
+             let msgEl = this.el.panelMessagesContainer.querySelector('#_'+ data.id)
+    
+              msgEl.querySelector('.message-status').innerHTML = message.getStatusViewElement().outerHTML;
+    
+            }
+    
+            if(message.type === 'contact'){
+    
+              view.querySelector('.btn-message-send').on('click', e =>{
+    
+                Chat.createIfNotExists(this._user.email, message.content.email).then(chat => {
+    
+                  let contact = new User(message.content.email);
+                  contact.on('datachange', data =>{
+    
+                    contact.chatId = chat.id;
+      
+                    this._user.addContact(contact);
+    
+                  this._user.chatId = chat.id;
+      
+                  contact.addContact(this._user);
+      
+                  this.setActiveChat(contact);
+    
+                  });
+    
+    
+                  
+      
+                });
+    
+              });
+    
+            }
+          }); 
+              
+          if (autoScroll) {
+    
+            this.el.panelMessagesContainer.scrollTop = 
+            (this.el.panelMessagesContainer.scrollHeight - 
+            this.el.panelMessagesContainer.offsetHeight);
+    
+          } else {
+    
+            this.el.panelMessagesContainer.scrollTop = scrollTop;
+    
+          }
+    
+         });
+    
+      }
+    
+
+      
     loadElements() {
         this.el = {}
 
