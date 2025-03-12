@@ -1,9 +1,9 @@
-import { Format } from '../util/Format'
-import { CameraController } from './CameraController'
-import { DocumentPreviewController } from './DocumentPreviewController.js'
-import { MicrophoneController } from './MicrophoneController.js'
-import { Firebase } from '../util/Firebase.js'
-import { User } from '../model/User.js'
+import { Format } from '../util/Format';
+import { CameraController } from './CameraController';
+import { MicrophoneController } from './MicrophoneController';
+import { DocumentPreviewController } from './DocumentPreviewController';
+import { Firebase } from '../util/Firebase';
+import { User } from '../model/User';
 
 export class WhatsAppController {
     constructor() {
@@ -95,7 +95,7 @@ export class WhatsAppController {
                         <span dir="auto" title="${contact.name}" class="_1wjpf">${contact.name}</span>
                     </div>
                     <div class="_3Bxar">
-                        <span class="_3T2VG">${Format.fbTimeStampToTime(contact.lastMessageTime)}</span>
+                  
                     </div>
                 </div>
                 <div class="_1AwDx">
