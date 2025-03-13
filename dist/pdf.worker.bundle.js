@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "dist";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 138);
+/******/ 	return __webpack_require__(__webpack_require__.s = 141);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -284,7 +284,7 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 138:
+/***/ 141:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* Copyright 2016 Mozilla Foundation
@@ -303,12 +303,12 @@ process.umask = function() { return 0; };
  */
 
 (typeof window !== 'undefined' ? window : {}).pdfjsWorker =
-  __webpack_require__(26);
+  __webpack_require__(29);
 
 
 /***/ }),
 
-/***/ 14:
+/***/ 16:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -466,7 +466,7 @@ function fromByteArray (uint8) {
 
 /***/ }),
 
-/***/ 15:
+/***/ 17:
 /***/ (function(module, exports) {
 
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
@@ -572,9 +572,9 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 
-var base64 = __webpack_require__(14)
-var ieee754 = __webpack_require__(15)
-var isArray = __webpack_require__(8)
+var base64 = __webpack_require__(16)
+var ieee754 = __webpack_require__(17)
+var isArray = __webpack_require__(9)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -2356,7 +2356,7 @@ function isnan (val) {
 
 /***/ }),
 
-/***/ 26:
+/***/ 29:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, Buffer, global) {/**
@@ -47433,7 +47433,7 @@ exports.PDFImage = PDFImage;
 
 /***/ }),
 
-/***/ 8:
+/***/ 9:
 /***/ (function(module, exports) {
 
 var toString = {}.toString;

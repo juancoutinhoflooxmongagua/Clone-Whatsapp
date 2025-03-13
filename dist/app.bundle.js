@@ -142,7 +142,7 @@
 /******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 50);
+/******/ 	return __webpack_require__(__webpack_require__.s = 51);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -377,9 +377,9 @@ process.umask = function() { return 0; };
 
 
 
-var base64 = __webpack_require__(14)
-var ieee754 = __webpack_require__(15)
-var isArray = __webpack_require__(8)
+var base64 = __webpack_require__(16)
+var ieee754 = __webpack_require__(17)
+var isArray = __webpack_require__(9)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -2194,7 +2194,7 @@ function isnan (val) {
 
 /*<replacement>*/
 
-var pna = __webpack_require__(9);
+var pna = __webpack_require__(10);
 /*</replacement>*/
 
 /*<replacement>*/
@@ -2213,8 +2213,8 @@ var util = Object.create(__webpack_require__(7));
 util.inherits = __webpack_require__(4);
 /*</replacement>*/
 
-var Readable = __webpack_require__(29);
-var Writable = __webpack_require__(19);
+var Readable = __webpack_require__(31);
+var Writable = __webpack_require__(21);
 
 util.inherits(Duplex, Readable);
 
@@ -2347,7 +2347,7 @@ module.exports = TypeError;
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "firebase", function() { return firebase; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__firebase_util__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__firebase_util__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__firebase_util___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__firebase_util__);
 
 
@@ -2860,6 +2860,77 @@ function objectToString(o) {
 
 /***/ }),
 /* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+const firebase = __webpack_require__(122);
+__webpack_require__(134);
+
+class Firebase {
+  constructor() {
+    this._config = {
+ 
+        apiKey: "AIzaSyCLODBGpr_LFC-OfLgMwvVulXg-ipnvHO0",
+        authDomain: "wasabi-5d6f7.firebaseapp.com",
+        projectId: "wasabi-5d6f7",
+        storageBucket: "wasabi-5d6f7.firebasestorage.app",
+        messagingSenderId: "22057437819",
+        appId: "1:22057437819:web:7d0026bc8f2abc9105f0de"
+    };
+
+    this.init();
+  }
+
+  init() {
+    if (!window._initializedFirebase) {
+      firebase.initializeApp(this._config);
+
+      firebase.firestore().settings({
+        timestampsInSnapshots: true,
+      });
+
+      window._initializedFirebase = true;
+    }
+  }
+
+  static db() {
+    return firebase.firestore();
+  }
+
+  static hd() {
+    return firebase.storage();
+  }
+
+  initAuth() {
+    return new Promise((s, f) => {
+      let provider = new firebase.auth.GoogleAuthProvider();
+
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then((result) => {
+          let token = result.credential.acessToken;
+          let user = result.user;
+
+          s({
+            user,
+            token,
+          });
+        })
+        .catch((err) => {
+          f(err);
+        });
+    });
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Firebase;
+
+
+
+
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -2870,7 +2941,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2923,19 +2994,19 @@ function nextTick(fn, arg1, arg2, arg3) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var implementation = __webpack_require__(93);
+var implementation = __webpack_require__(94);
 
 module.exports = Function.prototype.bind || implementation;
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3047,7 +3118,7 @@ exports.setTyped(TYPED_OK);
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var hasMap = typeof Map === 'function' && Map.prototype;
@@ -3117,7 +3188,7 @@ function addNumericSeparator(num, str) {
     return $replace.call(str, sepRegex, '$&_');
 }
 
-var utilInspect = __webpack_require__(116);
+var utilInspect = __webpack_require__(117);
 var inspectCustom = utilInspect.custom;
 var inspectSymbol = isSymbol(inspectCustom) ? inspectCustom : null;
 
@@ -3598,7 +3669,7 @@ function arrObjKeys(obj, inspect) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3803,7 +3874,35 @@ function __importDefault(mod) {
 
 
 /***/ }),
-/* 14 */
+/* 15 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class Format {
+    static getCamelCase(text) {
+        let div = document.createElement('div');
+        div.innerHTML = `<div data-${text}="id"></div>`;
+        return Object.keys(div.firstChild.dataset)[0];
+    }
+
+    static toTime(duration) {
+        let seconds = parseInt((duration / 1000) % 60);
+        let minutes = parseInt((duration / (1000 * 60)) % 60);
+        let hours = parseInt((duration) / (1000 * 60 * 60) % 24);
+    
+        if (hours > 0) {
+            return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        } else {
+            return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+    }
+    
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Format;
+
+
+/***/ }),
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3960,7 +4059,7 @@ function fromByteArray (uint8) {
 
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports) {
 
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
@@ -4051,7 +4150,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4555,20 +4654,20 @@ function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
 
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(29);
+exports = module.exports = __webpack_require__(31);
 exports.Stream = exports;
 exports.Readable = exports;
-exports.Writable = __webpack_require__(19);
+exports.Writable = __webpack_require__(21);
 exports.Duplex = __webpack_require__(3);
-exports.Transform = __webpack_require__(34);
-exports.PassThrough = __webpack_require__(64);
+exports.Transform = __webpack_require__(36);
+exports.PassThrough = __webpack_require__(65);
 
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* eslint-disable node/no-deprecated-api */
@@ -4636,7 +4735,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4669,7 +4768,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 
 /*<replacement>*/
 
-var pna = __webpack_require__(9);
+var pna = __webpack_require__(10);
 /*</replacement>*/
 
 module.exports = Writable;
@@ -4712,17 +4811,17 @@ util.inherits = __webpack_require__(4);
 
 /*<replacement>*/
 var internalUtil = {
-  deprecate: __webpack_require__(62)
+  deprecate: __webpack_require__(63)
 };
 /*</replacement>*/
 
 /*<replacement>*/
-var Stream = __webpack_require__(30);
+var Stream = __webpack_require__(32);
 /*</replacement>*/
 
 /*<replacement>*/
 
-var Buffer = __webpack_require__(18).Buffer;
+var Buffer = __webpack_require__(20).Buffer;
 var OurUint8Array = (typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : typeof self !== 'undefined' ? self : {}).Uint8Array || function () {};
 function _uint8ArrayToBuffer(chunk) {
   return Buffer.from(chunk);
@@ -4733,7 +4832,7 @@ function _isUint8Array(obj) {
 
 /*</replacement>*/
 
-var destroyImpl = __webpack_require__(31);
+var destroyImpl = __webpack_require__(33);
 
 util.inherits(Writable, Stream);
 
@@ -5325,18 +5424,18 @@ Writable.prototype._destroy = function (err, cb) {
   this.end();
   cb(err);
 };
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(32).setImmediate, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(34).setImmediate, __webpack_require__(0)))
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var GetIntrinsic = __webpack_require__(21);
+var GetIntrinsic = __webpack_require__(23);
 
-var callBindBasic = __webpack_require__(41);
+var callBindBasic = __webpack_require__(43);
 
 /** @type {(thisArg: string, searchString: string, position?: number) => number} */
 var $indexOf = callBindBasic([GetIntrinsic('%String.prototype.indexOf%')]);
@@ -5354,7 +5453,7 @@ module.exports = function callBoundIntrinsic(name, allowMissing) {
 
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5362,23 +5461,23 @@ module.exports = function callBoundIntrinsic(name, allowMissing) {
 
 var undefined;
 
-var $Object = __webpack_require__(22);
+var $Object = __webpack_require__(24);
 
-var $Error = __webpack_require__(74);
-var $EvalError = __webpack_require__(75);
-var $RangeError = __webpack_require__(76);
-var $ReferenceError = __webpack_require__(77);
-var $SyntaxError = __webpack_require__(78);
+var $Error = __webpack_require__(75);
+var $EvalError = __webpack_require__(76);
+var $RangeError = __webpack_require__(77);
+var $ReferenceError = __webpack_require__(78);
+var $SyntaxError = __webpack_require__(79);
 var $TypeError = __webpack_require__(5);
-var $URIError = __webpack_require__(79);
+var $URIError = __webpack_require__(80);
 
-var abs = __webpack_require__(80);
-var floor = __webpack_require__(81);
-var max = __webpack_require__(82);
-var min = __webpack_require__(83);
-var pow = __webpack_require__(84);
-var round = __webpack_require__(85);
-var sign = __webpack_require__(86);
+var abs = __webpack_require__(81);
+var floor = __webpack_require__(82);
+var max = __webpack_require__(83);
+var min = __webpack_require__(84);
+var pow = __webpack_require__(85);
+var round = __webpack_require__(86);
+var sign = __webpack_require__(87);
 
 var $Function = Function;
 
@@ -5389,8 +5488,8 @@ var getEvalledConstructor = function (expressionSyntax) {
 	} catch (e) {}
 };
 
-var $gOPD = __webpack_require__(38);
-var $defineProperty = __webpack_require__(89);
+var $gOPD = __webpack_require__(40);
+var $defineProperty = __webpack_require__(90);
 
 var throwTypeError = function () {
 	throw new $TypeError();
@@ -5412,14 +5511,14 @@ var ThrowTypeError = $gOPD
 	}())
 	: throwTypeError;
 
-var hasSymbols = __webpack_require__(90)();
+var hasSymbols = __webpack_require__(91)();
 
-var getProto = __webpack_require__(91);
-var $ObjectGPO = __webpack_require__(40);
-var $ReflectGPO = __webpack_require__(39);
+var getProto = __webpack_require__(92);
+var $ObjectGPO = __webpack_require__(42);
+var $ReflectGPO = __webpack_require__(41);
 
-var $apply = __webpack_require__(42);
-var $call = __webpack_require__(23);
+var $apply = __webpack_require__(44);
+var $call = __webpack_require__(25);
 
 var needsEval = {};
 
@@ -5600,8 +5699,8 @@ var LEGACY_ALIASES = {
 	'%WeakSetPrototype%': ['WeakSet', 'prototype']
 };
 
-var bind = __webpack_require__(10);
-var hasOwn = __webpack_require__(96);
+var bind = __webpack_require__(11);
+var hasOwn = __webpack_require__(97);
 var $concat = bind.call($call, Array.prototype.concat);
 var $spliceApply = bind.call($apply, Array.prototype.splice);
 var $replace = bind.call($call, String.prototype.replace);
@@ -5739,7 +5838,7 @@ module.exports = function GetIntrinsic(name, allowMissing) {
 
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5750,7 +5849,7 @@ module.exports = Object;
 
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5761,7 +5860,7 @@ module.exports = Function.prototype.call;
 
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5791,7 +5890,7 @@ module.exports = {
 
 
 /***/ }),
-/* 25 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5799,7 +5898,7 @@ module.exports = {
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var tslib_1 = __webpack_require__(13);
+var tslib_1 = __webpack_require__(14);
 
 /**
  * Copyright 2017 Google Inc.
@@ -7572,36 +7671,35 @@ exports.stringToByteArray = stringToByteArray$1;
 
 
 /***/ }),
-/* 26 */,
-/* 27 */
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-class Format {
-    static getCamelCase(text) {
-        let div = document.createElement('div');
-        div.innerHTML = `<div data-${text}="id"></div>`;
-        return Object.keys(div.firstChild.dataset)[0];
-    }
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_ClassEvent__ = __webpack_require__(30);
 
-    static toTime(duration) {
-        let seconds = parseInt((duration / 1000) % 60);
-        let minutes = parseInt((duration / (1000 * 60)) % 60);
-        let hours = parseInt((duration) / (1000 * 60 * 60) % 24);
-    
-        if (hours > 0) {
-            return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        } else {
-            return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-        }
-    }
-    
+
+class Model extends __WEBPACK_IMPORTED_MODULE_0__util_ClassEvent__["a" /* ClassEvent */] {
+  constructor() {
+    super();
+    this._data = {};
+  }
+
+  fromJSON(json) {
+    this._data = Object.assign(this._data, json);
+
+    this.trigger('datachange', this._data);
+  }
+
+  toJSON() {
+    return this._data;
+  }
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = Format;
+/* harmony export (immutable) */ __webpack_exports__["a"] = Model;
 
 
 /***/ }),
-/* 28 */
+/* 29 */,
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7634,7 +7732,7 @@ class ClassEvent {
 
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7663,13 +7761,13 @@ class ClassEvent {
 
 /*<replacement>*/
 
-var pna = __webpack_require__(9);
+var pna = __webpack_require__(10);
 /*</replacement>*/
 
 module.exports = Readable;
 
 /*<replacement>*/
-var isArray = __webpack_require__(8);
+var isArray = __webpack_require__(9);
 /*</replacement>*/
 
 /*<replacement>*/
@@ -7679,7 +7777,7 @@ var Duplex;
 Readable.ReadableState = ReadableState;
 
 /*<replacement>*/
-var EE = __webpack_require__(16).EventEmitter;
+var EE = __webpack_require__(18).EventEmitter;
 
 var EElistenerCount = function (emitter, type) {
   return emitter.listeners(type).length;
@@ -7687,12 +7785,12 @@ var EElistenerCount = function (emitter, type) {
 /*</replacement>*/
 
 /*<replacement>*/
-var Stream = __webpack_require__(30);
+var Stream = __webpack_require__(32);
 /*</replacement>*/
 
 /*<replacement>*/
 
-var Buffer = __webpack_require__(18).Buffer;
+var Buffer = __webpack_require__(20).Buffer;
 var OurUint8Array = (typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : typeof self !== 'undefined' ? self : {}).Uint8Array || function () {};
 function _uint8ArrayToBuffer(chunk) {
   return Buffer.from(chunk);
@@ -7709,7 +7807,7 @@ util.inherits = __webpack_require__(4);
 /*</replacement>*/
 
 /*<replacement>*/
-var debugUtil = __webpack_require__(58);
+var debugUtil = __webpack_require__(59);
 var debug = void 0;
 if (debugUtil && debugUtil.debuglog) {
   debug = debugUtil.debuglog('stream');
@@ -7718,8 +7816,8 @@ if (debugUtil && debugUtil.debuglog) {
 }
 /*</replacement>*/
 
-var BufferList = __webpack_require__(59);
-var destroyImpl = __webpack_require__(31);
+var BufferList = __webpack_require__(60);
+var destroyImpl = __webpack_require__(33);
 var StringDecoder;
 
 util.inherits(Readable, Stream);
@@ -7809,7 +7907,7 @@ function ReadableState(options, stream) {
   this.decoder = null;
   this.encoding = null;
   if (options.encoding) {
-    if (!StringDecoder) StringDecoder = __webpack_require__(33).StringDecoder;
+    if (!StringDecoder) StringDecoder = __webpack_require__(35).StringDecoder;
     this.decoder = new StringDecoder(options.encoding);
     this.encoding = options.encoding;
   }
@@ -7965,7 +8063,7 @@ Readable.prototype.isPaused = function () {
 
 // backwards compatibility.
 Readable.prototype.setEncoding = function (enc) {
-  if (!StringDecoder) StringDecoder = __webpack_require__(33).StringDecoder;
+  if (!StringDecoder) StringDecoder = __webpack_require__(35).StringDecoder;
   this._readableState.decoder = new StringDecoder(enc);
   this._readableState.encoding = enc;
   return this;
@@ -8660,14 +8758,14 @@ function indexOf(xs, x) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(1)))
 
 /***/ }),
-/* 30 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(16).EventEmitter;
+module.exports = __webpack_require__(18).EventEmitter;
 
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8675,7 +8773,7 @@ module.exports = __webpack_require__(16).EventEmitter;
 
 /*<replacement>*/
 
-var pna = __webpack_require__(9);
+var pna = __webpack_require__(10);
 /*</replacement>*/
 
 // undocumented cb() API, needed for core, not for public API
@@ -8757,7 +8855,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 32 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -8813,7 +8911,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(61);
+__webpack_require__(62);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -8827,7 +8925,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 33 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8856,7 +8954,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /*<replacement>*/
 
-var Buffer = __webpack_require__(63).Buffer;
+var Buffer = __webpack_require__(64).Buffer;
 /*</replacement>*/
 
 var isEncoding = Buffer.isEncoding || function (encoding) {
@@ -9129,7 +9227,7 @@ function simpleEnd(buf) {
 }
 
 /***/ }),
-/* 34 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9349,13 +9447,13 @@ function done(stream, er, data) {
 }
 
 /***/ }),
-/* 35 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global) {
 
-var objectAssign = __webpack_require__(70)();
+var objectAssign = __webpack_require__(71)();
 
 // compare and isBuffer taken from https://github.com/feross/buffer/blob/680e9e5e488f22aac27599a57dc844a6315928dd/index.js
 // original notice:
@@ -9425,7 +9523,7 @@ function isBuffer(b) {
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-var util = __webpack_require__(43);
+var util = __webpack_require__(45);
 var hasOwn = Object.prototype.hasOwnProperty;
 var pSlice = Array.prototype.slice;
 var functionsHaveNames = (function () {
@@ -9863,7 +9961,7 @@ var objectKeys = Object.keys || function (obj) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 36 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9887,7 +9985,7 @@ module.exports = function isArguments(value) {
 
 
 /***/ }),
-/* 37 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9939,14 +10037,14 @@ module.exports = function hasSymbols() {
 
 
 /***/ }),
-/* 38 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 /** @type {import('.')} */
-var $gOPD = __webpack_require__(88);
+var $gOPD = __webpack_require__(89);
 
 if ($gOPD) {
 	try {
@@ -9961,7 +10059,7 @@ module.exports = $gOPD;
 
 
 /***/ }),
-/* 39 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9972,30 +10070,30 @@ module.exports = (typeof Reflect !== 'undefined' && Reflect.getPrototypeOf) || n
 
 
 /***/ }),
-/* 40 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var $Object = __webpack_require__(22);
+var $Object = __webpack_require__(24);
 
 /** @type {import('./Object.getPrototypeOf')} */
 module.exports = $Object.getPrototypeOf || null;
 
 
 /***/ }),
-/* 41 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var bind = __webpack_require__(10);
+var bind = __webpack_require__(11);
 var $TypeError = __webpack_require__(5);
 
-var $call = __webpack_require__(23);
-var $actualApply = __webpack_require__(94);
+var $call = __webpack_require__(25);
+var $actualApply = __webpack_require__(95);
 
 /** @type {(args: [Function, thisArg?: unknown, ...args: unknown[]]) => Function} TODO FIXME, find a way to use import('.') */
 module.exports = function callBindBasic(args) {
@@ -10007,7 +10105,7 @@ module.exports = function callBindBasic(args) {
 
 
 /***/ }),
-/* 42 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10018,7 +10116,7 @@ module.exports = Function.prototype.apply;
 
 
 /***/ }),
-/* 43 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -10556,7 +10654,7 @@ function isPrimitive(arg) {
 }
 exports.isPrimitive = isPrimitive;
 
-exports.isBuffer = __webpack_require__(97);
+exports.isBuffer = __webpack_require__(98);
 
 function objectToString(o) {
   return Object.prototype.toString.call(o);
@@ -10600,7 +10698,7 @@ exports.log = function() {
  *     prototype.
  * @param {function} superCtor Constructor function to inherit prototype from.
  */
-exports.inherits = __webpack_require__(98);
+exports.inherits = __webpack_require__(99);
 
 exports._extend = function(origin, add) {
   // Don't do anything if add isn't an object
@@ -10728,7 +10826,7 @@ exports.callbackify = callbackify;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 44 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10786,7 +10884,7 @@ module.exports = adler32;
 
 
 /***/ }),
-/* 45 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10852,15 +10950,15 @@ module.exports = crc32;
 
 
 /***/ }),
-/* 46 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var GetIntrinsic = __webpack_require__(21);
-var callBound = __webpack_require__(20);
-var inspect = __webpack_require__(12);
+var GetIntrinsic = __webpack_require__(23);
+var callBound = __webpack_require__(22);
+var inspect = __webpack_require__(13);
 
 var $TypeError = __webpack_require__(5);
 var $Map = GetIntrinsic('%Map%', true);
@@ -10927,13 +11025,13 @@ module.exports = !!$Map && /** @type {Exclude<import('.'), false>} */ function g
 
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var formats = __webpack_require__(24);
+var formats = __webpack_require__(26);
 
 var has = Object.prototype.hasOwnProperty;
 var isArray = Array.isArray;
@@ -11202,78 +11300,7 @@ module.exports = {
 
 
 /***/ }),
-/* 48 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-const firebase = __webpack_require__(121);
-__webpack_require__(133);
-
-class Firebase {
-  constructor() {
-    this._config = {
- 
-        apiKey: "AIzaSyCLODBGpr_LFC-OfLgMwvVulXg-ipnvHO0",
-        authDomain: "wasabi-5d6f7.firebaseapp.com",
-        projectId: "wasabi-5d6f7",
-        storageBucket: "wasabi-5d6f7.firebasestorage.app",
-        messagingSenderId: "22057437819",
-        appId: "1:22057437819:web:7d0026bc8f2abc9105f0de"
-    };
-
-    this.init();
-  }
-
-  init() {
-    if (!window._initializedFirebase) {
-      firebase.initializeApp(this._config);
-
-      firebase.firestore().settings({
-        timestampsInSnapshots: true,
-      });
-
-      window._initializedFirebase = true;
-    }
-  }
-
-  static db() {
-    return firebase.firestore();
-  }
-
-  static hd() {
-    return firebase.storage();
-  }
-
-  initAuth() {
-    return new Promise((s, f) => {
-      let provider = new firebase.auth.GoogleAuthProvider();
-
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then((result) => {
-          let token = result.credential.acessToken;
-          let user = result.user;
-
-          s({
-            user,
-            token,
-          });
-        })
-        .catch((err) => {
-          f(err);
-        });
-    });
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Firebase;
-
-
-
-
-
-/***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11477,28 +11504,32 @@ function setLogLevel(level) {
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__controller_WhatsAppController__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__controller_WhatsAppController__ = __webpack_require__(52);
 
 
 window.app = new __WEBPACK_IMPORTED_MODULE_0__controller_WhatsAppController__["a" /* WhatsAppController */]();
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_Format__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CameraController__ = __webpack_require__(52);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MicrophoneController__ = __webpack_require__(53);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__DocumentPreviewController__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__util_Firebase__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__model_User__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_Format__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CameraController__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MicrophoneController__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__DocumentPreviewController__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__util_firebase__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__model_User__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__model_Chat__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__model_message__ = __webpack_require__(139);
+
+
 
 
 
@@ -11507,738 +11538,862 @@ window.app = new __WEBPACK_IMPORTED_MODULE_0__controller_WhatsAppController__["a
 
 
 class WhatsAppController {
-    constructor() {
-        console.log('Whatsapp Controller')
-        
-        this._firebase = new __WEBPACK_IMPORTED_MODULE_4__util_Firebase__["a" /* Firebase */]()
-        this.initAuth()
-        this.elementsPrototype()
-        this.loadElements()
-        this.initEvents()
-    }
+  constructor() {
+    console.log('ok');
 
-    initAuth() {
-        this._firebase
-          .initAuth()
-          .then((response) => {
-            this._user = new __WEBPACK_IMPORTED_MODULE_5__model_User__["a" /* User */](response.user.email);
-    
-            this._user.on('datachange', (data) => {
-              document.querySelector('title').innerHTML =
-                data.name + ' - WhatsappClone';
-    
-              this.el.inputNamePanelEditProfile.innerHTML = data.name;
-    
-              if (data.photo) {
-                let photo = this.el.imgPanelEditProfile;
-                photo.src = data.photo;
-                photo.show();
-                this.el.imgDefaultPanelEditProfile.hide();
-    
-                let photo2 = this.el.myPhoto.querySelector('img');
-                photo2.src = data.photo;
-                photo2.show();
-              }
-    
-              this.initContacts();
-    
-            });
-    
-            
-            this._user.name = response.user.displayName;
-            this._user.email = response.user.email;
-            this._user.photo = response.user.photoURL;
-    
-            this._user.save().then(() => {
-              this.el.appContent.css({
-                display: 'flex',
-              });
-            });
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }
+    this._firebase = new __WEBPACK_IMPORTED_MODULE_4__util_firebase__["a" /* Firebase */]();
+    this.initAuth();
+    this.elementsPrototype();
+    this.loadElements();
+    this.initEvents();
+  }
 
+  initAuth() {
+    this._firebase
+      .initAuth()
+      .then((response) => {
+        this._user = new __WEBPACK_IMPORTED_MODULE_5__model_User__["a" /* User */](response.user.email);
 
-      initContacts(){
+        this._user.on('datachange', (data) => {
+          document.querySelector('title').innerHTML =
+            data.name + ' - WhatsappClone';
 
-        this._user.on('contactschange', docs =>{
-    
-          this.el.contactsMessagesList.innerHTML = '';
-    
-          docs.forEach(doc =>{
-    
-            let contact = doc.data();
-            let div = document.createElement('div');
-    
-            div.className= 'contact-item';
-            
-            div.innerHTML = `
-            <div class="dIyEr">
-                <div class="_1WliW" style="height: 49px; width: 49px;">
-                    <img src="#" class="Qgzj8 gqwaM photo" style="display:none;">
-                    <div class="_3ZW2E">
-                        <span data-icon="default-user" class="">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 212 212" width="212" height="212">
-                                <path fill="#DFE5E7" d="M106.251.5C164.653.5 212 47.846 212 106.25S164.653 212 106.25 212C47.846 212 .5 164.654.5 106.25S47.846.5 106.251.5z"></path>
-                                <g fill="#FFF">
-                                    <path d="M173.561 171.615a62.767 62.767 0 0 0-2.065-2.955 67.7 67.7 0 0 0-2.608-3.299 70.112 70.112 0 0 0-3.184-3.527 71.097 71.097 0 0 0-5.924-5.47 72.458 72.458 0 0 0-10.204-7.026 75.2 75.2 0 0 0-5.98-3.055c-.062-.028-.118-.059-.18-.087-9.792-4.44-22.106-7.529-37.416-7.529s-27.624 3.089-37.416 7.529c-.338.153-.653.318-.985.474a75.37 75.37 0 0 0-6.229 3.298 72.589 72.589 0 0 0-9.15 6.395 71.243 71.243 0 0 0-5.924 5.47 70.064 70.064 0 0 0-3.184 3.527 67.142 67.142 0 0 0-2.609 3.299 63.292 63.292 0 0 0-2.065 2.955 56.33 56.33 0 0 0-1.447 2.324c-.033.056-.073.119-.104.174a47.92 47.92 0 0 0-1.07 1.926c-.559 1.068-.818 1.678-.818 1.678v.398c18.285 17.927 43.322 28.985 70.945 28.985 27.678 0 52.761-11.103 71.055-29.095v-.289s-.619-1.45-1.992-3.778a58.346 58.346 0 0 0-1.446-2.322zM106.002 125.5c2.645 0 5.212-.253 7.68-.737a38.272 38.272 0 0 0 3.624-.896 37.124 37.124 0 0 0 5.12-1.958 36.307 36.307 0 0 0 6.15-3.67 35.923 35.923 0 0 0 9.489-10.48 36.558 36.558 0 0 0 2.422-4.84 37.051 37.051 0 0 0 1.716-5.25c.299-1.208.542-2.443.725-3.701.275-1.887.417-3.827.417-5.811s-.142-3.925-.417-5.811a38.734 38.734 0 0 0-1.215-5.494 36.68 36.68 0 0 0-3.648-8.298 35.923 35.923 0 0 0-9.489-10.48 36.347 36.347 0 0 0-6.15-3.67 37.124 37.124 0 0 0-5.12-1.958 37.67 37.67 0 0 0-3.624-.896 39.875 39.875 0 0 0-7.68-.737c-21.162 0-37.345 16.183-37.345 37.345 0 21.159 16.183 37.342 37.345 37.342z"></path>
-                                </g>
-                            </svg>
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="_3j7s9">
-                <div class="_2FBdJ">
-                    <div class="_25Ooe">
-                        <span dir="auto" title="${contact.name}" class="_1wjpf">${contact.name}</span>
-                    </div>
-                    <div class="_3Bxar">
-                  
-                    </div>
-                </div>
-                <div class="_1AwDx">
-                    <div class="_itDl">
-                        <span title="digitando…" class="vdXUe _1wjpf typing" style="display:none">digitando…</span>
-        
-                        <span class="_2_LEW last-message">
-                            <div class="_1VfKB">
-                                <span data-icon="status-dblcheck" class="">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" width="18" height="18">
-                                        <path fill="#263238" fill-opacity=".4" d="M17.394 5.035l-.57-.444a.434.434 0 0 0-.609.076l-6.39 8.198a.38.38 0 0 1-.577.039l-.427-.388a.381.381 0 0 0-.578.038l-.451.576a.497.497 0 0 0 .043.645l1.575 1.51a.38.38 0 0 0 .577-.039l7.483-9.602a.436.436 0 0 0-.076-.609zm-4.892 0l-.57-.444a.434.434 0 0 0-.609.076l-6.39 8.198a.38.38 0 0 1-.577.039l-2.614-2.556a.435.435 0 0 0-.614.007l-.505.516a.435.435 0 0 0 .007.614l3.887 3.8a.38.38 0 0 0 .577-.039l7.483-9.602a.435.435 0 0 0-.075-.609z"></path>
-                                    </svg>
-                                </span>
-                            </div>
-                            <span dir="ltr" class="_1wjpf _3NFp9">${contact.lastMessage}</span>
-                            <div class="_3Bxar">
-                                <span>
-                                    <div class="_15G96">
-                                        <span class="OUeyt messages-count-new" style="display:none;">1</span>
-                                    </div>
-                            </span></div>
-                            </span>
-                    </div>
-                </div>
-            </div>
-        `;
-    
-        
-           if(contact.photo){
-            
-             let img = div.querySelector('.photo');
-             img.src = contact.photo;
-             img.show();
-            
-           }
-    
-           div.on('click', e =>{
-    
-            this.setActiveChat(contact);
-           
-           });
-    
-          this.el.contactsMessagesList.appendChild(div);
-    
-          });
-    
-        });
-      
-        this._user.getContacts();
-    
-      }
+          this.el.inputNamePanelEditProfile.innerHTML = data.name;
 
-      setActiveChat(contact){
+          if (data.photo) {
+            let photo = this.el.imgPanelEditProfile;
+            photo.src = data.photo;
+            photo.show();
+            this.el.imgDefaultPanelEditProfile.hide();
 
-        if(this._activeContact){
-          Message.getRef(this._activeContact.chatId).onSnapshot(() =>{
-    
-    
-    
-          });
-        }
-        this._activeContact = contact;
-    
-        this.el.activeName.innerHTML = contact.name;
-        this.el.activeStatus.innerHTML = contact.status;
-    
-        if(contact.photo){
-          let img = this.el.activePhoto;
-          img.src = contact.photo;
-          img.show();
-        }
-    
-        this.el.home.hide();
-        this.el.main.css({
-          display:'flex'
-        });
-    
-        
-        this.el.panelMessagesContainer.innerHTML = '';
-    
-        Message.getRef(this._activeContact.chatId).orderBy("timeStamp").onSnapshot(docs => {
-    
-    
-            let scrollTop = this.el.panelMessagesContainer.scrollTop;
-            let scrollTopMax = (this.el.panelMessagesContainer.scrollHeight -
-            this.el.panelMessagesContainer.offsetHeight);
-            let autoScroll = (scrollTop >= scrollTopMax);
-    
-            docs.forEach(doc =>{
-              let data = doc.data();
-              data.id = doc.id;
-              
-              let message = new Message();
-              
-              message.fromJSON(data);
-    
-              let me = (data.from === this._user.email);
-              let view = message.getViewElement(me);
-    
-              if (!this.el.panelMessagesContainer.querySelector('#_'+ data.id)) {
-    
-                if (!me){
-    
-                  doc.ref.set({status:true
-    
-                  }, {
-                    merge:true
-                  }); 
-    
-                }
-    
-               
-    
-              this.el.panelMessagesContainer.appendChild(view);
-              
-            }else {
-    
-             
-    
-              let parent = this.el.panelMessagesContainer.querySelector('#_'+ data.id).parentNode;
-    
-              parent.replaceChild(view, this.el.panelMessagesContainer.querySelector('#_'+ data.id));
-    
-              this.el.panelMessagesContainer.querySelector('#_'+ data.id).innerHTML = view.innerHTML;
-    
-            }
-            
-            
-            
-            if (this.el.panelMessagesContainer.querySelector('#_'+ data.id) && me){
-    
-             let msgEl = this.el.panelMessagesContainer.querySelector('#_'+ data.id)
-    
-              msgEl.querySelector('.message-status').innerHTML = message.getStatusViewElement().outerHTML;
-    
-            }
-    
-            if(message.type === 'contact'){
-    
-              view.querySelector('.btn-message-send').on('click', e =>{
-    
-                Chat.createIfNotExists(this._user.email, message.content.email).then(chat => {
-    
-                  let contact = new __WEBPACK_IMPORTED_MODULE_5__model_User__["a" /* User */](message.content.email);
-                  contact.on('datachange', data =>{
-    
-                    contact.chatId = chat.id;
-      
-                    this._user.addContact(contact);
-    
-                  this._user.chatId = chat.id;
-      
-                  contact.addContact(this._user);
-      
-                  this.setActiveChat(contact);
-    
-                  });
-    
-    
-                  
-      
-                });
-    
-              });
-    
-            }
-          }); 
-              
-          if (autoScroll) {
-    
-            this.el.panelMessagesContainer.scrollTop = 
-            (this.el.panelMessagesContainer.scrollHeight - 
-            this.el.panelMessagesContainer.offsetHeight);
-    
-          } else {
-    
-            this.el.panelMessagesContainer.scrollTop = scrollTop;
-    
+            let photo2 = this.el.myPhoto.querySelector('img');
+            photo2.src = data.photo;
+            photo2.show();
           }
+
+          this.initContacts();
+
+        });
+
+        
+        this._user.name = response.user.displayName;
+        this._user.email = response.user.email;
+        this._user.photo = response.user.photoURL;
+
+        this._user.save().then(() => {
+          this.el.appContent.css({
+            display: 'flex',
+          });
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  initContacts(){
+
+    this._user.on('contactschange', docs =>{
+
+      this.el.contactsMessagesList.innerHTML = '';
+
+      docs.forEach(doc =>{
+
+        let contact = doc.data();
+        let div = document.createElement('div');
+
+        div.className= 'contact-item';
+        
+        div.innerHTML = `
+        <div class="dIyEr">
+            <div class="_1WliW" style="height: 49px; width: 49px;">
+                <img src="#" class="Qgzj8 gqwaM photo" style="display:none;">
+                <div class="_3ZW2E">
+                    <span data-icon="default-user" class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 212 212" width="212" height="212">
+                            <path fill="#DFE5E7" d="M106.251.5C164.653.5 212 47.846 212 106.25S164.653 212 106.25 212C47.846 212 .5 164.654.5 106.25S47.846.5 106.251.5z"></path>
+                            <g fill="#FFF">
+                                <path d="M173.561 171.615a62.767 62.767 0 0 0-2.065-2.955 67.7 67.7 0 0 0-2.608-3.299 70.112 70.112 0 0 0-3.184-3.527 71.097 71.097 0 0 0-5.924-5.47 72.458 72.458 0 0 0-10.204-7.026 75.2 75.2 0 0 0-5.98-3.055c-.062-.028-.118-.059-.18-.087-9.792-4.44-22.106-7.529-37.416-7.529s-27.624 3.089-37.416 7.529c-.338.153-.653.318-.985.474a75.37 75.37 0 0 0-6.229 3.298 72.589 72.589 0 0 0-9.15 6.395 71.243 71.243 0 0 0-5.924 5.47 70.064 70.064 0 0 0-3.184 3.527 67.142 67.142 0 0 0-2.609 3.299 63.292 63.292 0 0 0-2.065 2.955 56.33 56.33 0 0 0-1.447 2.324c-.033.056-.073.119-.104.174a47.92 47.92 0 0 0-1.07 1.926c-.559 1.068-.818 1.678-.818 1.678v.398c18.285 17.927 43.322 28.985 70.945 28.985 27.678 0 52.761-11.103 71.055-29.095v-.289s-.619-1.45-1.992-3.778a58.346 58.346 0 0 0-1.446-2.322zM106.002 125.5c2.645 0 5.212-.253 7.68-.737a38.272 38.272 0 0 0 3.624-.896 37.124 37.124 0 0 0 5.12-1.958 36.307 36.307 0 0 0 6.15-3.67 35.923 35.923 0 0 0 9.489-10.48 36.558 36.558 0 0 0 2.422-4.84 37.051 37.051 0 0 0 1.716-5.25c.299-1.208.542-2.443.725-3.701.275-1.887.417-3.827.417-5.811s-.142-3.925-.417-5.811a38.734 38.734 0 0 0-1.215-5.494 36.68 36.68 0 0 0-3.648-8.298 35.923 35.923 0 0 0-9.489-10.48 36.347 36.347 0 0 0-6.15-3.67 37.124 37.124 0 0 0-5.12-1.958 37.67 37.67 0 0 0-3.624-.896 39.875 39.875 0 0 0-7.68-.737c-21.162 0-37.345 16.183-37.345 37.345 0 21.159 16.183 37.342 37.345 37.342z"></path>
+                            </g>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="_3j7s9">
+            <div class="_2FBdJ">
+                <div class="_25Ooe">
+                    <span dir="auto" title="${contact.name}" class="_1wjpf">${contact.name}</span>
+                </div>
+                <div class="_3Bxar">
+                    <span class="_3T2VG">${__WEBPACK_IMPORTED_MODULE_0__util_Format__["a" /* Format */].fbTimeStampToTime(contact.lastMessageTime)}</span>
+                </div>
+            </div>
+            <div class="_1AwDx">
+                <div class="_itDl">
+                    <span title="digitando…" class="vdXUe _1wjpf typing" style="display:none">digitando…</span>
     
-         });
+                    <span class="_2_LEW last-message">
+                        <div class="_1VfKB">
+                            <span data-icon="status-dblcheck" class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" width="18" height="18">
+                                    <path fill="#263238" fill-opacity=".4" d="M17.394 5.035l-.57-.444a.434.434 0 0 0-.609.076l-6.39 8.198a.38.38 0 0 1-.577.039l-.427-.388a.381.381 0 0 0-.578.038l-.451.576a.497.497 0 0 0 .043.645l1.575 1.51a.38.38 0 0 0 .577-.039l7.483-9.602a.436.436 0 0 0-.076-.609zm-4.892 0l-.57-.444a.434.434 0 0 0-.609.076l-6.39 8.198a.38.38 0 0 1-.577.039l-2.614-2.556a.435.435 0 0 0-.614.007l-.505.516a.435.435 0 0 0 .007.614l3.887 3.8a.38.38 0 0 0 .577-.039l7.483-9.602a.435.435 0 0 0-.075-.609z"></path>
+                                </svg>
+                            </span>
+                        </div>
+                        <span dir="ltr" class="_1wjpf _3NFp9">${contact.lastMessage}</span>
+                        <div class="_3Bxar">
+                            <span>
+                                <div class="_15G96">
+                                    <span class="OUeyt messages-count-new" style="display:none;">1</span>
+                                </div>
+                        </span></div>
+                        </span>
+                </div>
+            </div>
+        </div>
+    `;
+
     
+       if(contact.photo){
+        
+         let img = div.querySelector('.photo');
+         img.src = contact.photo;
+         img.show();
+        
+       }
+
+       div.on('click', e =>{
+
+        this.setActiveChat(contact);
+       
+       });
+
+      this.el.contactsMessagesList.appendChild(div);
+
+      });
+
+    });
+  
+    this._user.getContacts();
+
+  }
+
+  setActiveChat(contact){
+
+    if(this._activeContact){
+      __WEBPACK_IMPORTED_MODULE_7__model_message__["a" /* Message */].getRef(this._activeContact.chatId).onSnapshot(() =>{
+
+
+
+      });
+    }
+    this._activeContact = contact;
+
+    this.el.activeName.innerHTML = contact.name;
+    this.el.activeStatus.innerHTML = contact.status;
+
+    if(contact.photo){
+      let img = this.el.activePhoto;
+      img.src = contact.photo;
+      img.show();
+    }
+
+    this.el.home.hide();
+    this.el.main.css({
+      display:'flex'
+    });
+
+    
+    this.el.panelMessagesContainer.innerHTML = '';
+
+    __WEBPACK_IMPORTED_MODULE_7__model_message__["a" /* Message */].getRef(this._activeContact.chatId).orderBy("timeStamp").onSnapshot(docs => {
+
+
+        let scrollTop = this.el.panelMessagesContainer.scrollTop;
+        let scrollTopMax = (this.el.panelMessagesContainer.scrollHeight -
+        this.el.panelMessagesContainer.offsetHeight);
+        let autoScroll = (scrollTop >= scrollTopMax);
+
+        docs.forEach(doc =>{
+          let data = doc.data();
+          data.id = doc.id;
+          
+          let message = new __WEBPACK_IMPORTED_MODULE_7__model_message__["a" /* Message */]();
+          
+          message.fromJSON(data);
+
+          let me = (data.from === this._user.email);
+          let view = message.getViewElement(me);
+
+          if (!this.el.panelMessagesContainer.querySelector('#_'+ data.id)) {
+
+            if (!me){
+
+              doc.ref.set({status:true
+
+              }, {
+                merge:true
+              }); 
+
+            }
+
+           
+
+          this.el.panelMessagesContainer.appendChild(view);
+          
+        }else {
+
+         
+
+          let parent = this.el.panelMessagesContainer.querySelector('#_'+ data.id).parentNode;
+
+          parent.replaceChild(view, this.el.panelMessagesContainer.querySelector('#_'+ data.id));
+
+          this.el.panelMessagesContainer.querySelector('#_'+ data.id).innerHTML = view.innerHTML;
+
+        }
+        
+        
+        
+        if (this.el.panelMessagesContainer.querySelector('#_'+ data.id) && me){
+
+         let msgEl = this.el.panelMessagesContainer.querySelector('#_'+ data.id)
+
+          msgEl.querySelector('.message-status').innerHTML = message.getStatusViewElement().outerHTML;
+
+        }
+
+        if(message.type === 'contact'){
+
+          view.querySelector('.btn-message-send').on('click', e =>{
+
+            __WEBPACK_IMPORTED_MODULE_6__model_Chat__["a" /* Chat */].createIfNotExists(this._user.email, message.content.email).then(chat => {
+
+              let contact = new __WEBPACK_IMPORTED_MODULE_5__model_User__["a" /* User */](message.content.email);
+              contact.on('datachange', data =>{
+
+                contact.chatId = chat.id;
+  
+                this._user.addContact(contact);
+
+              this._user.chatId = chat.id;
+  
+              contact.addContact(this._user);
+  
+              this.setActiveChat(contact);
+
+              });
+
+
+              
+  
+            });
+
+          });
+
+        }
+      }); 
+          
+      if (autoScroll) {
+
+        this.el.panelMessagesContainer.scrollTop = 
+        (this.el.panelMessagesContainer.scrollHeight - 
+        this.el.panelMessagesContainer.offsetHeight);
+
+      } else {
+
+        this.el.panelMessagesContainer.scrollTop = scrollTop;
+
       }
-    
+
+     });
+
+  }
+
+
+  loadElements() {
+    this.el = {};
+
+    document.querySelectorAll('[id]').forEach((element) => {
+      this.el[__WEBPACK_IMPORTED_MODULE_0__util_Format__["a" /* Format */].getCamelCase(element.id)] = element;
+    });
+  }
+
+  elementsPrototype() {
+    Element.prototype.hide = function () {
+      this.style.display = 'none';
+      return this;
+    };
+
+    Element.prototype.show = function () {
+      this.style.display = 'block';
+      return this;
+    };
+
+    Element.prototype.toggle = function () {
+      this.style.display = this.style.display === 'none' ? 'block' : 'none';
+      return this;
+    };
+
+    Element.prototype.on = function (events, fn) {
+      events.split(' ').forEach((event) => {
+        this.addEventListener(event, fn);
+      });
+      return this;
+    };
+
+    Element.prototype.css = function (styles) {
+      for (let name in styles) {
+        this.style[name] = styles[name];
+      }
+      return this;
+    };
+
+    Element.prototype.addClass = function (name) {
+      this.classList.add(name);
+      return this;
+    };
+
+    Element.prototype.removeClass = function (name) {
+      this.classList.remove(name);
+      return this;
+    };
+
+    Element.prototype.toggleClass = function (name) {
+      this.classList.toggle(name);
+      return this;
+    };
+
+    Element.prototype.hasClass = function (name) {
+      return this.classList.contains(name);
+    };
+
+    HTMLFormElement.prototype.getForm = function () {
+      return new FormData(this);
+    };
+
+    HTMLFormElement.prototype.toJSON = function () {
+      let json = {};
+
+      this.getForm().forEach((value, key) => {
+        json[key] = value;
+      });
+      return json;
+    };
+  }
+
+  initEvents() {
+
+    this.el.inputSearchContacts.on('keyup', (e) => {
+
+      if ( this.el.inputSearchContacts.value.length > 0 ) {
+
+        this.el.inputSearchContactsPlaceholder.hide();
+
+      }
+      else {
+
+        this.el.inputSearchContactsPlaceholder.show();
+
+      }
+
+      this._user.getContacts(this.el.inputSearchContacts.value);
+
+    });
+
+
+    this.el.myPhoto.on('click', (e) => {
+      this.closeAllLeftPanel();
+      this.el.panelEditProfile.show();
+      setTimeout(() => {
+        this.el.panelEditProfile.addClass('open');
+      }, 300);
+    });
+
+    this.el.btnNewContact.on('click', (e) => {
+      this.closeAllLeftPanel();
+      this.el.panelAddContact.show();
+      setTimeout(() => {
+        this.el.panelAddContact.addClass('open');
+      }, 300);
+    });
+
+    this.el.btnClosePanelEditProfile.on('click', (e) => {
+      this.el.panelEditProfile.removeClass('open');
+    });
+
+    this.el.btnClosePanelAddContact.on('click', (e) => {
+      this.el.panelAddContact.removeClass('open');
+    });
+
+    this.el.photoContainerEditProfile.on('click', (e) => {
+      this.el.inputProfilePhoto.click();
+    });
+
+    this.el.inputProfilePhoto.on('change', e => {
+
+      if(this.el.inputProfilePhoto.files.length >0 ){
+
+        let file = this.el.inputProfilePhoto.files[0];
+
+        Upload.send(file, this._user.email).then(snapshot =>{
+
+          this._user.photo = snapshot.downloadURL;
+          this._user.save().then(() =>{
+            this.el.btnClosePanelEditProfile.click();
+          });
+
+        });
+
+
+        }
+
+    });
+
+    this.el.inputNamePanelEditProfile.on('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+
+        this.el.btnSavePanelEditProfile.click();
+      }
+    });
+
+    this.el.btnSavePanelEditProfile.on('click', (e) => {
+      this.el.btnSavePanelEditProfile.disabled = true;
+
+      this._user.name = this.el.inputNamePanelEditProfile.innerHTML;
+
+      this._user.save().then(() => {
+        this.el.btnSavePanelEditProfile.disabled = false;
+      });
+    });
+
+    this.el.formPanelAddContact.on('submit', (e) => {
+      e.preventDefault();
+
+      let formData = new FormData(this.el.formPanelAddContact);
+
+      let contact = new __WEBPACK_IMPORTED_MODULE_5__model_User__["a" /* User */](formData.get('email'));
 
       
-    loadElements() {
-        this.el = {}
 
-        document.querySelectorAll("[id]").forEach((element) => {
-            this.el[__WEBPACK_IMPORTED_MODULE_0__util_Format__["a" /* Format */].getCamelCase(element.id)] = element
-        })
-    }
+      contact.on('datachange', (data) => {
+        if (data.name) {
 
-    elementsPrototype() {
-        Element.prototype.hide = function () {
-            this.style.display = 'none'
-        }
+          __WEBPACK_IMPORTED_MODULE_6__model_Chat__["a" /* Chat */].createIfNotExists(this._user.email, contact.email).then(chat => {
 
-        Element.prototype.show = function () {
-            this.style.display = 'block'
-            return this
-        }
+            contact.chatId = chat.id;
 
-        Element.prototype.toggle = function () {
-            this.style.display = (this.style.display === 'none') ? 'block' : 'none'
-            return this
-        }
+            this._user.chatId = chat.id;
 
-        Element.prototype.on = function (events, fn) {
-            events.split(' ').forEach(event => {
-                this.addEventListener(event, fn)
-            })
-            return this
-        }
+            contact.addContact(this._user);
 
-        Element.prototype.css = function (styles) {
-            for (let name in styles) {
-                this.style[name] = styles[name]
-            }
-            return this
-        }
-
-        Element.prototype.addClass = function (name) {
-            this.classList.add(name)
-            return this
-        }
-
-        Element.prototype.removeClass = function (name) {
-            this.classList.remove(name)
-            return this
-        }
-
-        Element.prototype.toggleClass = function (name) {
-            this.classList.toggle(name)
-            return this
-        }
-
-        Element.prototype.hasClass = function (name) {
-            return this.classList.contains(name)
-        }
-
-        HTMLFormElement.prototype.getForm = function () {
-            return new FormData(this)
-        }
-
-        HTMLFormElement.prototype.toJson = function () {
-            let json = {};
-
-            const formData = new FormData(this);
-
-            formData.forEach((value, key) => {
-                json[key] = value;
+            this._user.addContact(contact).then(() => {
+              this.el.btnClosePanelAddContact.click();
+              console.info('ctt adicionado');
             });
 
-            return json;
-        };
+          });
 
-    }
+        } else {
+          console.error('usuario n foi encontrado.');
+        }
+      });
+    });
 
-    initEvents() {
-        this.el.myPhoto.on('click', e => {
-            this.closeAllLeftPanel();
-            this.el.panelEditProfile.show();
-            setTimeout(() => {
-                this.el.panelEditProfile.addClass('open');
-            }, 300);
-
+    this.el.contactsMessagesList
+      .querySelectorAll('.contact-item')
+      .forEach((item) => {
+        item.on('click', (e) => {
+          this.el.home.hide();
+          this.el.main.css({
+            display: 'flex',
+          });
         });
+      });
 
-        this.el.btnNewContact.on('click', e => {
-            this.closeAllLeftPanel();
-            this.el.panelAddContact.show();
-            setTimeout(() => {
-                this.el.panelAddContact.addClass('open');
-            }, 300);
+    this.el.btnAttach.on('click', (e) => {
+      e.stopPropagation();
+      this.el.menuAttach.addClass('open');
+      document.addEventListener('click', this.closeMenuAttach.bind(this));
+    });
+    this.el.btnAttachPhoto.on('click', (e) => {
+      this.el.inputPhoto.click();
+    });
 
-        });
+    this.el.inputPhoto.on('change', (e) => {
 
-        this.el.btnClosePanelEditProfile.on('click', e => {
-            this.el.panelEditProfile.removeClass('open')
-        });
+      [...this.el.inputPhoto.files].forEach((file) => {
 
-        this.el.btnClosePanelAddContact.on('click', e => {
-            this.el.panelAddContact.removeClass('open')
-        });
+        __WEBPACK_IMPORTED_MODULE_7__model_message__["a" /* Message */].sendImage(this._activeContact.chatId, this._user.email, file);
+        __WEBPACK_IMPORTED_MODULE_7__model_message__["a" /* Message */].send(this._activeContact.chatId, this._user.email, 'image', '');
 
-        this.el.photoContainerEditProfile.on('click', e => {
-            this.el.inputProfilePhoto.click()
-        })
+      });
+    });
 
-        this.el.inputNamePanelEditProfile.on('keypress', e => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
+    this.el.btnAttachCamera.on('click', (e) => {
+      this.closeAllMainPanel();
+      this.el.panelCamera.addClass('open');
+      this.el.panelCamera.css({
+        height: 'calc(100% - 120px)',
+      });
 
-                this.el.btnSavePanelEditProfile.click()
-            }
-        })
+      this._camera = new __WEBPACK_IMPORTED_MODULE_1__CameraController__["a" /* CameraController */](this.el.videoCamera);
+    });
 
+    this.el.btnClosePanelCamera.on('click', (e) => {
+      this.closeAllMainPanel();
+      this.el.panelMessagesContainer.show();
+      this._camera.stop();
+    });
 
-        this.el.btnSavePanelEditProfile.on('click', e => {
+    this.el.btnTakePicture.on('click', (e) => {
+      let dataURL = this._camera.takePicture();
 
-            this.el.btnSavePanelEditProfile.disabled = true
-            this._user.name = this.el.inputNamePanelEditProfile.innerHTML
+      this.el.pictureCamera.src = dataURL;
+      this.el.pictureCamera.show();
+      this.el.videoCamera.hide();
+      this.el.btnReshootPanelCamera.show();
+      this.el.containerTakePicture.hide();
+      this.el.containerSendPicture.show();
+    });
 
-            this._user.save().then(() =>{
-                this.el.btnSavePanelEditProfile.disabled = true
-            })
+    this.el.btnReshootPanelCamera.on('click', (e) => {
+      this.el.pictureCamera.hide();
+      this.el.videoCamera.show();
+      this.el.btnReshootPanelCamera.hide();
+      this.el.containerTakePicture.show();
+      this.el.containerSendPicture.hide();
+    });
 
-            console.log(this.el.inputNamePanelEditProfile.innerHTML)
-        })
-
-        this.el.formPanelAddContact.on('submit', e => {
-            e.preventDefault()
-
-            let formData = new FormData(this.el.formPanelAddContact)
-            
-            let contact = new __WEBPACK_IMPORTED_MODULE_5__model_User__["a" /* User */](formData.get('email'))
-            
-            contact.on('datachange', data=>{
-                if (data.name){
-                    this._user.addContact(contact).then(() => {
-                        
-                        this.el.btnClosePanelAddContact.click()
-                        console.info('Contato Adicionado') 
-                        
-                    })
-                } else {
-                    console.error('usuário não encontrado')
-                }
-            })
-        })
-
-        this.el.contactsMessagesList.querySelectorAll('.contact-item').forEach(item => {
-            item.addEventListener('click', e => {
-                this.el.home.hide();
-                this.el.main.css({
-                    display: 'flex'
-                });
-            });
-        });
+    this.el.btnSendPicture.on('click', (e) => {
 
 
-        this.el.btnAttach.on('click', e => {
-            e.stopPropagation()
-            this.el.menuAttach.addClass('open')
-            document.addEventListener('click', this.closeMenuAttach.bind(this))
-        })
+      this.el.btnSendPicture.disabled = true;
 
-        this.el.btnAttachPhoto.on('click', e => {
-            this.el.inputPhoto.click()
-        });
+      let regex = /^data:(.+);base64,(.*)$/;
 
-        this.el.inputPhoto.on('change', e => {
-            console.log(this.el.inputPhoto.files);
+      let result = this.el.pictureCamera.src.match(regex);
+      let mimeType = result[1];
+      let ext = mimeType.split('/')[1];
+      let filename = `camera${Date.now()}.${ext}`;
 
-            [...this.el.inputPhoto.files].forEach(file => {
-                console.log(file);
-            });
-        });
 
-        this.el.btnAttachCamera.on('click', e => {
-            this.el.panelMessagesContainer.hide();
-            this.el.panelCamera.addClass('open');
-        
-            this.el.panelCamera.css({
-                'height': 'calc(100% - 120px)'
-            });
-        
-            this._camera = new __WEBPACK_IMPORTED_MODULE_1__CameraController__["a" /* CameraController */](this.el.videoCamera);
-        });
+      let picture = new Image();
+      picture.src = this.el.pictureCamera.src;
+      picture.onload = e =>{
+        let canvas = document.createElement('canvas');
+        let context = canvas.getContext('2d');
 
-        this.el.btnClosePanelCamera.on('click', e => {
-            this.CloseAllMainPanel();
-            this.el.panelMessagesContainer.show();
-            this._camera.stop(); 
-        });
-        
-        this.el.btnTakePicture.on('click', e => {
-            let dataUrl = this._camera.TakePicture();
-        
-            if (dataUrl) {
-                this.el.pictureCamera.src = dataUrl;
-                this.el.pictureCamera.show();
-                this.el.videoCamera.hide();
-                this.el.btnReshootPanelCamera.show();
-            } else {
-                console.error("Erro ao capturar a imagem");
-            }
-        });
+        canvas.width = picture.width;
+        canvas.height = picture.height;
 
-        this.el.btnSendPicture.on('click', e=>{
-            console.log(this.el.pictureCamera.src)
-        })
-        
-        this.el.btnReshootPanelCamera.on('click', e => {  
-            this.el.pictureCamera.hide()
-            this.el.videoCamera.show()
-            this.el.btnReshootPanelCamera.hide()
-            this.el.containerTakePicutre.show()
-            this.el.containerSendPicture.hide()
-        })
-        
-        this.el.btnAttachDocument.on('click', (e) => {
-            this.closeAllMainPanel();
-            this.el.panelDocumentPreview.addClass('open');
+        context.translate(picture.width, 0);
+        context.scale(-1, 1);
+        context.drawImage(picture, 0, 0, canvas.width, canvas.height);
+
+     
+
+      fetch(canvas.toDataURL(mimeType))
+      .then(res =>{ return res.arrayBuffer();})
+      .then(buffer =>{ return new File([buffer], filename, { type:mimeType });})
+      .then(file =>{
+
+        __WEBPACK_IMPORTED_MODULE_7__model_message__["a" /* Message */].sendImage(this._activeContact.chatId, this._user.email, file);
+
+        this.el.btnSendPicture.disabled = false;
+
+        this.closeAllMainPanel();
+        this._camera.stop();
+        this.el.btnReshootPanelCamera.hide();
+        this.el.pictureCamera.hide();
+        this.el.videoCamera.show();
+        this.el.containerSendPicture.hide();
+        this.el.containerTakePicture.show();
+        this.el.panelMessagesContainer.show();
+
+
+      });
+
+    };
+      });
+   
+
+    this.el.btnAttachDocument.on('click', (e) => {
+      this.closeAllMainPanel();
+      this.el.panelDocumentPreview.addClass('open');
+      this.el.panelDocumentPreview.css({
+        height: 'calc(100% - 120px)',
+      });
+
+      this.el.inputDocument.click();
+    });
+
+    this.el.inputDocument.on('change', (event) => {
+      if (this.el.inputDocument.files.length) {
+        let file = this.el.inputDocument.files[0];
+
+        this.closeAllMainPanel();
+        this.el.panelMessagesContainer.hide();
+        this.el.panelDocumentPreview.addClass('open');
+        setTimeout(() => {
+          this.el.panelDocumentPreview.style.height = 'calc(100% - 120px)';
+        }, 500);
+
+        this._documentPreview = new __WEBPACK_IMPORTED_MODULE_3__DocumentPreviewController__["a" /* DocumentPreviewController */](file);
+
+        this._documentPreview
+          .getPriviewData()
+          .then((data) => {
+            this.el.filePanelDocumentPreview.hide();
+            this.el.imagePanelDocumentPreview.show();
+            this.el.imgPanelDocumentPreview.src = data.src;
+            this.el.imgPanelDocumentPreview.show();
+
+            this.el.infoPanelDocumentPreview.innerHTML = data.info;
+
             this.el.panelDocumentPreview.css({
               height: 'calc(100% - 120px)',
             });
-      
-            this.el.inputDocument.click();
-          });
-      
-          this.el.inputDocument.on('change', (event) => {
-            if (this.el.inputDocument.files.length) {
-              let file = this.el.inputDocument.files[0];
-      
-              this.closeAllMainPanel();
-              this.el.panelMessagesContainer.hide();
-              this.el.panelDocumentPreview.addClass('open');
-              setTimeout(() => {
-                this.el.panelDocumentPreview.style.height = 'calc(100% - 120px)';
-              }, 500);
-      
-              this._documentPreview = new __WEBPACK_IMPORTED_MODULE_3__DocumentPreviewController__["a" /* DocumentPreviewController */](file);
-      
-              this._documentPreview
-                .getPriviewData()
-                .then((data) => {
-                  this.el.filePanelDocumentPreview.hide();
-                  this.el.imagePanelDocumentPreview.show();
-                  this.el.imgPanelDocumentPreview.src = data.src;
-                  this.el.imgPanelDocumentPreview.show();
-      
-                  this.el.infoPanelDocumentPreview.innerHTML = data.info;
-      
-                  this.el.panelDocumentPreview.css({
-                    height: 'calc(100% - 120px)',
-                  });
-                })
-                .catch((err) => {
-                  this.el.panelDocumentPreview.css({
-                    height: 'calc(100% - 120px)',
-                  });
-      
-                  switch (file.type) {
-                    case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-                    case 'application/msword':
-                      this.el.iconPanelDocumentPreview.classList.value =
-                        'jcxhw icon-doc-doc';
-                      break;
-      
-                    case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-                    case 'application/vnd.ms-excel':
-                      this.el.iconPanelDocumentPreview.classList.value =
-                        'jcxhw icon-doc-xls';
-                      break;
-      
-                    case 'application/vnd.ms-powerpoint':
-                    case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
-                      this.el.iconPanelDocumentPreview.classList.value =
-                        'jcxhw icon-doc-ppt';
-                      break;
-      
-                    default:
-                      this.el.iconPanelDocumentPreview.classList.value =
-                        'jcxhw icon-doc-generic';
-                  }
-      
-                  this.el.filePanelDocumentPreview.show();
-                  this.el.imagePanelDocumentPreview.hide();
-      
-                  this.el.filenamePanelDocumentPreview.innerHTML = file.name;
-                });
-            }
-          });
-      
-          this.el.btnSendDocument.on('click', (e) => {
-           
-              let file = this.el.inputDocument.files[0];
-              let base64 = this.el.imgPanelDocumentPreview.src;
-      
-            if(file.type === 'application/pdf'){
-      
-              Base64.toFile(base64).then(filePreview =>{
-      
-              Message.sendDocument(this._activeContact.chatId, this._user.email, file, base64, this.el.infoPanelDocumentPreview.innerHTML);
-              
+          })
+          .catch((err) => {
+            this.el.panelDocumentPreview.css({
+              height: 'calc(100% - 120px)',
             });
-      
-            }else{
-      
-              Message.send(this._activeContact.chatId, this._user.email, file);
-      
+
+            switch (file.type) {
+              case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+              case 'application/msword':
+                this.el.iconPanelDocumentPreview.classList.value =
+                  'jcxhw icon-doc-doc';
+                break;
+
+              case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+              case 'application/vnd.ms-excel':
+                this.el.iconPanelDocumentPreview.classList.value =
+                  'jcxhw icon-doc-xls';
+                break;
+
+              case 'application/vnd.ms-powerpoint':
+              case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
+                this.el.iconPanelDocumentPreview.classList.value =
+                  'jcxhw icon-doc-ppt';
+                break;
+
+              default:
+                this.el.iconPanelDocumentPreview.classList.value =
+                  'jcxhw icon-doc-generic';
             }
-      
-            this.el.btnClosePanelDocumentPreview.click();
-      
-      
+
+            this.el.filePanelDocumentPreview.show();
+            this.el.imagePanelDocumentPreview.hide();
+
+            this.el.filenamePanelDocumentPreview.innerHTML = file.name;
           });
+      }
+    });
 
-  
-          this.el.btnClosePanelDocumentPreview.on('click', (e) => {
-            this.closeAllMainPanel();
-            this.el.panelMessagesContainer.show();
-          });
+    this.el.btnClosePanelDocumentPreview.on('click', (e) => {
+      this.closeAllMainPanel();
+      this.el.panelMessagesContainer.show();
+    });
 
-        this.el.btnAttachContact.on('click', e => {
-            this.el.modalContacts.show()
-        });
+    this.el.btnSendDocument.on('click', (e) => {
+     
+        let file = this.el.inputDocument.files[0];
+        let base64 = this.el.imgPanelDocumentPreview.src;
 
-        this.el.btnCloseModalContacts.on('click', e => {
-            this.el.modalContacts.hide()
-        })
+      if(file.type === 'application/pdf'){
 
-        this.el.btnSendMicrophone.on('click', e => {
-            this.el.recordMicrophone.show()
-            this.el.btnSendMicrophone.hide()
+        Base64.toFile(base64).then(filePreview =>{
 
-            this.startRecordMicrophoneTime()
-
-            this._MicrophoneController = new __WEBPACK_IMPORTED_MODULE_2__MicrophoneController__["a" /* MicrophoneController */]()
-            
-
-            this._MicrophoneController.on('play', audio => {
-                console.log('a', audio)
-            })
-        })
-
-        this.el.btnCancelMicrophone.on('click', e => {
-            this._MicrophoneController.stop()
-            this.CloseRecordMicrophone()
-        })
-
-        this.el.btnFinishMicrophone.on('click', e => {
-            this._MicrophoneController.stop()
-            this.CloseRecordMicrophone()
-        })
-
-        this.el.inputText.on('keypress', e => {
-            if (e.key === 'Enter' && !e.ctrlKey) {
-                e.preventDefault()
-
-                this.btnSend.click()
-            }
-        })
-
-
-        this.el.inputText.on('keyup', e => {
-
-            if (this.el.inputText.innerHTML.length) {
-                this.el.inputPlaceholder.hide();
-                this.el.btnSendMicrophone.hide()
-                this.el.btnSend.show()
-            } else {
-                this.el.inputPlaceholder.show();
-            }
-        });
-
-        this.el.btnSend.on('click', e => {
-            console.log(this.el.inputText.innerHTML)
-        })
-
-
-        this.el.btnEmojis.addEventListener('click', e => {
-            this.el.panelEmojis.classList.toggle('open');
-        });
-
-        this.el.panelEmojis.querySelectorAll('.emojik').forEach(emoji => {
-            emoji.on('click', e => {
-                console.log(emoji.dataset.unicode);
+        __WEBPACK_IMPORTED_MODULE_7__model_message__["a" /* Message */].sendDocument(this._activeContact.chatId, this._user.email, file, base64, this.el.infoPanelDocumentPreview.innerHTML);
         
-                let img = this.el.imgEmojiDefault.cloneNode();
-                img.style.cssText = emoji.style.cssText;
-                img.dataset.unicode = emoji.dataset.unicode;
-                img.alt = emoji.dataset.unicode;
-        
-                emoji.classList.forEach(name => {
-                    img.classList.add(name);
-                });
-        
-                let cursor = window.getSelection();
-                
-                if (!cursor.focusNode || cursor.focusNode.id !== 'input-text') {
-                    this.el.inputText.focus();
-                    cursor = window.getSelection();
-                }
-        
-                let range = document.createRange();
-                
-                range = cursor.getRangeAt(0);
-                
-                range.deleteContents();
-                
-                let frag = document.createDocumentFragment();
-                frag.appendChild(img);
-                
-                range.insertNode(frag);
-                
-                range.setStartAfter(img);
-        
-               this.el.inputText.dispatchEvent(new Event('keyup'));
-            });
-        });
-    }
+      });
 
-    startRecordMicrophoneTime() {
-        let start = Date.now()
+      }else{
 
-        this._recordMicrophoneInterval = setInterval(() => {
-            this.el.recordMicrophoneTimer.innerHTML = __WEBPACK_IMPORTED_MODULE_0__util_Format__["a" /* Format */].toTime(Date.now() - start)
-        }, 100)
-    }
+        __WEBPACK_IMPORTED_MODULE_7__model_message__["a" /* Message */].send(this._activeContact.chatId, this._user.email, file);
 
-    CloseRecordMicrophone() {
-        this.el.recordMicrophone.hide()
-        this.el.btnSendMicrophone.show()
-        clearInterval(this._recordMicrophoneInterval)
-    }
-
-    closeAllMainPanel() {
-        this.el.panelMessagesContainer.hide();
-        this.el.panelDocumentPreview.removeClass('open');
-        this.el.panelCamera.removeClass('open');
       }
 
-    closeMenuAttach(e) {
-        document.removeEventListener('click', this.closeMenuAttach)
-        this.el.menuAttach.removeClass('open')
-        console.log('remove menu')
-    }
-    closeAllLeftPanel() {
-        this.el.panelAddContact.hide();
-        this.el.panelEditProfile.hide();
-    }
+      this.el.btnClosePanelDocumentPreview.click();
+
+
+    });
+
+    this.el.btnAttachContact.on('click', (e) => {
+
+
+      this._contactsController = new ContactsController(this.el.modalContacts, this._user);
+
+      this._contactsController.on('select', contact =>{
+
+        __WEBPACK_IMPORTED_MODULE_7__model_message__["a" /* Message */].sendContact(
+          this._activeContact.chatId,
+          this._user.email, 
+          contact
+        );
+
+      });
+
+      this._contactsController.open();
+
+    });
+
+    this.el.btnCloseModalContacts.on('click', (e) => {
+
+      this._contactsController.close();
+   
+    });
+
+    this.el.btnSendMicrophone.on('click', (e) => {
+      this.el.recordMicrophone.show();
+      this.el.btnSendMicrophone.hide();
+      this.startRecordMicrophoneTime();
+
+      this._microphoneController = new __WEBPACK_IMPORTED_MODULE_2__MicrophoneController__["a" /* MicrophoneController */]();
+
+      this._microphoneController.on('ready', (musica) => {
+        console.log('recebi o envento play');
+
+        this._microphoneController.startRecorder();
+      });
+    });
+
+    this.el.btnCancelMicrophone.on('click', (e) => {
+      this._microphoneController.stopRecorder();
+      this.closeRecordMicrophone();
+    });
+
+    this.el.btnFinishMicrophone.on('click', (e) => {
+
+      this._microphoneController.on('recorded', (file, metadata)=>{
+
+        __WEBPACK_IMPORTED_MODULE_7__model_message__["a" /* Message */].sendAudio(this._activeContact.chatId, this._user.email, file, metadata , this._user.photo);
+
+      });
+
+
+      this._microphoneController.stop();
+      this.closeRecordMicrophone();
+    });
+
+    this.el.inputText.on('keypress', (e) => {
+      if (e.key === 'Enter' && !e.ctrlKey) {
+        e.preventDefault();
+        this.el.btnSend.click();
+      }
+    });
+
+    this.el.inputText.on('keyup', (e) => {
+      if (this.el.inputText.innerHTML.length) {
+        this.el.inputPlaceholder.hide();
+        this.el.btnSendMicrophone.hide();
+        this.el.btnSend.show();
+      } else {
+        this.el.inputPlaceholder.show();
+        this.el.btnSendMicrophone.show();
+        this.el.btnSend.hide();
+      }
+    });
+
+    this.el.btnSend.on('click', (e) => {
+
+      __WEBPACK_IMPORTED_MODULE_7__model_message__["a" /* Message */].send(this._activeContact.chatId, this._user.email, 'text', this.el.inputText.innerHTML);
+
+            this.el.inputText.innerHTML = '';
+            this.el.panelEmojis.removeClass('open');
+    });
+
+    this.el.btnEmojis.on('click', (e) => {
+      this.el.panelEmojis.toggleClass('open');
+
+      if (this.el.panelEmojis.hasClass('open')) {
+        this.el.iconEmojisOpen.hide();
+        this.el.iconEmojisClose.show();
+      } else {
+        this.el.iconEmojisOpen.show();
+        this.el.iconEmojisClose.hide();
+      }
+    });
+
+    this.el.panelEmojis.querySelectorAll('.emojik').forEach((emoji) => {
+      emoji.on('click', (event) => {
+        let img = this.el.imgEmojiDefault.cloneNode();
+
+        img.style.cssText = emoji.style.cssText;
+        img.dataset.unicode = emoji.dataset.unicode;
+        img.alt = emoji.dataset.unicode;
+
+        emoji.classList.forEach((cls) => {
+          img.classList.add(cls);
+        });
+
+        let cursor = window.getSelection();
+
+        if (!cursor.focusNode || cursor.focusNode.id !== 'input-text') {
+          this.el.inputText.focus();
+          cursor = window.getSelection();
+        }
+
+        let range = document.createRange();
+
+        range = cursor.getRangeAt(0);
+
+        range.deleteContents();
+
+        var frag = document.createDocumentFragment();
+
+        frag.appendChild(img);
+
+        range.insertNode(frag);
+
+        range.setStartAfter(img);
+
+        this.el.inputText.dispatchEvent(new Event('keyup'));
+      });
+    });
+  }
+
+  startRecordMicrophoneTime() {
+    let start = Date.now();
+
+    this._recordMicrophoneInterval = setInterval(() => {
+      this.el.recordMicrophoneTimer.innerHTML = __WEBPACK_IMPORTED_MODULE_0__util_Format__["a" /* Format */].toTime(
+        Date.now() - start
+      );
+    }, 100);
+  }
+
+  closeRecordMicrophone() {
+    this.el.recordMicrophone.hide();
+    this.el.btnSendMicrophone.show();
+    clearInterval(this._recordMicrophoneInterval);
+  }
+
+  closeAllMainPanel() {
+    this.el.panelMessagesContainer.hide();
+    this.el.panelDocumentPreview.removeClass('open');
+    this.el.panelCamera.removeClass('open');
+  }
+
+  closeMenuAttach(e) {
+    document.removeEventListener('click', this.closeMenuAttach);
+    this.el.menuAttach.removeClass('open');
+  }
+
+  closeAllLeftPanel() {
+    this.el.panelAddContact.hide();
+    this.el.panelEditProfile.hide();
+  }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = WhatsAppController;
 
 
-
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12295,12 +12450,12 @@ class CameraController {
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_Format__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util_ClassEvent__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_Format__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util_ClassEvent__ = __webpack_require__(30);
 
 
 
@@ -12426,12 +12581,12 @@ class MicrophoneController extends __WEBPACK_IMPORTED_MODULE_1__util_ClassEvent_
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(__dirname) {const pdfjsLib = __webpack_require__(55);
-const path = __webpack_require__(120);
+/* WEBPACK VAR INJECTION */(function(__dirname) {const pdfjsLib = __webpack_require__(56);
+const path = __webpack_require__(121);
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = path.resolve(
   __dirname,
@@ -12526,7 +12681,7 @@ class DocumentPreviewController {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, "/"))
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process, Buffer) {/**
@@ -20815,7 +20970,7 @@ var useRequireEnsure = false;
   fakeWorkerFilesLoader = useRequireEnsure ? function (callback) {
     __webpack_require__.e/* require.ensure */(0).then((function () {
       var worker;
-      worker = __webpack_require__(26);
+      worker = __webpack_require__(29);
       callback(worker.WorkerMessageHandler);
     }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
   } : dynamicLoaderSupported ? function (callback) {
@@ -27705,7 +27860,7 @@ var SVGGraphics = function SVGGraphics() {
         } else {
           input = new Buffer(literals);
         }
-        var output = __webpack_require__(56).deflateSync(input, { level: 9 });
+        var output = __webpack_require__(57).deflateSync(input, { level: 9 });
         return output instanceof Uint8Array ? output : new Uint8Array(output);
       } catch (e) {
         (0, _util.warn)('Not compressing PNG because zlib.deflateSync is unavailable: ' + e);
@@ -28681,10 +28836,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var fs = __webpack_require__(107);
-var http = __webpack_require__(108);
-var https = __webpack_require__(109);
-var url = __webpack_require__(110);
+var fs = __webpack_require__(108);
+var http = __webpack_require__(109);
+var https = __webpack_require__(110);
+var url = __webpack_require__(111);
 
 var fileUriRegex = /^file:\/\/\/[a-zA-Z]:\//;
 function parseUrl(sourceUrl) {
@@ -30043,17 +30198,17 @@ exports.NetworkManager = NetworkManager;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(1), __webpack_require__(2).Buffer))
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var Buffer = __webpack_require__(2).Buffer;
-var Transform = __webpack_require__(57).Transform;
-var binding = __webpack_require__(69);
-var util = __webpack_require__(43);
-var assert = __webpack_require__(35).ok;
+var Transform = __webpack_require__(58).Transform;
+var binding = __webpack_require__(70);
+var util = __webpack_require__(45);
+var assert = __webpack_require__(37).ok;
 var kMaxLength = __webpack_require__(2).kMaxLength;
 var kRangeErrorMessage = 'Cannot create final Buffer. It would be larger ' + 'than 0x' + kMaxLength.toString(16) + ' bytes';
 
@@ -30659,7 +30814,7 @@ util.inherits(Unzip, Zlib);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -30685,15 +30840,15 @@ util.inherits(Unzip, Zlib);
 
 module.exports = Stream;
 
-var EE = __webpack_require__(16).EventEmitter;
+var EE = __webpack_require__(18).EventEmitter;
 var inherits = __webpack_require__(4);
 
 inherits(Stream, EE);
-Stream.Readable = __webpack_require__(17);
-Stream.Writable = __webpack_require__(65);
-Stream.Duplex = __webpack_require__(66);
-Stream.Transform = __webpack_require__(67);
-Stream.PassThrough = __webpack_require__(68);
+Stream.Readable = __webpack_require__(19);
+Stream.Writable = __webpack_require__(66);
+Stream.Duplex = __webpack_require__(67);
+Stream.Transform = __webpack_require__(68);
+Stream.PassThrough = __webpack_require__(69);
 
 // Backwards-compat with node 0.4.x
 Stream.Stream = Stream;
@@ -30792,13 +30947,13 @@ Stream.prototype.pipe = function(dest, options) {
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30806,8 +30961,8 @@ Stream.prototype.pipe = function(dest, options) {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Buffer = __webpack_require__(18).Buffer;
-var util = __webpack_require__(60);
+var Buffer = __webpack_require__(20).Buffer;
+var util = __webpack_require__(61);
 
 function copyBuffer(src, target, offset) {
   src.copy(target, offset);
@@ -30882,13 +31037,13 @@ if (util && util.inspect && util.inspect.custom) {
 }
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -31081,7 +31236,7 @@ if (util && util.inspect && util.inspect.custom) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(1)))
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -31155,7 +31310,7 @@ function config (name) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* eslint-disable node/no-deprecated-api */
@@ -31223,7 +31378,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31256,7 +31411,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 
 module.exports = PassThrough;
 
-var Transform = __webpack_require__(34);
+var Transform = __webpack_require__(36);
 
 /*<replacement>*/
 var util = Object.create(__webpack_require__(7));
@@ -31276,47 +31431,47 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 };
 
 /***/ }),
-/* 65 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(19);
-
-
-/***/ }),
 /* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(3);
+module.exports = __webpack_require__(21);
 
 
 /***/ }),
 /* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(17).Transform
+module.exports = __webpack_require__(3);
 
 
 /***/ }),
 /* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(17).PassThrough
+module.exports = __webpack_require__(19).Transform
 
 
 /***/ }),
 /* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(19).PassThrough
+
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 /* WEBPACK VAR INJECTION */(function(Buffer, process) {
 /* eslint camelcase: "off" */
 
-var assert = __webpack_require__(35);
+var assert = __webpack_require__(37);
 
-var Zstream = __webpack_require__(99);
-var zlib_deflate = __webpack_require__(100);
-var zlib_inflate = __webpack_require__(103);
-var constants = __webpack_require__(106);
+var Zstream = __webpack_require__(100);
+var zlib_deflate = __webpack_require__(101);
+var zlib_inflate = __webpack_require__(104);
+var constants = __webpack_require__(107);
 
 for (var key in constants) {
   exports[key] = constants[key];
@@ -31720,13 +31875,13 @@ exports.Zlib = Zlib;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2).Buffer, __webpack_require__(1)))
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var implementation = __webpack_require__(71);
+var implementation = __webpack_require__(72);
 
 var lacksProperEnumerationOrder = function () {
 	if (!Object.assign) {
@@ -31782,17 +31937,17 @@ module.exports = function getPolyfill() {
 
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 // modified from https://github.com/es-shims/es6-shim
-var objectKeys = __webpack_require__(72);
-var hasSymbols = __webpack_require__(37)();
-var callBound = __webpack_require__(20);
-var $Object = __webpack_require__(22);
+var objectKeys = __webpack_require__(73);
+var hasSymbols = __webpack_require__(39)();
+var callBound = __webpack_require__(22);
+var $Object = __webpack_require__(24);
 var $push = callBound('Array.prototype.push');
 var $propIsEnumerable = callBound('Object.prototype.propertyIsEnumerable');
 var originalGetSymbols = hasSymbols ? $Object.getOwnPropertySymbols : null;
@@ -31835,17 +31990,17 @@ module.exports = function assign(target, source1) {
 
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var slice = Array.prototype.slice;
-var isArgs = __webpack_require__(36);
+var isArgs = __webpack_require__(38);
 
 var origKeys = Object.keys;
-var keysShim = origKeys ? function keys(o) { return origKeys(o); } : __webpack_require__(73);
+var keysShim = origKeys ? function keys(o) { return origKeys(o); } : __webpack_require__(74);
 
 var originalKeys = Object.keys;
 
@@ -31874,7 +32029,7 @@ module.exports = keysShim;
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31885,7 +32040,7 @@ if (!Object.keys) {
 	// modified from https://github.com/es-shims/es5-shim
 	var has = Object.prototype.hasOwnProperty;
 	var toStr = Object.prototype.toString;
-	var isArgs = __webpack_require__(36); // eslint-disable-line global-require
+	var isArgs = __webpack_require__(38); // eslint-disable-line global-require
 	var isEnumerable = Object.prototype.propertyIsEnumerable;
 	var hasDontEnumBug = !isEnumerable.call({ toString: null }, 'toString');
 	var hasProtoEnumBug = isEnumerable.call(function () {}, 'prototype');
@@ -32003,7 +32158,7 @@ module.exports = keysShim;
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32014,7 +32169,7 @@ module.exports = Error;
 
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32025,7 +32180,7 @@ module.exports = EvalError;
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32036,7 +32191,7 @@ module.exports = RangeError;
 
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32047,7 +32202,7 @@ module.exports = ReferenceError;
 
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32058,7 +32213,7 @@ module.exports = SyntaxError;
 
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32069,7 +32224,7 @@ module.exports = URIError;
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32080,7 +32235,7 @@ module.exports = Math.abs;
 
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32091,7 +32246,7 @@ module.exports = Math.floor;
 
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32102,7 +32257,7 @@ module.exports = Math.max;
 
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32113,7 +32268,7 @@ module.exports = Math.min;
 
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32124,7 +32279,7 @@ module.exports = Math.pow;
 
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32135,13 +32290,13 @@ module.exports = Math.round;
 
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var $isNaN = __webpack_require__(87);
+var $isNaN = __webpack_require__(88);
 
 /** @type {import('./sign')} */
 module.exports = function sign(number) {
@@ -32153,7 +32308,7 @@ module.exports = function sign(number) {
 
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32166,7 +32321,7 @@ module.exports = Number.isNaN || function isNaN(a) {
 
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32177,7 +32332,7 @@ module.exports = Object.getOwnPropertyDescriptor;
 
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32198,14 +32353,14 @@ module.exports = $defineProperty;
 
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var origSymbol = typeof Symbol !== 'undefined' && Symbol;
-var hasSymbolSham = __webpack_require__(37);
+var hasSymbolSham = __webpack_require__(39);
 
 /** @type {import('.')} */
 module.exports = function hasNativeSymbols() {
@@ -32219,16 +32374,16 @@ module.exports = function hasNativeSymbols() {
 
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var reflectGetProto = __webpack_require__(39);
-var originalGetProto = __webpack_require__(40);
+var reflectGetProto = __webpack_require__(41);
+var originalGetProto = __webpack_require__(42);
 
-var getDunderProto = __webpack_require__(92);
+var getDunderProto = __webpack_require__(93);
 
 /** @type {import('.')} */
 module.exports = reflectGetProto
@@ -32253,14 +32408,14 @@ module.exports = reflectGetProto
 
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var callBind = __webpack_require__(41);
-var gOPD = __webpack_require__(38);
+var callBind = __webpack_require__(43);
+var gOPD = __webpack_require__(40);
 
 var hasProtoAccessor;
 try {
@@ -32290,7 +32445,7 @@ module.exports = desc && typeof desc.get === 'function'
 
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32381,24 +32536,24 @@ module.exports = function bind(that) {
 
 
 /***/ }),
-/* 94 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var bind = __webpack_require__(10);
+var bind = __webpack_require__(11);
 
-var $apply = __webpack_require__(42);
-var $call = __webpack_require__(23);
-var $reflectApply = __webpack_require__(95);
+var $apply = __webpack_require__(44);
+var $call = __webpack_require__(25);
+var $reflectApply = __webpack_require__(96);
 
 /** @type {import('./actualApply')} */
 module.exports = $reflectApply || bind.call($call, $apply);
 
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32409,7 +32564,7 @@ module.exports = typeof Reflect !== 'undefined' && Reflect && Reflect.apply;
 
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32417,14 +32572,14 @@ module.exports = typeof Reflect !== 'undefined' && Reflect && Reflect.apply;
 
 var call = Function.prototype.call;
 var $hasOwn = Object.prototype.hasOwnProperty;
-var bind = __webpack_require__(10);
+var bind = __webpack_require__(11);
 
 /** @type {import('.')} */
 module.exports = bind.call(call, $hasOwn);
 
 
 /***/ }),
-/* 97 */
+/* 98 */
 /***/ (function(module, exports) {
 
 module.exports = function isBuffer(arg) {
@@ -32435,7 +32590,7 @@ module.exports = function isBuffer(arg) {
 }
 
 /***/ }),
-/* 98 */
+/* 99 */
 /***/ (function(module, exports) {
 
 if (typeof Object.create === 'function') {
@@ -32464,7 +32619,7 @@ if (typeof Object.create === 'function') {
 
 
 /***/ }),
-/* 99 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32518,7 +32673,7 @@ module.exports = ZStream;
 
 
 /***/ }),
-/* 100 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32543,11 +32698,11 @@ module.exports = ZStream;
 //   misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-var utils   = __webpack_require__(11);
-var trees   = __webpack_require__(101);
-var adler32 = __webpack_require__(44);
-var crc32   = __webpack_require__(45);
-var msg     = __webpack_require__(102);
+var utils   = __webpack_require__(12);
+var trees   = __webpack_require__(102);
+var adler32 = __webpack_require__(46);
+var crc32   = __webpack_require__(47);
+var msg     = __webpack_require__(103);
 
 /* Public constants ==========================================================*/
 /* ===========================================================================*/
@@ -34399,7 +34554,7 @@ exports.deflateTune = deflateTune;
 
 
 /***/ }),
-/* 101 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34426,7 +34581,7 @@ exports.deflateTune = deflateTune;
 
 /* eslint-disable space-unary-ops */
 
-var utils = __webpack_require__(11);
+var utils = __webpack_require__(12);
 
 /* Public constants ==========================================================*/
 /* ===========================================================================*/
@@ -35628,7 +35783,7 @@ exports._tr_align = _tr_align;
 
 
 /***/ }),
-/* 102 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35667,7 +35822,7 @@ module.exports = {
 
 
 /***/ }),
-/* 103 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35692,11 +35847,11 @@ module.exports = {
 //   misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-var utils         = __webpack_require__(11);
-var adler32       = __webpack_require__(44);
-var crc32         = __webpack_require__(45);
-var inflate_fast  = __webpack_require__(104);
-var inflate_table = __webpack_require__(105);
+var utils         = __webpack_require__(12);
+var adler32       = __webpack_require__(46);
+var crc32         = __webpack_require__(47);
+var inflate_fast  = __webpack_require__(105);
+var inflate_table = __webpack_require__(106);
 
 var CODES = 0;
 var LENS = 1;
@@ -37230,7 +37385,7 @@ exports.inflateUndermine = inflateUndermine;
 
 
 /***/ }),
-/* 104 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37582,7 +37737,7 @@ module.exports = function inflate_fast(strm, start) {
 
 
 /***/ }),
-/* 105 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37607,7 +37762,7 @@ module.exports = function inflate_fast(strm, start) {
 //   misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-var utils = __webpack_require__(11);
+var utils = __webpack_require__(12);
 
 var MAXBITS = 15;
 var ENOUGH_LENS = 852;
@@ -37932,7 +38087,7 @@ module.exports = function inflate_table(type, lens, lens_index, codes, table, ta
 
 
 /***/ }),
-/* 106 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38007,12 +38162,6 @@ module.exports = {
 
 
 /***/ }),
-/* 107 */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
 /* 108 */
 /***/ (function(module, exports) {
 
@@ -38026,6 +38175,12 @@ module.exports = {
 
 /***/ }),
 /* 110 */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38054,7 +38209,7 @@ module.exports = {
 
 
 
-var punycode = __webpack_require__(111);
+var punycode = __webpack_require__(112);
 
 function Url() {
   this.protocol = null;
@@ -38136,7 +38291,7 @@ var protocolPattern = /^([a-z0-9.+-]+:)/i,
     'gopher:': true,
     'file:': true
   },
-  querystring = __webpack_require__(113);
+  querystring = __webpack_require__(114);
 
 function urlParse(url, parseQueryString, slashesDenoteHost) {
   if (url && typeof url === 'object' && url instanceof Url) { return url; }
@@ -38808,7 +38963,7 @@ exports.Url = Url;
 
 
 /***/ }),
-/* 111 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.4.1 by @mathias */
@@ -39344,10 +39499,10 @@ exports.Url = Url;
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(112)(module), __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(113)(module), __webpack_require__(0)))
 
 /***/ }),
-/* 112 */
+/* 113 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -39375,15 +39530,15 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 113 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var stringify = __webpack_require__(114);
-var parse = __webpack_require__(119);
-var formats = __webpack_require__(24);
+var stringify = __webpack_require__(115);
+var parse = __webpack_require__(120);
+var formats = __webpack_require__(26);
 
 module.exports = {
     formats: formats,
@@ -39393,15 +39548,15 @@ module.exports = {
 
 
 /***/ }),
-/* 114 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var getSideChannel = __webpack_require__(115);
-var utils = __webpack_require__(47);
-var formats = __webpack_require__(24);
+var getSideChannel = __webpack_require__(116);
+var utils = __webpack_require__(49);
+var formats = __webpack_require__(26);
 var has = Object.prototype.hasOwnProperty;
 
 var arrayPrefixGenerators = {
@@ -39756,17 +39911,17 @@ module.exports = function (object, opts) {
 
 
 /***/ }),
-/* 115 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var $TypeError = __webpack_require__(5);
-var inspect = __webpack_require__(12);
-var getSideChannelList = __webpack_require__(117);
-var getSideChannelMap = __webpack_require__(46);
-var getSideChannelWeakMap = __webpack_require__(118);
+var inspect = __webpack_require__(13);
+var getSideChannelList = __webpack_require__(118);
+var getSideChannelMap = __webpack_require__(48);
+var getSideChannelWeakMap = __webpack_require__(119);
 
 var makeChannel = getSideChannelWeakMap || getSideChannelMap || getSideChannelList;
 
@@ -39806,19 +39961,19 @@ module.exports = function getSideChannel() {
 
 
 /***/ }),
-/* 116 */
+/* 117 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
-/* 117 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var inspect = __webpack_require__(12);
+var inspect = __webpack_require__(13);
 
 var $TypeError = __webpack_require__(5);
 
@@ -39932,16 +40087,16 @@ module.exports = function getSideChannelList() {
 
 
 /***/ }),
-/* 118 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var GetIntrinsic = __webpack_require__(21);
-var callBound = __webpack_require__(20);
-var inspect = __webpack_require__(12);
-var getSideChannelMap = __webpack_require__(46);
+var GetIntrinsic = __webpack_require__(23);
+var callBound = __webpack_require__(22);
+var inspect = __webpack_require__(13);
+var getSideChannelMap = __webpack_require__(48);
 
 var $TypeError = __webpack_require__(5);
 var $WeakMap = GetIntrinsic('%WeakMap%', true);
@@ -40023,13 +40178,13 @@ module.exports = $WeakMap
 
 
 /***/ }),
-/* 119 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(47);
+var utils = __webpack_require__(49);
 
 var has = Object.prototype.hasOwnProperty;
 var isArray = Array.isArray;
@@ -40358,7 +40513,7 @@ module.exports = function (str, opts) {
 
 
 /***/ }),
-/* 120 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {// .dirname, .basename, and .extname methods are extracted from Node.js v8.11.1,
@@ -40667,35 +40822,6 @@ var substr = 'ab'.substr(-1) === 'b'
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 121 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Copyright 2017 Google Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-var firebase = __webpack_require__(122);
-__webpack_require__(125);
-__webpack_require__(127);
-__webpack_require__(129);
-__webpack_require__(131);
-
-module.exports = firebase;
-
-
-/***/ }),
 /* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -40715,17 +40841,46 @@ module.exports = firebase;
  * limitations under the License.
  */
 
-__webpack_require__(123);
-module.exports = __webpack_require__(6).default;
+var firebase = __webpack_require__(123);
+__webpack_require__(126);
+__webpack_require__(128);
+__webpack_require__(130);
+__webpack_require__(132);
+
+module.exports = firebase;
 
 
 /***/ }),
 /* 123 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright 2017 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+__webpack_require__(124);
+module.exports = __webpack_require__(6).default;
+
+
+/***/ }),
+/* 124 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* WEBPACK VAR INJECTION */(function(setImmediate, global) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_whatwg_fetch__ = __webpack_require__(124);
+/* WEBPACK VAR INJECTION */(function(setImmediate, global) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_whatwg_fetch__ = __webpack_require__(125);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_whatwg_fetch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_whatwg_fetch__);
 
 
@@ -41429,10 +41584,10 @@ var startsWith = _core.String.startsWith;
  * limitations under the License.
  */
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(32).setImmediate, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(34).setImmediate, __webpack_require__(0)))
 
 /***/ }),
-/* 124 */
+/* 125 */
 /***/ (function(module, exports) {
 
 (function(self) {
@@ -41904,7 +42059,7 @@ var startsWith = _core.String.startsWith;
 
 
 /***/ }),
-/* 125 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -41923,11 +42078,11 @@ var startsWith = _core.String.startsWith;
  * limitations under the License.
  */
 
-__webpack_require__(126);
+__webpack_require__(127);
 
 
 /***/ }),
-/* 126 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {(function() {
@@ -42236,7 +42391,7 @@ c){a=new Gl(a);c({INTERNAL:{getUid:r(a.getUid,a),getToken:r(a.$b,a),addAuthToken
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 127 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -42255,11 +42410,11 @@ c){a=new Gl(a);c({INTERNAL:{getUid:r(a.getUid,a),getToken:r(a.$b,a),addAuthToken
  * limitations under the License.
  */
 
-module.exports = __webpack_require__(128);
+module.exports = __webpack_require__(129);
 
 
 /***/ }),
-/* 128 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42269,9 +42424,9 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var util = __webpack_require__(25);
-var logger = __webpack_require__(49);
-var tslib_1 = __webpack_require__(13);
+var util = __webpack_require__(27);
+var logger = __webpack_require__(50);
+var tslib_1 = __webpack_require__(14);
 var firebase = _interopDefault(__webpack_require__(6));
 
 /**
@@ -57619,7 +57774,7 @@ exports.OnDisconnect = OnDisconnect;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 129 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -57638,19 +57793,19 @@ exports.OnDisconnect = OnDisconnect;
  * limitations under the License.
  */
 
-__webpack_require__(130);
+__webpack_require__(131);
 
 
 /***/ }),
-/* 130 */
+/* 131 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "registerMessaging", function() { return registerMessaging; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__firebase_util__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__firebase_util__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__firebase_util___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__firebase_util__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_tslib__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_tslib__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__firebase_app__ = __webpack_require__(6);
 
 
@@ -59734,7 +59889,7 @@ registerMessaging(__WEBPACK_IMPORTED_MODULE_2__firebase_app__["default"]);
 
 
 /***/ }),
-/* 131 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -59753,11 +59908,11 @@ registerMessaging(__WEBPACK_IMPORTED_MODULE_2__firebase_app__["default"]);
  * limitations under the License.
  */
 
-__webpack_require__(132);
+__webpack_require__(133);
 
 
 /***/ }),
-/* 132 */
+/* 133 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -63215,7 +63370,7 @@ registerStorage(__WEBPACK_IMPORTED_MODULE_0__firebase_app__["default"]);
 
 
 /***/ }),
-/* 133 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -63234,11 +63389,11 @@ registerStorage(__WEBPACK_IMPORTED_MODULE_0__firebase_app__["default"]);
  * limitations under the License.
  */
 
-__webpack_require__(134);
+__webpack_require__(135);
 
 
 /***/ }),
-/* 134 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63249,9 +63404,9 @@ Object.defineProperty(exports, '__esModule', { value: true });
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var firebase = _interopDefault(__webpack_require__(6));
-var logger = __webpack_require__(49);
-var tslib_1 = __webpack_require__(13);
-var webchannelWrapper = __webpack_require__(135);
+var logger = __webpack_require__(50);
+var tslib_1 = __webpack_require__(14);
+var webchannelWrapper = __webpack_require__(136);
 
 /**
  * Copyright 2017 Google Inc.
@@ -79778,7 +79933,7 @@ exports.registerFirestore = registerFirestore;
 
 
 /***/ }),
-/* 135 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {(function() {var g,goog=goog||{},k=this;function l(a){return"string"==typeof a}function n(a,b){a=a.split(".");b=b||k;for(var c=0;c<a.length;c++)if(b=b[a[c]],null==b)return null;return b}function aa(){}
@@ -79888,12 +80043,12 @@ T.prototype.getStatus=T.prototype.W;T.prototype.getStatusText=T.prototype.Ha;T.p
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 136 */
+/* 137 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_Firebase__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Model__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_firebase__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Model__ = __webpack_require__(28);
 
 
 
@@ -79939,7 +80094,7 @@ class User extends __WEBPACK_IMPORTED_MODULE_1__Model__["a" /* Model */] {
 
     static getRef() {
         
-        return __WEBPACK_IMPORTED_MODULE_0__util_Firebase__["a" /* Firebase */].db().collection('/users');
+        return __WEBPACK_IMPORTED_MODULE_0__util_firebase__["a" /* Firebase */].db().collection('/users');
 
     }
 
@@ -79996,30 +80151,776 @@ class User extends __WEBPACK_IMPORTED_MODULE_1__Model__["a" /* Model */] {
 
 
 /***/ }),
-/* 137 */
+/* 138 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_ClassEvent__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Model__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util_firebase__ = __webpack_require__(8);
 
 
-class Model extends __WEBPACK_IMPORTED_MODULE_0__util_ClassEvent__["a" /* ClassEvent */] {
-  constructor() {
-    super();
-    this._data = {};
-  }
 
-  fromJSON(json) {
-    this._data = Object.assign(this._data, json);
+class Chat extends __WEBPACK_IMPORTED_MODULE_0__Model__["a" /* Model */] {
+    constructor() {
+        super();
+    }
 
-    this.trigger('datachange', this._data);
-  }
+    get users() { return this._data.users; }
+    set users(value) { this._data.users = value; }
+    
+    get timeStamp() { return this._data.timeStamp; }
+    set timeStamp(value) { this._data.timeStamp = value; }
 
-  toJSON() {
-    return this._data;
-  }
+    static getRef(){
+
+        return __WEBPACK_IMPORTED_MODULE_1__util_firebase__["a" /* Firebase */].db().collection('/chats');
+
+    } 
+
+    static create(meEmail, contactEmail){
+
+        return new Promise((s, f)=>{
+
+            let users = {};
+
+            users[btoa(meEmail)] = true;
+            users[btoa(contactEmail)] = true;
+
+            Chat.getRef().add({
+                users,
+                timeStamp: new Date()
+            }).then(doc=>{
+
+                Chat.getRef().doc(doc.id).get().then(chat=>{
+
+                    s(chat);
+
+                }).catch(err=>{ f(err) });
+
+            }).catch(err => { f(err) });
+
+        });
+    }
+
+
+    static find(meEmail, contactEmail){
+        return Chat.getRef()
+        .where((meEmail), '==', true)
+        .where((contactEmail), '==', true)
+        .get();
+    }
+
+    static createIfNotExists(meEmail, contactEmail){
+
+        return new Promise((s, f )  =>{
+
+            Chat.find(meEmail, contactEmail).then(chats => {
+
+                if (chats.empty) {
+
+                    Chat.create(meEmail, contactEmail).then(chat => {
+
+                        s(chat);
+
+                    }).catch(err => { f(err); });
+
+                } else {
+
+                    chats.forEach(chat => {
+
+                        s(chat);
+
+                    });
+
+                }
+
+            }).catch(err => { f(err); });
+
+        });
+
+
+
+    }
+
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = Model;
+/* harmony export (immutable) */ __webpack_exports__["a"] = Chat;
+
+
+/***/ }),
+/* 139 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_firebase__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Model__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util_Format__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_Upload__ = __webpack_require__(140);
+
+
+
+
+
+class Message extends __WEBPACK_IMPORTED_MODULE_1__Model__["a" /* Model */] {
+    constructor() {
+        super();
+    }
+
+    get id() { return this._data.id; }
+    set id(value) { return this._data.id = value; }
+
+    get content() { return this._data.content; }
+    set content(value) { this._data.content = value; }
+
+    get type() { return this._data.type; }
+    set type(value) { this._data.type = value; }
+
+    get timeStamp() { return this._data.timeStamp; }
+    set timeStamp(value) { this._data.timeStamp = value; }
+
+    get status() { return this._data.status; }
+    set status(value) { this._data.status = value; }
+
+    get preview() { return this._data.preview; }
+    set preview(value) { this._data.preview = value; }
+
+    get filename() { return this._data.filename; }
+    set filename(value) { this._data.filename = value; }
+
+    get fileType() { return this._data.fileType; }
+    set fileType(value) { this._data.fileType = value; }
+
+    get size() { return this._data.size; }
+    set size(value) { this._data.size = value; }
+
+    get from() { return this._data.from; }
+    set from(value) { this._data.from = value; }
+
+    get info() { return this._data.info; }
+    set info(value) { this._data.info = value; }
+
+    get photo() { return this._data.photo; }
+    set photo(value) { this._data.photo = value; }
+
+    get duration() { return this._data.duration; }
+    set duration(value) { this._data.duration = value; }
+
+    getViewElement(me = true){
+
+        let div = document.createElement('div');
+
+        div.id =`_$this.id}`;
+        div.className = 'message';
+
+        switch(this.type){
+
+        
+            case 'contact':
+                div.innerHTML= `
+                          
+                              <div class="_3_7SH kNKwo tail">
+                        <span class="tail-container"></span>
+                        <span class="tail-container highlight"></span>
+                        <div class="_1YNgi copyable-text">
+                            <div class="_3DZ69" role="button">
+                                <div class="_20hTB">
+                                    <div class="_1WliW" style="height: 49px; width: 49px;">
+                                        <img src="#" class="Qgzj8 gqwaM photo-contact-sended" style="display:none">
+                                        <div class="_3ZW2E">
+                                            <span data-icon="default-user">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 212 212" width="212" height="212">
+                                                    <path fill="#DFE5E7" d="M106.251.5C164.653.5 212 47.846 212 106.25S164.653 212 106.25 212C47.846 212 .5 164.654.5 106.25S47.846.5 106.251.5z"></path>
+                                                    <g fill="#FFF">
+                                                        <path d="M173.561 171.615a62.767 62.767 0 0 0-2.065-2.955 67.7 67.7 0 0 0-2.608-3.299 70.112 70.112 0 0 0-3.184-3.527 71.097 71.097 0 0 0-5.924-5.47 72.458 72.458 0 0 0-10.204-7.026 75.2 75.2 0 0 0-5.98-3.055c-.062-.028-.118-.059-.18-.087-9.792-4.44-22.106-7.529-37.416-7.529s-27.624 3.089-37.416 7.529c-.338.153-.653.318-.985.474a75.37 75.37 0 0 0-6.229 3.298 72.589 72.589 0 0 0-9.15 6.395 71.243 71.243 0 0 0-5.924 5.47 70.064 70.064 0 0 0-3.184 3.527 67.142 67.142 0 0 0-2.609 3.299 63.292 63.292 0 0 0-2.065 2.955 56.33 56.33 0 0 0-1.447 2.324c-.033.056-.073.119-.104.174a47.92 47.92 0 0 0-1.07 1.926c-.559 1.068-.818 1.678-.818 1.678v.398c18.285 17.927 43.322 28.985 70.945 28.985 27.678 0 52.761-11.103 71.055-29.095v-.289s-.619-1.45-1.992-3.778a58.346 58.346 0 0 0-1.446-2.322zM106.002 125.5c2.645 0 5.212-.253 7.68-.737a38.272 38.272 0 0 0 3.624-.896 37.124 37.124 0 0 0 5.12-1.958 36.307 36.307 0 0 0 6.15-3.67 35.923 35.923 0 0 0 9.489-10.48 36.558 36.558 0 0 0 2.422-4.84 37.051 37.051 0 0 0 1.716-5.25c.299-1.208.542-2.443.725-3.701.275-1.887.417-3.827.417-5.811s-.142-3.925-.417-5.811a38.734 38.734 0 0 0-1.215-5.494 36.68 36.68 0 0 0-3.648-8.298 35.923 35.923 0 0 0-9.489-10.48 36.347 36.347 0 0 0-6.15-3.67 37.124 37.124 0 0 0-5.12-1.958 37.67 37.67 0 0 0-3.624-.896 39.875 39.875 0 0 0-7.68-.737c-21.162 0-37.345 16.183-37.345 37.345 0 21.159 16.183 37.342 37.345 37.342z"></path>
+                                                    </g>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="_1lC8v">
+                                    <div dir="ltr" class="_3gkvk selectable-text invisible-space copyable-text">${this.content.name}</div>
+                                </div>
+                                <div class="_3a5-b">
+                                    <div class="_1DZAH" role="button">
+                                        <span class="message-time">${__WEBPACK_IMPORTED_MODULE_2__util_Format__["a" /* Format */].fbTimeStampToTime(this.timeStamp)}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="_6qEXM">
+                                <div class="btn-message-send" role="button">Enviar mensagem</div>
+                            </div>
+                        </div>
+
+                    </div>
+                          
+                `;
+
+                if(this.content.photo){
+                    let img = div.querySelector('.photo-contact-sended');
+                    img.src = this.content.photo;
+                    img.show();
+                }
+
+              
+
+                break;
+
+            case 'image':
+                div.innerHTML= `
+                      <div class="_3_7SH _3qMSo">
+                        <div class="KYpDv">
+                            <div>
+                                <div class="_3v3PK" style="width: 330px; height: 330px;">
+                                    <div class="_34Olu">
+                                        <div class="_2BzIU">
+                                            <div class="_2X3l6">
+                                                <svg class="_1UDDE" width="50" height="50" viewBox="0 0 43 43">
+                                                    <circle class="_3GbTq _2wGBy" cx="21.5" cy="21.5" r="20" fill="none" stroke-width="3"></circle>
+                                                </svg>
+                                            </div>
+                                            <div class="_1l3ap">
+                                                <span data-icon="media-disabled" class="">
+                                                    <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" width="44" height="44">
+                                                        <path fill="#FFF" fill-opacity=".4" d="M29.377 16.099l-1.475-1.475L22 20.525l-5.901-5.901-1.476 1.475L20.525 22l-5.901 5.901 1.476 1.475 5.9-5.901 5.901 5.901 1.475-1.475L23.475 22l5.902-5.901z"></path>
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <img src="${this.content}" class="_1JVSX message-photo" style="width: 100%; display:none">
+                                    <div class="_1i3Za"></div>
+                                </div>
+                                <div class="_2TvOE">
+                                    <div class="_1DZAH" role="button">
+                                        <span class="message-time text-white">${__WEBPACK_IMPORTED_MODULE_2__util_Format__["a" /* Format */].fbTimeStampToTime(this.timeStamp)}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="_3S8Q-" role="button">
+                            <span data-icon="forward-chat">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" width="25" height="25">
+                                    <path fill="#FFF" d="M14.2 9.5V6.1l5.9 5.9-5.9 6v-3.5c-4.2 0-7.2 1.4-9.3 4.3.8-4.2 3.4-8.4 9.3-9.3z"></path>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                `;
+
+
+                div.querySelector('.message-photo').on('load', e => {
+
+                    div.querySelector('.message-photo').show();
+                    div.querySelector('._34Olu').hide();
+                    div.querySelector('._3v3PK').css({
+                        height: 'auto'
+                    });
+
+                });
+
+                break;
+
+            case 'document':
+                div.innerHTML= `          
+                     <div class="_3_7SH _1ZPgd">
+                            <div class="_1fnMt _2CORf">
+                                <a class="_1vKRe" href="#">
+                                    <div class="_2jTyA" style="background-image: url(${this.preview})"></div>
+                                    <div class="_12xX7">
+                                        <div class="_3eW69">
+                                            <div class="JdzFp message-file-icon"></div>
+                                        </div>
+                                        <div class="nxILt">
+                                            <span dir="auto" class="message-filename">${this.filename}</span>
+                                        </div>
+                                        <div class="_17viz">
+                                            <span data-icon="audio-download" class="message-file-download">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 34" width="34" height="34">
+                                                    <path fill="#263238" fill-opacity=".5" d="M17 2c8.3 0 15 6.7 15 15s-6.7 15-15 15S2 25.3 2 17 8.7 2 17 2m0-1C8.2 1 1 8.2 1 17s7.2 16 16 16 16-7.2 16-16S25.8 1 17 1z"></path>
+                                                    <path fill="#263238" fill-opacity=".5" d="M22.4 17.5h-3.2v-6.8c0-.4-.3-.7-.7-.7h-3.2c-.4 0-.7.3-.7.7v6.8h-3.2c-.6 0-.8.4-.4.8l5 5.3c.5.7 1 .5 1.5 0l5-5.3c.7-.5.5-.8-.1-.8z"></path>
+                                                </svg>
+                                            </span>
+                                            <div class="_3SUnz message-file-load" style="display:none">
+                                                <svg class="_1UDDE" width="32" height="32" viewBox="0 0 43 43">
+                                                    <circle class="_3GbTq _37WZ9" cx="21.5" cy="21.5" r="20" fill="none" stroke-width="3"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="_3cMIj">
+                                    <span class="PyPig message-file-info">${this.info}</span>
+                                    <span class="PyPig message-file-type">${this.fileType}</span>
+                                    <span class="PyPig message-file-size">${this.size}</span>
+                                </div>
+                                <div class="_3Lj_s">
+                                    <div class="_1DZAH" role="button">
+                                        <span class="message-time">${__WEBPACK_IMPORTED_MODULE_2__util_Format__["a" /* Format */].fbTimeStampToTime(this.timeStamp)}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                      
+                `;
+        
+                div.on('click', e => {
+
+                    window.open(this.content);
+
+                });
+
+                break;
+
+            case 'audio':
+                div.innerHTML= `
+                 <div class="_3_7SH _17oKL">
+                        <div class="_2N_Df LKbsn">
+                            <div class="_2jfIu">
+                                <div class="_2cfqh">
+                                    <div class="_1QMEq _1kZiz fS1bA">
+                                        <div class="E5U9C">
+                                            <svg class="_1UDDE audio-load" width="34" height="34" viewBox="0 0 43 43">
+                                                <circle class="_3GbTq _37WZ9" cx="21.5" cy="21.5" r="20" fill="none" stroke-width="3"></circle>
+                                            </svg>
+                                            <button class="_2pQE3 audio-play" style="display:none">
+                                                <span data-icon="audio-play">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 34" width="34" height="34">
+                                                        <path fill="#263238" fill-opacity=".5" d="M8.5 8.7c0-1.7 1.2-2.4 2.6-1.5l14.4 8.3c1.4.8 1.4 2.2 0 3l-14.4 8.3c-1.4.8-2.6.2-2.6-1.5V8.7z"></path>
+                                                    </svg>
+                                                </span>
+                                            </button>
+                                            <button class="_2pQE3 audio-pause" style="display:none">
+                                                <span data-icon="audio-pause">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 34" width="34" height="34">
+                                                        <path fill="#263238" fill-opacity=".5" d="M9.2 25c0 .5.4 1 .9 1h3.6c.5 0 .9-.4.9-1V9c0-.5-.4-.9-.9-.9h-3.6c-.4-.1-.9.3-.9.9v16zm11-17c-.5 0-1 .4-1 .9V25c0 .5.4 1 1 1h3.6c.5 0 1-.4 1-1V9c0-.5-.4-.9-1-.9 0-.1-3.6-.1-3.6-.1z"></path>
+                                                    </svg>
+                                                </span>
+                                            </button>
+                                        </div>
+                                        <div class="_1_Gu6">
+                                            <div class="message-audio-duration">0:00</div>
+                                            <div class="_1sLSi">
+                                                <span class="nDKsM" style="width: 0%;"></span>
+                                                <input type="range" min="0" max="100" class="_3geJ8" value="0">
+                                                <audio>
+                                                    <source src="${this.content}" type="audio/webm">
+                                                </audio>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="_1mbqw">
+                                    <div class="QnDup">
+                                        <span data-icon="ptt-out-blue">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 26" width="19" height="26">
+                                                <path fill="#DDF6C9" d="M9.217 24.401c-1.158 0-2.1-.941-2.1-2.1v-2.366c-2.646-.848-4.652-3.146-5.061-5.958l-.052-.357-.003-.081a2.023 2.023 0 0 1 .571-1.492c.39-.404.939-.637 1.507-.637h.3c.254 0 .498.044.724.125v-6.27A4.27 4.27 0 0 1 9.367 1a4.27 4.27 0 0 1 4.265 4.265v6.271c.226-.081.469-.125.723-.125h.3c.564 0 1.112.233 1.501.64s.597.963.571 1.526c0 .005.001.124-.08.6-.47 2.703-2.459 4.917-5.029 5.748v2.378c0 1.158-.942 2.1-2.1 2.1h-.301v-.002z"></path>
+                                                <path fill="#03A9F4" d="M9.367 15.668a2.765 2.765 0 0 0 2.765-2.765V5.265a2.765 2.765 0 0 0-5.529 0v7.638a2.764 2.764 0 0 0 2.764 2.765zm5.288-2.758h-.3a.64.64 0 0 0-.631.598l-.059.285a4.397 4.397 0 0 1-4.298 3.505 4.397 4.397 0 0 1-4.304-3.531l-.055-.277a.628.628 0 0 0-.629-.579h-.3a.563.563 0 0 0-.579.573l.04.278a5.894 5.894 0 0 0 5.076 4.978v3.562c0 .33.27.6.6.6h.3c.33 0 .6-.27.6-.6V18.73c2.557-.33 4.613-2.286 5.051-4.809.057-.328.061-.411.061-.411a.57.57 0 0 0-.573-.6z"></path>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="_2fuJy">
+                                    <div class="_1WliW" style="height: 55px; width: 55px;">
+                                        <img src="${this.content}" class="Qgzj8 gqwaM message-photo" style="display:none">
+                                        <div class="_3ZW2E">
+                                            <span data-icon="default-user">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 212 212" width="212" height="212">
+                                                    <path fill="#DFE5E7" d="M106.251.5C164.653.5 212 47.846 212 106.25S164.653 212 106.25 212C47.846 212 .5 164.654.5 106.25S47.846.5 106.251.5z"></path>
+                                                    <g fill="#FFF">
+                                                        <path d="M173.561 171.615a62.767 62.767 0 0 0-2.065-2.955 67.7 67.7 0 0 0-2.608-3.299 70.112 70.112 0 0 0-3.184-3.527 71.097 71.097 0 0 0-5.924-5.47 72.458 72.458 0 0 0-10.204-7.026 75.2 75.2 0 0 0-5.98-3.055c-.062-.028-.118-.059-.18-.087-9.792-4.44-22.106-7.529-37.416-7.529s-27.624 3.089-37.416 7.529c-.338.153-.653.318-.985.474a75.37 75.37 0 0 0-6.229 3.298 72.589 72.589 0 0 0-9.15 6.395 71.243 71.243 0 0 0-5.924 5.47 70.064 70.064 0 0 0-3.184 3.527 67.142 67.142 0 0 0-2.609 3.299 63.292 63.292 0 0 0-2.065 2.955 56.33 56.33 0 0 0-1.447 2.324c-.033.056-.073.119-.104.174a47.92 47.92 0 0 0-1.07 1.926c-.559 1.068-.818 1.678-.818 1.678v.398c18.285 17.927 43.322 28.985 70.945 28.985 27.678 0 52.761-11.103 71.055-29.095v-.289s-.619-1.45-1.992-3.778a58.346 58.346 0 0 0-1.446-2.322zM106.002 125.5c2.645 0 5.212-.253 7.68-.737a38.272 38.272 0 0 0 3.624-.896 37.124 37.124 0 0 0 5.12-1.958 36.307 36.307 0 0 0 6.15-3.67 35.923 35.923 0 0 0 9.489-10.48 36.558 36.558 0 0 0 2.422-4.84 37.051 37.051 0 0 0 1.716-5.25c.299-1.208.542-2.443.725-3.701.275-1.887.417-3.827.417-5.811s-.142-3.925-.417-5.811a38.734 38.734 0 0 0-1.215-5.494 36.68 36.68 0 0 0-3.648-8.298 35.923 35.923 0 0 0-9.489-10.48 36.347 36.347 0 0 0-6.15-3.67 37.124 37.124 0 0 0-5.12-1.958 37.67 37.67 0 0 0-3.624-.896 39.875 39.875 0 0 0-7.68-.737c-21.162 0-37.345 16.183-37.345 37.345 0 21.159 16.183 37.342 37.345 37.342z"></path>
+                                                    </g>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="_27K_5">
+                                <div class="_1DZAH" role="button">
+                                    <span class="message-time">${__WEBPACK_IMPORTED_MODULE_2__util_Format__["a" /* Format */].fbTimeStampToTime(this.timeStamp)}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="_3S8Q-" role="button">
+                            <span data-icon="forward-chat">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" width="25" height="25">
+                                    <path fill="#FFF" d="M14.2 9.5V6.1l5.9 5.9-5.9 6v-3.5c-4.2 0-7.2 1.4-9.3 4.3.8-4.2 3.4-8.4 9.3-9.3z"></path>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                `;
+
+                if (this.photo) {
+
+                    let img = div.querySelector('.message-photo');
+                    img.src = this.photo;
+                    img.show();
+
+                }
+
+                let audioEl = div.querySelector('audio');
+                let loadEl = div.querySelector('.audio-load');
+                let btnPlay = div.querySelector('.audio-play');
+                let btnPause = div.querySelector('.audio-pause');
+                let inputRange = div.querySelector('[type="range"]');
+                let audioDuration = div.querySelector('.message-audio-duration');
+
+
+                audioEl.onloadedmetadata = e => {
+
+                    loadEl.hide();
+                    btnPlay.show();
+
+                };
+
+                audioEl.onplay = e => {
+
+                    btnPlay.hide();
+                    btnPause.show();    
+
+                }
+
+                audioEl.onpause = e => {  
+
+                    audioDuration.innerText = __WEBPACK_IMPORTED_MODULE_2__util_Format__["a" /* Format */].toTime(this.duration);
+                    btnPlay.show();
+                    btnPause.hide();
+
+                 }
+
+
+                 audioEl.onended = e => {
+
+                    audioEl.currentTime = 0;
+
+                 }
+
+                 audioEl.ontimeupdate = e => {
+
+                    btnPlay.hide();
+                    btnPause.hide();
+
+                    audioDuration.innerText = __WEBPACK_IMPORTED_MODULE_2__util_Format__["a" /* Format */].toTime(audioEl.currentTime * 1000);
+                    inputRange.value = (audioEl.currentTime * 100) / this.duration;
+
+                    if(audioEl.paused){
+
+                        btnPlay.show();
+
+                    }else{
+
+                        btnPause.show();
+
+                    }
+
+                 }
+
+
+                 btnPlay.on('click', e => {
+
+                    audioEl.play();
+
+                 });
+
+                 btnPause.on('click', e => {
+
+                    audioEl.pause();
+
+                 });
+
+                 inputRange.on('change', e => {
+
+                    audioEl.currentTime = (inputRange.value * this.duration) / 100; 
+
+                 });
+
+
+
+                break;
+
+            default:
+                div.innerHTML= `
+                         <div class="font-style _3DFk6  tail" >
+                         <span class="tail-container"></span>
+                         <span class="tail-container highlight"></span>
+                         <div class="Tkt2p">
+                             <div class="_3zb-j ZhF0n">
+                                 <span dir="ltr" class="selectable-text invisible-space message-text">${this.content}</span>
+                             </div>
+                             <div class="_2f-RV">
+                                 <div class="_1DZAH">
+                                     <span class="message-time">${__WEBPACK_IMPORTED_MODULE_2__util_Format__["a" /* Format */].fbTimeStampToTime(this.timeStamp)}</span>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                `;
+
+
+       }
+
+       let className = 'message-in'; 
+
+       if(me){
+        
+        className = 'message-out';
+
+         div.querySelector('.message-time').parentElement.appendChild(this.getStatusViewElement());
+
+       }
+
+       div.firstElementChild.classList.add(className);
+
+       return div;
+    }
+
+
+    static upload(file, from){
+
+       return __WEBPACK_IMPORTED_MODULE_3__util_Upload__["a" /* Upload */].send(file, from);
+
+
+    }
+
+    static sendAudio(chatId, from, file, metadata, photo){
+
+        return Message.send(chatId, from, 'audio', '').then(msgRef => {
+
+            Message.upload(file, from).then(snapshot => {
+
+                let downloadFile = snapshot.downloadURL;
+
+                msgRef.set({
+                    content: downloadFile,
+                    duration: metadata.duration,
+                    size: file.size,
+                    status: 'sent',
+                    photo,
+                    fileType: file.type
+                },{
+
+                    merge: true
+                });
+
+            });
+
+        });
+
+    }
+
+    static sendDocument(chatId, from, file, filePreview, info){
+
+        Message.send(chatId, from, 'document', '').then(msgRef => {
+
+       
+
+         Message.upload(file, from).then(snapshot => {
+
+                let downloadFile = snapshot.downloadURL;
+
+                    if(filePreview){ Message.upload(filePreview, from).then(snapshotPreview => {
+
+                    let downloadPreview = snapshotPreview.downloadURL;
+
+                            msgRef.set({
+                                content: downloadFile,
+                                preview: downloadPreview,
+                                filename: file.name,
+                                fileType: file.type,
+                                status: 'sent',
+                                info
+                            },{
+
+                                merge: true
+                            });
+
+                    });
+                } else{
+
+                    msgRef.set({
+                        content: downloadFile,
+                        filename: file.name,
+                        fileType: file.type,
+                        status: 'sent'
+                    },{
+
+                        merge: true
+                    });
+
+                }
+
+             });
+
+        
+        });
+
+       
+
+    }
+
+    static sendContact(chatId, from, contact){
+
+        return Message.send(chatId, from, 'contact', contact);
+
+    }
+
+    static sendImage(chatId, from, file){
+
+        return new Promise((s, f) => {
+
+            Message.upload(file).then(snapshot=>{
+
+                Message.send(
+                    chatId, 
+                    from, 
+                    'image', 
+                    snapshot.downloadURL).then(()=>{
+
+                    s();
+                });
+
+            });
+        
+        });
+
+    }
+
+    static send(chatId, from, type, content){
+
+          return new Promise((s, f) => {
+          
+          Message.getRef(chatId).add({
+                content,
+                timeStamp: new Date(),
+                status: 'wait',
+                type,
+                from 
+            }).then(result =>{
+                
+                
+                let docRef = result.parent.doc(result.id);
+                
+                
+                docRef.set({
+                    status: 'sent'
+
+                },{
+
+                    merge: true
+                }).then(()=>{
+
+                    s(docRef);
+
+                });
+            });
+        });
+       
+   }
+
+   static getRef(chatId){
+
+    return __WEBPACK_IMPORTED_MODULE_0__util_firebase__["a" /* Firebase */].db()
+    .collection('chats')
+    .doc(chatId)
+    .collection('messages');
+   }
+
+   getStatusViewElement(){
+
+    let div = document.createElement('div');
+
+    div.className = 'message-status';
+
+    switch (this.status) {
+
+        case 'wait':
+           div.innerHTML = `
+                    <span data-icon="msg-time">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 15" width="16" height="15">
+                            <path fill="#859479" d="M9.75 7.713H8.244V5.359a.5.5 0 0 0-.5-.5H7.65a.5.5 0 0 0-.5.5v2.947a.5.5 0 0 0 .5.5h.094l.003-.001.003.002h2a.5.5 0 0 0 .5-.5v-.094a.5.5 0 0 0-.5-.5zm0-5.263h-3.5c-1.82 0-3.3 1.48-3.3 3.3v3.5c0 1.82 1.48 3.3 3.3 3.3h3.5c1.82 0 3.3-1.48 3.3-3.3v-3.5c0-1.82-1.48-3.3-3.3-3.3zm2 6.8a2 2 0 0 1-2 2h-3.5a2 2 0 0 1-2-2v-3.5a2 2 0 0 1 2-2h3.5a2 2 0 0 1 2 2v3.5z"></path>
+                        </svg>
+                    </span>
+                `;
+            break;
+
+        case 'sent':
+           div.innerHTML = `
+                    <span data-icon="msg-check" class="">
+                        <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 15" width="16" height="15">
+                            <path fill="#92A58C" d="M10.91 3.316l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z"></path>
+                        </svg>
+                    </span>
+                `;
+            break;
+
+        case 'received':
+           div.innerHTML = `
+                    <span data-icon="msg-dblcheck">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 15" width="16" height="15">
+                            <path fill="#92A58C" d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.319.319 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z"></path>
+                        </svg>
+                    </span>
+                `;
+            break;
+
+        case 'read':
+           div.innerHTML = `
+                    <span data-icon="msg-dblcheck-ack">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 15" width="16" height="15">
+                            <path fill="#4FC3F7" d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.319.319 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z"></path>
+                        </svg>
+                    </span>
+                `;
+            break;
+
+    }
+
+    return div;
+
+   }
+
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Message;
+
+
+/***/ }),
+/* 140 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__firebase__ = __webpack_require__(8);
+
+
+class Upload {
+    static send(file, from){
+
+        
+                return new Promise((s, f) => {
+        
+                let uploadTask = __WEBPACK_IMPORTED_MODULE_0__firebase__["a" /* Firebase */].hd().ref(from).child(Date.now() + '_' + file.name).put(file);
+        
+                uploadTask.on('state_changed', e => {
+        
+                    console.info('upload', e);
+        
+                }, err => {
+        
+                    f(err);
+        
+                }, () => {
+        
+                    s(uploadTask.snapshot);        
+        
+                });
+            });
+                
+
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Upload;
 
 
 /***/ })
