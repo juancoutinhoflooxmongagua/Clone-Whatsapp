@@ -4,12 +4,8 @@ import { MicrophoneController } from './MicrophoneController';
 import { DocumentPreviewController } from './DocumentPreviewController';
 import { Firebase } from '../util/firebase';
 import { User } from '../model/User';
-import { Chat } from '../model/chat';
+import { Chat } from '../model/Chat';
 import { Message } from '../model/message';
-import { Base64 } from '../util/Base64';
-import { ContactsController } from './ContactsController';
-import { Upload } from '../util/Upload';
-
 
 export class WhatsAppController {
   constructor() {
@@ -100,7 +96,7 @@ export class WhatsAppController {
                     <span dir="auto" title="${contact.name}" class="_1wjpf">${contact.name}</span>
                 </div>
                 <div class="_3Bxar">
-                    <span class="_3T2VG">${Format.fbTimeStampToTime(contact.lastMessageTime)}</span>
+                    <span class="_3T2VG">${contact.lastMessageTime}</span>
                 </div>
             </div>
             <div class="_1AwDx">

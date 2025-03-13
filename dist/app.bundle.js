@@ -379,7 +379,7 @@ process.umask = function() { return 0; };
 
 var base64 = __webpack_require__(16)
 var ieee754 = __webpack_require__(17)
-var isArray = __webpack_require__(8)
+var isArray = __webpack_require__(9)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -2194,7 +2194,7 @@ function isnan (val) {
 
 /*<replacement>*/
 
-var pna = __webpack_require__(9);
+var pna = __webpack_require__(10);
 /*</replacement>*/
 
 /*<replacement>*/
@@ -2860,6 +2860,77 @@ function objectToString(o) {
 
 /***/ }),
 /* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+const firebase = __webpack_require__(122);
+__webpack_require__(134);
+
+class Firebase {
+  constructor() {
+    this._config = {
+ 
+        apiKey: "AIzaSyCLODBGpr_LFC-OfLgMwvVulXg-ipnvHO0",
+        authDomain: "wasabi-5d6f7.firebaseapp.com",
+        projectId: "wasabi-5d6f7",
+        storageBucket: "wasabi-5d6f7.firebasestorage.app",
+        messagingSenderId: "22057437819",
+        appId: "1:22057437819:web:7d0026bc8f2abc9105f0de"
+    };
+
+    this.init();
+  }
+
+  init() {
+    if (!window._initializedFirebase) {
+      firebase.initializeApp(this._config);
+
+      firebase.firestore().settings({
+        timestampsInSnapshots: true,
+      });
+
+      window._initializedFirebase = true;
+    }
+  }
+
+  static db() {
+    return firebase.firestore();
+  }
+
+  static hd() {
+    return firebase.storage();
+  }
+
+  initAuth() {
+    return new Promise((s, f) => {
+      let provider = new firebase.auth.GoogleAuthProvider();
+
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then((result) => {
+          let token = result.credential.acessToken;
+          let user = result.user;
+
+          s({
+            user,
+            token,
+          });
+        })
+        .catch((err) => {
+          f(err);
+        });
+    });
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Firebase;
+
+
+
+
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -2870,7 +2941,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2923,7 +2994,7 @@ function nextTick(fn, arg1, arg2, arg3) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2935,7 +3006,7 @@ module.exports = Function.prototype.bind || implementation;
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3047,7 +3118,7 @@ exports.setTyped(TYPED_OK);
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var hasMap = typeof Map === 'function' && Map.prototype;
@@ -3596,77 +3667,6 @@ function arrObjKeys(obj, inspect) {
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 13 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-const firebase = __webpack_require__(122);
-__webpack_require__(134);
-
-class Firebase {
-  constructor() {
-    this._config = {
- 
-        apiKey: "AIzaSyCLODBGpr_LFC-OfLgMwvVulXg-ipnvHO0",
-        authDomain: "wasabi-5d6f7.firebaseapp.com",
-        projectId: "wasabi-5d6f7",
-        storageBucket: "wasabi-5d6f7.firebasestorage.app",
-        messagingSenderId: "22057437819",
-        appId: "1:22057437819:web:7d0026bc8f2abc9105f0de"
-    };
-
-    this.init();
-  }
-
-  init() {
-    if (!window._initializedFirebase) {
-      firebase.initializeApp(this._config);
-
-      firebase.firestore().settings({
-        timestampsInSnapshots: true,
-      });
-
-      window._initializedFirebase = true;
-    }
-  }
-
-  static db() {
-    return firebase.firestore();
-  }
-
-  static hd() {
-    return firebase.storage();
-  }
-
-  initAuth() {
-    return new Promise((s, f) => {
-      let provider = new firebase.auth.GoogleAuthProvider();
-
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then((result) => {
-          let token = result.credential.acessToken;
-          let user = result.user;
-
-          s({
-            user,
-            token,
-          });
-        })
-        .catch((err) => {
-          f(err);
-        });
-    });
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Firebase;
-
-
-
-
 
 /***/ }),
 /* 14 */
@@ -4768,7 +4768,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 
 /*<replacement>*/
 
-var pna = __webpack_require__(9);
+var pna = __webpack_require__(10);
 /*</replacement>*/
 
 module.exports = Writable;
@@ -5699,7 +5699,7 @@ var LEGACY_ALIASES = {
 	'%WeakSetPrototype%': ['WeakSet', 'prototype']
 };
 
-var bind = __webpack_require__(10);
+var bind = __webpack_require__(11);
 var hasOwn = __webpack_require__(97);
 var $concat = bind.call($call, Array.prototype.concat);
 var $spliceApply = bind.call($apply, Array.prototype.splice);
@@ -7761,13 +7761,13 @@ class ClassEvent {
 
 /*<replacement>*/
 
-var pna = __webpack_require__(9);
+var pna = __webpack_require__(10);
 /*</replacement>*/
 
 module.exports = Readable;
 
 /*<replacement>*/
-var isArray = __webpack_require__(8);
+var isArray = __webpack_require__(9);
 /*</replacement>*/
 
 /*<replacement>*/
@@ -8773,7 +8773,7 @@ module.exports = __webpack_require__(18).EventEmitter;
 
 /*<replacement>*/
 
-var pna = __webpack_require__(9);
+var pna = __webpack_require__(10);
 /*</replacement>*/
 
 // undocumented cb() API, needed for core, not for public API
@@ -10089,7 +10089,7 @@ module.exports = $Object.getPrototypeOf || null;
 "use strict";
 
 
-var bind = __webpack_require__(10);
+var bind = __webpack_require__(11);
 var $TypeError = __webpack_require__(5);
 
 var $call = __webpack_require__(25);
@@ -10958,7 +10958,7 @@ module.exports = crc32;
 
 var GetIntrinsic = __webpack_require__(23);
 var callBound = __webpack_require__(22);
-var inspect = __webpack_require__(12);
+var inspect = __webpack_require__(13);
 
 var $TypeError = __webpack_require__(5);
 var $Map = GetIntrinsic('%Map%', true);
@@ -11524,11 +11524,10 @@ window.app = new __WEBPACK_IMPORTED_MODULE_0__controller_WhatsAppController__["a
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CameraController__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MicrophoneController__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__DocumentPreviewController__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__util_firebase__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__util_firebase__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__model_User__ = __webpack_require__(137);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__model_Chat__ = __webpack_require__(138);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__model_message__ = __webpack_require__(139);
-
 
 
 
@@ -32543,7 +32542,7 @@ module.exports = function bind(that) {
 "use strict";
 
 
-var bind = __webpack_require__(10);
+var bind = __webpack_require__(11);
 
 var $apply = __webpack_require__(44);
 var $call = __webpack_require__(25);
@@ -32573,7 +32572,7 @@ module.exports = typeof Reflect !== 'undefined' && Reflect && Reflect.apply;
 
 var call = Function.prototype.call;
 var $hasOwn = Object.prototype.hasOwnProperty;
-var bind = __webpack_require__(10);
+var bind = __webpack_require__(11);
 
 /** @type {import('.')} */
 module.exports = bind.call(call, $hasOwn);
@@ -32699,7 +32698,7 @@ module.exports = ZStream;
 //   misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-var utils   = __webpack_require__(11);
+var utils   = __webpack_require__(12);
 var trees   = __webpack_require__(102);
 var adler32 = __webpack_require__(46);
 var crc32   = __webpack_require__(47);
@@ -34582,7 +34581,7 @@ exports.deflateTune = deflateTune;
 
 /* eslint-disable space-unary-ops */
 
-var utils = __webpack_require__(11);
+var utils = __webpack_require__(12);
 
 /* Public constants ==========================================================*/
 /* ===========================================================================*/
@@ -35848,7 +35847,7 @@ module.exports = {
 //   misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-var utils         = __webpack_require__(11);
+var utils         = __webpack_require__(12);
 var adler32       = __webpack_require__(46);
 var crc32         = __webpack_require__(47);
 var inflate_fast  = __webpack_require__(105);
@@ -37763,7 +37762,7 @@ module.exports = function inflate_fast(strm, start) {
 //   misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-var utils = __webpack_require__(11);
+var utils = __webpack_require__(12);
 
 var MAXBITS = 15;
 var ENOUGH_LENS = 852;
@@ -39919,7 +39918,7 @@ module.exports = function (object, opts) {
 
 
 var $TypeError = __webpack_require__(5);
-var inspect = __webpack_require__(12);
+var inspect = __webpack_require__(13);
 var getSideChannelList = __webpack_require__(118);
 var getSideChannelMap = __webpack_require__(48);
 var getSideChannelWeakMap = __webpack_require__(119);
@@ -39974,7 +39973,7 @@ module.exports = function getSideChannel() {
 "use strict";
 
 
-var inspect = __webpack_require__(12);
+var inspect = __webpack_require__(13);
 
 var $TypeError = __webpack_require__(5);
 
@@ -40096,7 +40095,7 @@ module.exports = function getSideChannelList() {
 
 var GetIntrinsic = __webpack_require__(23);
 var callBound = __webpack_require__(22);
-var inspect = __webpack_require__(12);
+var inspect = __webpack_require__(13);
 var getSideChannelMap = __webpack_require__(48);
 
 var $TypeError = __webpack_require__(5);
@@ -80048,7 +80047,7 @@ T.prototype.getStatus=T.prototype.W;T.prototype.getStatusText=T.prototype.Ha;T.p
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_firebase__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_firebase__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Model__ = __webpack_require__(28);
 
 
@@ -80157,7 +80156,7 @@ class User extends __WEBPACK_IMPORTED_MODULE_1__Model__["a" /* Model */] {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Model__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util_firebase__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util_firebase__ = __webpack_require__(8);
 
 
 
@@ -80252,10 +80251,10 @@ class Chat extends __WEBPACK_IMPORTED_MODULE_0__Model__["a" /* Model */] {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_firebase__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_firebase__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Model__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util_Format__ = __webpack_require__(15);
-throw new Error("Cannot find module \"../util/Upload\"");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_Upload__ = __webpack_require__(140);
 
 
 
@@ -80681,7 +80680,7 @@ class Message extends __WEBPACK_IMPORTED_MODULE_1__Model__["a" /* Model */] {
 
     static upload(file, from){
 
-       return __WEBPACK_IMPORTED_MODULE_3__util_Upload__["Upload"].send(file, from);
+       return __WEBPACK_IMPORTED_MODULE_3__util_Upload__["a" /* Upload */].send(file, from);
 
 
     }
@@ -80885,6 +80884,43 @@ class Message extends __WEBPACK_IMPORTED_MODULE_1__Model__["a" /* Model */] {
 
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Message;
+
+
+/***/ }),
+/* 140 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__firebase__ = __webpack_require__(8);
+
+
+class Upload {
+    static send(file, from){
+
+        
+                return new Promise((s, f) => {
+        
+                let uploadTask = __WEBPACK_IMPORTED_MODULE_0__firebase__["a" /* Firebase */].hd().ref(from).child(Date.now() + '_' + file.name).put(file);
+        
+                uploadTask.on('state_changed', e => {
+        
+                    console.info('upload', e);
+        
+                }, err => {
+        
+                    f(err);
+        
+                }, () => {
+        
+                    s(uploadTask.snapshot);        
+        
+                });
+            });
+                
+
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Upload;
 
 
 /***/ })
