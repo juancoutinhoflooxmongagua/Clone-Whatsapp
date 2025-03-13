@@ -1,7 +1,7 @@
 import { Firebase } from "../util/firebase";
 import { Model } from "./Model";
 import { Format } from "../util/Format";
-import { Upload } from "../util/Upload";
+import { Upload } from "../util/Upload.js";
 
 export class Message extends Model {
     constructor() {
