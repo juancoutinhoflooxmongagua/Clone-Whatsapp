@@ -6,7 +6,9 @@ import { Firebase } from '../util/firebase';
 import { User } from '../model/User';
 import { Chat } from '../model/Chat';
 import { Message } from '../model/message';
-
+import { Base64 } from '../util/Base64';
+import { ContactsController } from './ContactsController';
+import { Upload } from '../util/Upload';
 export class WhatsAppController {
   constructor() {
     console.log('ok');
