@@ -1,4 +1,4 @@
-import { Firebase } from "./firebase";
+import { Firebase } from "./Firebase";
 
 export class Upload {
     static send(file, from){
