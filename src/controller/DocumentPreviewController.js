@@ -8,7 +8,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = path.resolve(
 
 export class DocumentPreviewController {
   constructor(file) {
-    this._file = file; 
+    this._file = file;
   }
 
   getPriviewData() {

@@ -1,13 +1,11 @@
-import { Firebase } from "../util/firebase";
+import { Firebase } from "../util/Firebase";
 import { Model } from "./Model";
 
 export class User extends Model {
 
     constructor(id){
-
         super();
         if(id) this.getById(id);
-
     }
 
     get name(){return this._data.name;}
@@ -23,7 +21,6 @@ export class User extends Model {
     set chatId(value){this._data.chatId=value;}
 
     getById(id){
-
         return new Promise((s, f )=>{
 
             User.findByEmail(id).onSnapshot(doc =>{

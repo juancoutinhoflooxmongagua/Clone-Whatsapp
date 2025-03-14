@@ -4,13 +4,14 @@ require("firebase/firestore");
 export class Firebase {
   constructor() {
     this._config = {
- 
-        apiKey: "AIzaSyCLODBGpr_LFC-OfLgMwvVulXg-ipnvHO0",
-        authDomain: "wasabi-5d6f7.firebaseapp.com",
-        projectId: "wasabi-5d6f7",
-        storageBucket: "wasabi-5d6f7.firebasestorage.app",
-        messagingSenderId: "22057437819",
-        appId: "1:22057437819:web:7d0026bc8f2abc9105f0de"
+      apiKey: "AIzaSyCe3V4o9RS5T-JCwNYT9d0MoPukvjvHzGE",
+      authDomain: "wppclone-3946c.firebaseapp.com",
+      databaseURL: "https://wppclone-3946c-default-rtdb.firebaseio.com",
+      projectId: "wppclone-3946c",
+      storageBucket: "gs://wppclone-3946c.firebasestorage.app",
+      messagingSenderId: "118093865732",
+      appId: "1:118093865732:web:2697144ee8bf6618a06651",
+      measurementId: "G-XXD52GF9N0",
     };
 
     this.init();
@@ -58,5 +59,3 @@ export class Firebase {
     });
   }
 }
-
-

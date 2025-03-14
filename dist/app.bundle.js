@@ -2870,13 +2870,14 @@ class Firebase {
   constructor() {
     this._config = {
  
-        apiKey: "AIzaSyCLODBGpr_LFC-OfLgMwvVulXg-ipnvHO0",
-        authDomain: "wasabi-5d6f7.firebaseapp.com",
-        projectId: "wasabi-5d6f7",
-        storageBucket: "wasabi-5d6f7.firebasestorage.app",
-        messagingSenderId: "22057437819",
-        appId: "1:22057437819:web:7d0026bc8f2abc9105f0de"
-    };
+      apiKey: "AIzaSyCLODBGpr_LFC-OfLgMwvVulXg-ipnvHO0",
+      authDomain: "wasabi-5d6f7.firebaseapp.com",
+      projectId: "wasabi-5d6f7",
+      storageBucket: "wasabi-5d6f7.firebasestorage.app",
+      messagingSenderId: "22057437819",
+      appId: "1:22057437819:web:7d0026bc8f2abc9105f0de"
+  };
+
 
     this.init();
   }
@@ -2924,8 +2925,6 @@ class Firebase {
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Firebase;
-
-
 
 
 
@@ -3879,47 +3878,48 @@ function __importDefault(mod) {
 
 "use strict";
 class Format {
-    static getCamelCase(text) {
-      let div = document.createElement("div");
-  
-      div.innerHTML = `<div data-${text}="id"></div>`;
-  
-      return Object.keys(div.firstChild.dataset)[0];
-    }
-  
-    static toTime(duration) {
-      let milliseconds = parseInt((duration % 1000) / 100),
-        seconds = parseInt((duration / 1000) % 60),
-        minutes = parseInt((duration / (1000 * 60)) % 60),
-        hours = parseInt((duration / (1000 * 60 * 60)) % 24);
-  
-      if (hours > 0) {
-        return `${hours.toString()}:${minutes
-          .toString()
-          .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-      } else {
-        return `${minutes.toString()}:${seconds.toString().padStart(2, "0")}`;
-      }
-    }
-  
-    static dateToTime(date, locale = 'pt-BR') {
-  
-      
-          return date.toLocaleTimeString(locale, { 
-            hour: '2-digit',
-            minute: '2-digit' 
-          });
-     
-  
-    }
-  
-    static fbTimeStampToTime(timeStamp) {
-      return timeStamp && typeof timeStamp.toDate === "function"
-        ? Format.dateToTime(timeStamp.toDate())
-        : "";
+  static getCamelCase(text) {
+    let div = document.createElement("div");
+
+    div.innerHTML = `<div data-${text}="id"></div>`;
+
+    return Object.keys(div.firstChild.dataset)[0];
+  }
+
+  static toTime(duration) {
+    let milliseconds = parseInt((duration % 1000) / 100),
+      seconds = parseInt((duration / 1000) % 60),
+      minutes = parseInt((duration / (1000 * 60)) % 60),
+      hours = parseInt((duration / (1000 * 60 * 60)) % 24);
+
+    if (hours > 0) {
+      return `${hours.toString()}:${minutes
+        .toString()
+        .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    } else {
+      return `${minutes.toString()}:${seconds.toString().padStart(2, "0")}`;
     }
   }
+
+  static dateToTime(date, locale = 'pt-BR') {
+
+    
+        return date.toLocaleTimeString(locale, { 
+          hour: '2-digit',
+          minute: '2-digit' 
+        });
+   
+
+  }
+
+  static fbTimeStampToTime(timeStamp) {
+    return timeStamp && typeof timeStamp.toDate === "function"
+      ? Format.dateToTime(timeStamp.toDate())
+      : "";
+  }
+}
 /* harmony export (immutable) */ __webpack_exports__["a"] = Format;
+
 
 
 /***/ }),
@@ -3953,6 +3953,7 @@ class ClassEvent {
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = ClassEvent;
+
 
 
 /***/ }),
@@ -7751,6 +7752,7 @@ class Model extends __WEBPACK_IMPORTED_MODULE_0__util_ClassEvent__["a" /* ClassE
 /* harmony export (immutable) */ __webpack_exports__["a"] = Model;
 
 
+
 /***/ }),
 /* 30 */,
 /* 31 */
@@ -11529,7 +11531,7 @@ function setLogLevel(level) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__firebase__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Firebase__ = __webpack_require__(8);
 
 
 class Upload {
@@ -11538,7 +11540,7 @@ class Upload {
         
                 return new Promise((s, f) => {
         
-                let uploadTask = __WEBPACK_IMPORTED_MODULE_0__firebase__["a" /* Firebase */].hd().ref(from).child(Date.now() + '_' + file.name).put(file);
+                let uploadTask = __WEBPACK_IMPORTED_MODULE_0__Firebase__["a" /* Firebase */].hd().ref(from).child(Date.now() + '_' + file.name).put(file);
         
                 uploadTask.on('state_changed', e => {
         
@@ -11582,7 +11584,7 @@ window.app = new __WEBPACK_IMPORTED_MODULE_0__controller_WhatsAppController__["a
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CameraController__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MicrophoneController__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__DocumentPreviewController__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__util_firebase__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__util_Firebase__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__model_User__ = __webpack_require__(138);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__model_Chat__ = __webpack_require__(139);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__model_message__ = __webpack_require__(140);
@@ -11606,7 +11608,7 @@ class WhatsAppController {
   constructor() {
     console.log('ok');
 
-    this._firebase = new __WEBPACK_IMPORTED_MODULE_4__util_firebase__["a" /* Firebase */]();
+    this._firebase = new __WEBPACK_IMPORTED_MODULE_4__util_Firebase__["a" /* Firebase */]();
     this.initAuth();
     this.elementsPrototype();
     this.loadElements();
@@ -11691,7 +11693,7 @@ class WhatsAppController {
                     <span dir="auto" title="${contact.name}" class="_1wjpf">${contact.name}</span>
                 </div>
                 <div class="_3Bxar">
-                    <span class="_3T2VG">${contact.lastMessageTime}</span>
+                    <span class="_3T2VG">${__WEBPACK_IMPORTED_MODULE_0__util_Format__["a" /* Format */].fbTimeStampToTime(contact.lastMessageTime)}</span>
                 </div>
             </div>
             <div class="_1AwDx">
@@ -12457,58 +12459,44 @@ class WhatsAppController {
 /* harmony export (immutable) */ __webpack_exports__["a"] = WhatsAppController;
 
 
+
 /***/ }),
 /* 54 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 class CameraController {
-    constructor(videoEl) {
-        this._videoEl = videoEl;
+  constructor(videoEl) {
+    this._videoEl = videoEl;
 
-        navigator.mediaDevices.getUserMedia({
-            video: true
-        }).then(stream => {
-            this._stream = stream; 
-            this._videoEl.srcObject = stream;
-            this._videoEl.play();
-        }).catch(err => {
-            console.error('Erro ao acessar a câmera: ', err);
-        });
-    }
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then((stream) => {
+        this._stream = stream;
+        this._videoEl.srcObject = stream; // Correção aqui
+        this._videoEl.play();
+      })
+      .catch((err) => {
+        console.error("Erro ao acessar a câmera:", err);
+      });
+  }
 
-    stop() {
-        if (this._stream) {
-            this._stream.getTracks().forEach(track => {
-                track.stop();
-            });
-        } else {
-            console.error('Nenhum stream de vídeo foi iniciado.');
-        }
-    }
+  takePicture(mimeType = "image/png") {
+    let canvas = document.createElement("canvas");
+    canvas.width = this._videoEl.videoWidth;
+    canvas.height = this._videoEl.videoHeight;
 
-    TakePicture(mimeType = 'image/png') {
-        if (!this._videoEl || !this._videoEl.videoHeight || !this._videoEl.videoWidth) {
-            console.error('Erro: O elemento de vídeo não está corretamente configurado.');
-            return;
-        }
-    
-        let canvas = document.createElement('canvas');
-        
-        canvas.setAttribute('height', this._videoEl.videoHeight);
-        canvas.setAttribute('width', this._videoEl.videoWidth);
-    
-        let context = canvas.getContext('2d');
-        if (!context) {
-            console.error('Erro: Não foi possível obter o contexto 2D.');
-            return;
-        }
-    
-        context.drawImage(this._videoEl, 0, 0, canvas.width, canvas.height);
-    
-        return canvas.toDataURL(mimeType);
+    let context = canvas.getContext("2d");
+    context.drawImage(this._videoEl, 0, 0, canvas.width, canvas.height);
+
+    return canvas.toDataURL(mimeType);
+  }
+
+  stop() {
+    if (this._stream) {
+      this._stream.getTracks().forEach((track) => track.stop());
     }
-    
+  }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = CameraController;
 
@@ -12645,6 +12633,7 @@ class MicrophoneController extends __WEBPACK_IMPORTED_MODULE_1__util_ClassEvent_
 /* harmony export (immutable) */ __webpack_exports__["a"] = MicrophoneController;
 
 
+
 /***/ }),
 /* 56 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -12660,7 +12649,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = path.resolve(
 
 class DocumentPreviewController {
   constructor(file) {
-    this._file = file; 
+    this._file = file;
   }
 
   getPriviewData() {
@@ -12742,6 +12731,7 @@ class DocumentPreviewController {
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = DocumentPreviewController;
+
 
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, "/"))
 
@@ -80112,7 +80102,7 @@ T.prototype.getStatus=T.prototype.W;T.prototype.getStatusText=T.prototype.Ha;T.p
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_firebase__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_Firebase__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Model__ = __webpack_require__(29);
 
 
@@ -80163,7 +80153,7 @@ class User extends __WEBPACK_IMPORTED_MODULE_1__Model__["a" /* Model */] {
 
     static getRef() {
         
-        return __WEBPACK_IMPORTED_MODULE_0__util_firebase__["a" /* Firebase */].db().collection('/users');
+        return __WEBPACK_IMPORTED_MODULE_0__util_Firebase__["a" /* Firebase */].db().collection('/users');
 
     }
 
@@ -80225,7 +80215,7 @@ class User extends __WEBPACK_IMPORTED_MODULE_1__Model__["a" /* Model */] {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Model__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util_firebase__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util_Firebase__ = __webpack_require__(8);
 
 
 
@@ -80242,7 +80232,7 @@ class Chat extends __WEBPACK_IMPORTED_MODULE_0__Model__["a" /* Model */] {
 
     static getRef(){
 
-        return __WEBPACK_IMPORTED_MODULE_1__util_firebase__["a" /* Firebase */].db().collection('/chats');
+        return __WEBPACK_IMPORTED_MODULE_1__util_Firebase__["a" /* Firebase */].db().collection('/chats');
 
     } 
 
@@ -80320,10 +80310,10 @@ class Chat extends __WEBPACK_IMPORTED_MODULE_0__Model__["a" /* Model */] {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_firebase__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_Firebase__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Model__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util_Format__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_Upload_js__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_Upload__ = __webpack_require__(51);
 
 
 
@@ -80749,7 +80739,7 @@ class Message extends __WEBPACK_IMPORTED_MODULE_1__Model__["a" /* Model */] {
 
     static upload(file, from){
 
-       return __WEBPACK_IMPORTED_MODULE_3__util_Upload_js__["a" /* Upload */].send(file, from);
+       return __WEBPACK_IMPORTED_MODULE_3__util_Upload__["a" /* Upload */].send(file, from);
 
 
     }
@@ -80891,7 +80881,7 @@ class Message extends __WEBPACK_IMPORTED_MODULE_1__Model__["a" /* Model */] {
 
    static getRef(chatId){
 
-    return __WEBPACK_IMPORTED_MODULE_0__util_firebase__["a" /* Firebase */].db()
+    return __WEBPACK_IMPORTED_MODULE_0__util_Firebase__["a" /* Firebase */].db()
     .collection('chats')
     .doc(chatId)
     .collection('messages');
